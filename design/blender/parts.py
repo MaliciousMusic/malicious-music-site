@@ -274,6 +274,24 @@ def part_power(on):
     render_split(("power-on" if on else "power-off") + "-frame", "power-cap" if on else None, [cap])
 
 
+def part_fader():
+    """Tirette de fader : corps chromé, dessus à nervures, trait violet au centre."""
+    clear(); key_light(); camera_top(2.4, 360, 240)
+    rounded_box("body", 2.0, 1.22, 0.34, 0.14, SATIN(), z=0.0)
+    rounded_box("top", 1.82, 1.04, 0.12, 0.06, DARK(), z=0.16)
+    for i in range(-3, 4):
+        if i == 0:
+            continue
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.05, depth=0.92, location=(i * 0.24, 0, 0.22), vertices=32)
+        ob = bpy.context.active_object
+        ob.rotation_euler.x = math.radians(90)
+        bpy.ops.object.shade_smooth()
+        ob.data.materials.append(CHROME())
+    violet = mat("violet_line", (0.45, 0.12, 0.9), 0.0, 0.3, emit=(0.55, 0.2, 1.0), emit_strength=0.9)
+    rounded_box("line", 0.07, 0.96, 0.08, 0.02, violet, z=0.23)
+    render("fader")
+
+
 def part_plate():
     """Plaque de métal brossé pour le châssis (vue en perspective pour varier les reflets)."""
     clear()
@@ -407,6 +425,7 @@ def part_sticker():
 
 
 PARTS = {
+    "fader": part_fader,
     "sticker": part_sticker,
     "btn": part_button,
     "pill": part_pill,

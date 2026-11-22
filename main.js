@@ -83,15 +83,29 @@ function updatePos() {
   const max = scroller.scrollHeight - scroller.clientHeight;
   posTrack.style.setProperty("--p", max > 0 ? (scroller.scrollTop / max).toFixed(4) : 0);
 }
-scroller.addEventListener("scroll", updatePos, { passive: true });
-posTrack.addEventListener("pointerdown", (e) => {
-  const seek = (ev) => {
-    const r = posTrack.getBoundingClientRect();
-    scroller.scrollTop = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width)) * (scroller.scrollHeight - scroller.clientHeight);
+scroller.addEventListener("scroll", () => { if (!posTrack.classList.contains("dragging")) updatePos(); }, { passive: true });
+// Glisser : la tirette suit le doigt ou la souris sans sauter, la page ne défile pas pendant le geste
+(function () {
+  const thumb = posTrack.querySelector("i");
+  let grab = null; // décalage entre le pointeur et le centre de la tirette
+  const seek = (clientX) => {
+    const r = posTrack.getBoundingClientRect(), tw = thumb.offsetWidth;
+    const p = Math.min(1, Math.max(0, (clientX - grab - r.left - tw / 2) / (r.width - tw)));
+    posTrack.style.setProperty("--p", p.toFixed(4));
+    scroller.scrollTop = p * (scroller.scrollHeight - scroller.clientHeight);
   };
-  posTrack.setPointerCapture(e.pointerId); seek(e);
-  posTrack.onpointermove = (ev) => ev.buttons && seek(ev);
-});
+  posTrack.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    const t = thumb.getBoundingClientRect();
+    grab = e.target === thumb ? e.clientX - (t.left + t.width / 2) : 0;
+    posTrack.setPointerCapture(e.pointerId);
+    posTrack.classList.add("dragging");
+    seek(e.clientX);
+  });
+  posTrack.addEventListener("pointermove", (e) => { if (grab !== null) seek(e.clientX); });
+  const stop = () => { grab = null; posTrack.classList.remove("dragging"); };
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach((ev) => posTrack.addEventListener(ev, stop));
+})();
 document.getElementById("up").addEventListener("click", () => scroller.scrollBy({ top: -scroller.clientHeight * 0.7, behavior: "smooth" }));
 document.getElementById("down").addEventListener("click", () => scroller.scrollBy({ top: scroller.clientHeight * 0.7, behavior: "smooth" }));
 

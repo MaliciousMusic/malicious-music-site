@@ -345,7 +345,7 @@ h2::before { content: "> "; }
   .signup { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
-  .device { --side: 14px; --top: 52px; --bottom: 252px; --jog: 132px; }
+  .device { --side: 14px; --top: 52px; --bottom: 276px; --jog: 132px; }
   .side, .pod, .dev-model { display: none; }
   .st-right { display: none; }
   .console { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "deck deck" "jog keys"; align-content: center; row-gap: 14px; column-gap: 18px; padding-top: 14px; }
@@ -555,3 +555,41 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 .jog-home:active { background: radial-gradient(circle, rgba(0,0,0,.3), rgba(0,0,0,.14) 66%, transparent 70%); }
 .jog-home:active svg { transform: translateY(1px) scale(.94); }
 .jog-home svg { transition: transform .07s; }
+
+/* =========================================================
+   FADER DE POSITION : rail creusé + tirette Blender
+   ========================================================= */
+.pos-track {
+  --tw: clamp(46px, 5.2vw, 58px);           /* largeur de la tirette */
+  --th: calc(var(--tw) * .616);
+  position: relative; flex: 1; height: calc(var(--th) + 18px); background: none; box-shadow: none; border-radius: 0;
+  cursor: grab; touch-action: none; -webkit-user-select: none; user-select: none;
+}
+.pos-track.dragging { cursor: grabbing; }
+.pos-track::before { /* la fente creusée dans le châssis */
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 10px; margin-top: -7px; border-radius: 5px;
+  background:
+    linear-gradient(90deg, rgba(120,255,90,.75), rgba(120,255,90,.75)) 0 50% / calc(var(--p) * (100% - var(--tw)) + var(--tw) / 2) 2px no-repeat,
+    linear-gradient(180deg, #050607, #1d2126 70%, #2c3239);
+  box-shadow: inset 0 2px 3px rgba(0,0,0,.9), 0 -1px 0 rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.85), 0 0 6px rgba(120,255,90,.0);
+}
+.pos-track::after { /* graduations gravées sous le rail */
+  content: ""; position: absolute; left: calc(var(--tw) / 2); right: calc(var(--tw) / 2); top: calc(50% + 7px); height: 7px; pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(20,24,30,.6) 0 1px, transparent 1px 100%) 0 0 / calc(100% / 10) 100%,
+    repeating-linear-gradient(90deg, rgba(255,255,255,.9) 0 1px, transparent 1px 100%) 1px 1px / calc(100% / 10) 100%;
+  -webkit-mask: linear-gradient(#000, #000) 0 0 / calc(100% + 1px) 100% no-repeat; mask: linear-gradient(#000, #000) 0 0 / calc(100% + 1px) 100% no-repeat;
+}
+.pos-track i, .pos-track i:hover {
+  position: absolute; z-index: 1; top: 50%; left: calc(var(--p) * (100% - var(--tw)));
+  width: var(--tw); height: var(--th); margin-top: calc(var(--th) / -2 - 2px);
+  border-radius: 0; box-shadow: none;
+  background: url("assets/hw/fader.png") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,.55)) drop-shadow(0 1px 1px rgba(0,0,0,.5));
+  transition: filter .08s, transform .08s;
+}
+.pos-track i::after { display: none; }
+.pos-track.dragging i { transform: translateY(1px); filter: drop-shadow(0 2px 2px rgba(0,0,0,.6)) brightness(1.06); }
+@media (max-width: 760px) {
+  .pos-track { --tw: 54px; height: 50px; }
+}
