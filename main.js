@@ -47,7 +47,7 @@ function hole(x, y, w, h, n) {
       `L${f(a - k)} ${f(yt)}`,
       `C${f(a - k * 0.35)} ${f(yt)} ${f(a - k * 0.45)} ${f(yb)} ${f(a)} ${f(yb)}`,
       // fond de l'encoche : épouse l'arc du titre (plus haut au centre, plus bas sous les extrémités)
-      `Q${f(n.cx)} ${f(yb - 2 * (n.sag || 0))} ${f(b)} ${f(yb)}`,
+      n.r ? `A${f(n.r)} ${f(n.r)} 0 0 1 ${f(b)} ${f(yb)}` : `L${f(b)} ${f(yb)}`,
       `C${f(b + k * 0.45)} ${f(yb)} ${f(b + k * 0.35)} ${f(yt)} ${f(b + k)} ${f(yt)}`,
       `L${f(x + w - bw - r)} ${f(yt)}`,
     ].join("");
@@ -71,9 +71,13 @@ function layout() {
   const W = d.width, H = d.height, x = g.left - d.left, y = g.top - d.top;
   const tp = document.getElementById("title-plate").getBoundingClientRect();
   const bt = Math.min(14, g.height * 0.03);
-  // le titre est en arc : ses extrémités descendent plus bas que son centre (≈ 35 % de sa hauteur)
-  const sag = tp.height * 0.35;
-  const notch = { cx: tp.left - d.left + tp.width / 2, hw: tp.width / 2 + 26, depth: Math.max(24, tp.bottom - d.top + 20 - (y + bt)), sag };
+  // le titre est courbé (Blender) sur un cercle de rayon 1,9 × sa largeur : le fond de l'encoche
+  // suit un cercle concentrique, décalé de la marge, pour que les deux courbes soient parallèles
+  const m = 20, R = tp.width * 1.9, Rn = R - m, hw = tp.width / 2 + 26;
+  const dropT = R - Math.sqrt(R * R - (tp.width / 2) ** 2);       // descente du bas du titre à ses extrémités
+  const dropN = Rn - Math.sqrt(Rn * Rn - hw * hw);                  // descente du fond de l'encoche à ses extrémités
+  const yc = tp.bottom - d.top - dropT + m;                         // fond de l'encoche sous le centre du titre
+  const notch = { cx: tp.left - d.left + tp.width / 2, hw, depth: Math.max(24, yc + dropN - (y + bt)), r: Rn };
   const shifted = (dx, dy, extra = 0) => ({ cx: notch.cx + dx, hw: notch.hw + extra, depth: notch.depth + extra });
   const inner = hole(x, y, g.width, g.height, notch);
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
