@@ -46,7 +46,8 @@ function hole(x, y, w, h, n) {
     top = [
       `L${f(a - k)} ${f(yt)}`,
       `C${f(a - k * 0.35)} ${f(yt)} ${f(a - k * 0.45)} ${f(yb)} ${f(a)} ${f(yb)}`,
-      `L${f(b)} ${f(yb)}`,
+      // fond de l'encoche : épouse l'arc du titre (plus haut au centre, plus bas sous les extrémités)
+      `Q${f(n.cx)} ${f(yb - 2 * (n.sag || 0))} ${f(b)} ${f(yb)}`,
       `C${f(b + k * 0.45)} ${f(yb)} ${f(b + k * 0.35)} ${f(yt)} ${f(b + k)} ${f(yt)}`,
       `L${f(x + w - bw - r)} ${f(yt)}`,
     ].join("");
@@ -70,7 +71,9 @@ function layout() {
   const W = d.width, H = d.height, x = g.left - d.left, y = g.top - d.top;
   const tp = document.getElementById("title-plate").getBoundingClientRect();
   const bt = Math.min(14, g.height * 0.03);
-  const notch = { cx: tp.left - d.left + tp.width / 2, hw: tp.width / 2 + 30, depth: Math.max(24, tp.bottom - d.top + 14 - (y + bt)) };
+  // le titre est en arc : ses extrémités descendent plus bas que son centre (≈ 35 % de sa hauteur)
+  const sag = tp.height * 0.35;
+  const notch = { cx: tp.left - d.left + tp.width / 2, hw: tp.width / 2 + 18, depth: Math.max(24, tp.bottom - d.top + 10 - (y + bt)), sag };
   const shifted = (dx, dy, extra = 0) => ({ cx: notch.cx + dx, hw: notch.hw + extra, depth: notch.depth + extra });
   const inner = hole(x, y, g.width, g.height, notch);
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
