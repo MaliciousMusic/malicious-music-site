@@ -5,7 +5,7 @@ const allCanvases = [...document.querySelectorAll("canvas")];
 
 // Models are drawn at low resolution and scaled up: real dot-matrix pixels
 function fit(c) {
-  const k = c.dataset.model ? 1 / 2.5 : 0.5;
+  const k = c.dataset.model ? 1 / 2.5 : c.id === "ink" ? 1 / 3 : 0.5;
   const w = Math.max(1, Math.round(c.clientWidth * k));
   const h = Math.max(1, Math.round(c.clientHeight * k));
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
@@ -379,6 +379,7 @@ function frame(t) {
     else if (c.hasAttribute("data-lcd")) drawLcd(c, t);
     else if (c.dataset.model) drawModel(c, t);
   }
+  fadeInk();
   if (!reduceMotion) requestAnimationFrame(frame);
 }
 if (reduceMotion) {
@@ -391,3 +392,117 @@ document.querySelectorAll("form.signup").forEach((f) =>
   f.addEventListener("submit", (e) => { e.preventDefault(); f.querySelector(".msg").hidden = false; f.reset(); })
 );
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
+
+// ---------------------------------------------------------
+// Stylet : remplace le curseur de la souris (pas sur écran tactile)
+// ---------------------------------------------------------
+const stylus = document.getElementById("stylus");
+if (window.matchMedia("(pointer: fine)").matches) {
+  document.documentElement.classList.add("stylus-on");
+  const isPen = (e) => e.pointerType === "mouse" || e.pointerType === "pen";
+  window.addEventListener("pointermove", (e) => {
+    if (!isPen(e)) return;
+    stylus.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    stylus.classList.add("show");
+  }, { passive: true });
+  document.documentElement.addEventListener("mouseleave", () => stylus.classList.remove("show"));
+  window.addEventListener("pointerdown", (e) => { if (isPen(e)) stylus.classList.add("down"); });
+  ["pointerup", "pointercancel"].forEach((ev) => window.addEventListener(ev, () => stylus.classList.remove("down")));
+}
+
+// ---------------------------------------------------------
+// Écran tactile : marque d'appui, trait d'encre, glisser pour défiler
+// ---------------------------------------------------------
+const ink = document.getElementById("ink");
+const ictx = ink.getContext("2d");
+let inkLife = 0;
+function fadeInk() {
+  if (inkLife <= 0) return;
+  inkLife--;
+  ictx.globalCompositeOperation = "destination-out";
+  ictx.fillStyle = "rgba(0,0,0,0.06)";
+  ictx.fillRect(0, 0, ink.width, ink.height);
+  ictx.globalCompositeOperation = "source-over";
+  if (inkLife === 0) ictx.clearRect(0, 0, ink.width, ink.height);
+}
+function inkLine(x0, y0, x1, y1) {
+  const r = glassEl.getBoundingClientRect();
+  if (ink.width < 2) fit(ink);
+  const sx = ink.width / r.width, sy = ink.height / r.height;
+  ictx.strokeStyle = "rgba(38,51,44,.9)";
+  ictx.lineWidth = 1.25;
+  ictx.lineCap = ictx.lineJoin = "round";
+  ictx.beginPath();
+  ictx.moveTo((x0 - r.left) * sx, (y0 - r.top) * sy);
+  ictx.lineTo((x1 - r.left) * sx, (y1 - r.top) * sy);
+  ictx.stroke();
+  inkLife = 90;
+}
+function tapMark(x, y) {
+  const r = glassEl.getBoundingClientRect();
+  const m = document.createElement("span");
+  m.className = "tap hold";
+  m.style.left = x - r.left + "px";
+  m.style.top = y - r.top + "px";
+  glassEl.appendChild(m);
+  return m;
+}
+
+let touch = null, glide = 0, swallowClick = false;
+glassEl.addEventListener("pointerdown", (e) => {
+  if (e.button > 0 || glassEl.classList.contains("off") || glassEl.classList.contains("booting")) return;
+  const field = e.target.closest("input, select, textarea, label, summary");
+  cancelAnimationFrame(glide);
+  touch = {
+    id: e.pointerId, x: e.clientX, y: e.clientY, y0: e.clientY, top0: scroller.scrollTop,
+    scroll: e.pointerType !== "touch" && !field, moved: false, v: 0, t: performance.now(),
+    mark: tapMark(e.clientX, e.clientY),
+  };
+});
+window.addEventListener("pointermove", (e) => {
+  if (!touch || e.pointerId !== touch.id) return;
+  inkLine(touch.x, touch.y, e.clientX, e.clientY);
+  touch.mark.style.left = e.clientX - glassEl.getBoundingClientRect().left + "px";
+  touch.mark.style.top = e.clientY - glassEl.getBoundingClientRect().top + "px";
+  if (touch.scroll) {
+    const dy = e.clientY - touch.y0;
+    if (!touch.moved && Math.abs(dy) > 6) {
+      touch.moved = true;
+      glassEl.setPointerCapture(e.pointerId);
+      glassEl.classList.add("scrolling");
+    }
+    if (touch.moved) {
+      const now = performance.now();
+      const prev = scroller.scrollTop;
+      scroller.scrollTop = touch.top0 - dy;
+      touch.v = 0.8 * touch.v + 0.2 * ((scroller.scrollTop - prev) / Math.max(1, now - touch.t));
+      touch.t = now;
+    }
+  }
+  touch.x = e.clientX; touch.y = e.clientY;
+});
+function release(e) {
+  if (!touch || (e && e.pointerId !== touch.id)) return;
+  const m = touch.mark;
+  m.classList.remove("hold");
+  m.addEventListener("animationend", () => m.remove());
+  if (touch.moved) {
+    swallowClick = true;
+    glassEl.classList.remove("scrolling");
+    let v = Math.max(-2.2, Math.min(2.2, touch.v)) * 16;
+    const step = () => {
+      if (Math.abs(v) < 0.4) return;
+      scroller.scrollTop += v; v *= 0.93;
+      glide = requestAnimationFrame(step);
+    };
+    glide = requestAnimationFrame(step);
+  }
+  touch = null;
+}
+window.addEventListener("pointerup", release);
+window.addEventListener("pointercancel", release);
+// un glisser n'est pas un clic : on ne suit pas le lien sous le stylet
+glassEl.addEventListener("click", (e) => {
+  if (swallowClick) { e.preventDefault(); e.stopPropagation(); swallowClick = false; }
+}, true);
+window.addEventListener("pointerdown", () => { swallowClick = false; }, true);

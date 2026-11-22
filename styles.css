@@ -601,3 +601,33 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
     linear-gradient(180deg, #050607, #1d2126 70%, #2c3239);
 }
 .pos-track { --th: calc(var(--tw) * .62); }
+
+/* =========================================================
+   STYLET + ÉCRAN TACTILE
+   ========================================================= */
+.stylus-on, .stylus-on * { cursor: none !important; }
+.stylus {
+  --sw: clamp(96px, 9vw, 128px);
+  position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
+  width: var(--sw); height: var(--sw);
+  margin: calc(var(--sw) * -.044) 0 0 calc(var(--sw) * -.044);   /* la pointe tombe pile sous la souris */
+  opacity: 0; transition: opacity .15s, filter .08s, scale .08s;
+  transform-origin: 4.4% 4.4%; will-change: transform;
+  filter: drop-shadow(14px 16px 6px rgba(0,0,0,.28));
+}
+.stylus.show { opacity: 1; }
+.stylus.down { scale: .97; filter: drop-shadow(4px 5px 2px rgba(0,0,0,.38)); }
+.stylus-on .views { -webkit-user-select: none; user-select: none; }
+.stylus-on .signup input, .stylus-on .signup select { -webkit-user-select: text; user-select: text; }
+
+.ink { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; image-rendering: pixelated; filter: blur(.35px); }
+.tap {
+  position: absolute; z-index: 5; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(38,51,44,.42) 0 18%, rgba(38,51,44,.16) 40%, transparent 68%);
+  box-shadow: 0 0 0 2px rgba(38,51,44,.28);
+  animation: tap-out .45s steps(5) forwards; animation-play-state: paused;
+}
+.tap.hold { animation-play-state: paused; }
+.tap:not(.hold) { animation-play-state: running; }
+@keyframes tap-out { to { opacity: 0; transform: scale(1.9); box-shadow: 0 0 0 1px rgba(38,51,44,.1); } }
+.glass.scrolling .views { pointer-events: none; }

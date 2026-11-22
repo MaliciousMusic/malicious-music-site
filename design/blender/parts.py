@@ -309,6 +309,27 @@ def part_fader():
     render("fader")
 
 
+def part_stylus():
+    """Stylet façon console portable : pointe grise, bague chromée, corps en plastique violet.
+    La pointe est dans le coin haut gauche de l'image (point chaud du curseur)."""
+    clear(); key_light(320, 4)
+    tip = lathe("tip", [(0, 0), (0.012, 0.004), (0.022, 0.02), (0.036, 0.08), (0.06, 0.2), (0.074, 0.28)],
+                mat("tip_plastic", (0.62, 0.64, 0.68), 0.0, 0.32, coat=0.3))
+    ring = lathe("ring", [(0.074, 0.28), (0.083, 0.29), (0.084, 0.34), (0.08, 0.35)], CHROME())
+    body = lathe("body", [(0.08, 0.35), (0.082, 0.4), (0.082, 2.36), (0.078, 2.44), (0.06, 2.52), (0.03, 2.565), (0, 2.575)],
+                 mat("stylus_violet", (0.26, 0.05, 0.62), 0.0, 0.22, coat=1.0, transmission=0.15))
+    grip = [lathe(f"grip{i}", [(0.0825, 0.46 + i * 0.07), (0.086, 0.475 + i * 0.07), (0.0825, 0.49 + i * 0.07)], DARK()) for i in range(5)]
+    for ob in [tip, ring, body] + grip:
+        ob.rotation_euler = (math.radians(90), 0, math.radians(45))
+        ob.location.z = 0.2
+    cam = bpy.data.cameras.new("cam"); cam.type = "ORTHO"; cam.ortho_scale = 2.0
+    co = bpy.data.objects.new("cam", cam); co.location = (0.91, -0.91, 10)
+    bpy.context.collection.objects.link(co); bpy.context.scene.camera = co
+    sc = bpy.context.scene
+    sc.render.resolution_x = sc.render.resolution_y = 320
+    render("stylus")
+
+
 def part_plate():
     """Plaque de métal brossé pour le châssis (vue en perspective pour varier les reflets)."""
     clear()
@@ -442,6 +463,7 @@ def part_sticker():
 
 
 PARTS = {
+    "stylus": part_stylus,
     "fader": part_fader,
     "sticker": part_sticker,
     "btn": part_button,

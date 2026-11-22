@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=17" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.png" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.png" />
   <script>document.documentElement.classList.add("js");</script>
@@ -86,6 +86,8 @@
 
   <!-- ===== L'ÉCRAN ===== -->
   <div class="glass off" id="glass">
+
+    <canvas class="ink" id="ink" aria-hidden="true"></canvas>
 
     <div class="splash" id="splash" aria-hidden="true">
       <img class="splash-logo ink-logo" src="assets/malicious-bass-lcd.png" alt="" />
@@ -370,6 +372,7 @@
     </div>
   </div>
 </div>
-<script src="main.js?v=15"></script>
+<img class="stylus" id="stylus" src="assets/hw/stylus.png" alt="" aria-hidden="true" />
+<script src="main.js?v=17"></script>
 </body>
 </html>
