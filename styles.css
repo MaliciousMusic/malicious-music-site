@@ -775,3 +775,20 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
 .product > p:not(.tag) { font-size: .86em; line-height: 1.12; }
 .product .list { font-size: .86em; gap: 1px; }
 .viewer canvas { height: clamp(90px, 22cqh, 200px); }
+
+/* plugin : page compacte — intro sur une ligne, fonctions | compatibilité + démo */
+.two { display: grid; gap: clamp(12px, 2cqh, 20px) clamp(16px, 3cqw, 40px); }
+.two .col { display: grid; gap: clamp(8px, 1.6cqh, 14px); align-content: start; }
+.two h3 { border-bottom: 2px dotted var(--ink); padding-bottom: 2px; }
+#plugin { gap: clamp(8px, 2cqh, 16px); }
+#plugin .player canvas { height: clamp(60px, 14cqh, 110px); }
+#plugin .p-time { font-size: clamp(2rem, min(5cqw, 9cqh), 3.4rem); }
+#plugin .steps li { font-size: .9em; }
+#plugin .list { font-size: .92em; }
+#plugin .nosignal { aspect-ratio: auto; height: clamp(90px, 22cqh, 180px); font-size: 1.3em; }
+@container screen (min-width: 720px) {
+  #plugin { grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(16px, 3cqw, 40px); align-items: end; }
+  #plugin > .txt { font-size: .86em; max-width: none; }
+  #plugin > :not(h2):not(.txt) { grid-column: 1 / -1; }
+  .two { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+}
