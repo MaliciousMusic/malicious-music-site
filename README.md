@@ -14,7 +14,7 @@ Site statique (HTML/CSS/JS, aucune dépendance).
 - `audioware.html` — la Pyramide, les Géants, le Casque + liste d'attente
 - `legal.html` — mentions légales, CGV, confidentialité (à rédiger)
 
-`assets/malicious-bass-logo.svg` est un logo **provisoire** : remplacer par le vrai logo Malicious Bass (même nom de fichier).
+`assets/malicious-bass-logo.png` : logo Malicious Bass (bar violet en dégradé, fond transparent), tiré de `~/Bureau/lonjaret/assets/logos/maliciousmusic/source-bass-degrade.png`.
  Les contenus provisoires sont marqués avec la classe `.ph` (affichés en orange).
 
 ## Lancer en local

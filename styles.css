@@ -52,7 +52,7 @@ img, svg { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--line);
 }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .06em; white-space: nowrap; }
-.logo img { width: 30px; height: 30px; color: var(--text); }
+.logo img { width: auto; height: 34px; }
 .logo span { color: var(--accent); }
 .nav-links { display: flex; gap: 28px; font-size: .95rem; color: var(--muted); }
 .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--text); }
@@ -144,7 +144,7 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; line-height: 1.25; }
   padding: 12px 16px; border-bottom: 1px solid #2a2a31; font-size: .75rem; color: var(--muted);
 }
 .plugin-bar .brand { display: flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; letter-spacing: .08em; }
-.plugin-bar .brand img { width: 18px; height: 18px; }
+.plugin-bar .brand img { width: auto; height: 20px; }
 .plugin-bar .file { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .plugin-body { display: grid; grid-template-columns: 1fr; gap: 0; }
 .stem {
@@ -198,7 +198,7 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; line-height: 1.25; }
   display: flex; align-items: center; gap: 6px;
   font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; color: var(--muted);
 }
-.stamp img { width: 16px; height: 16px; }
+.stamp img { width: auto; height: 18px; }
 .stroke { fill: none; stroke: var(--text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .stroke.accent, .stroke .accent { stroke: var(--accent); }
 .stroke.dim { stroke: var(--muted); stroke-width: 1.5; }
