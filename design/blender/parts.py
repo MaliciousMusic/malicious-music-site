@@ -460,13 +460,47 @@ def chrome80_material():
     return m
 
 
+def ref_metal_material():
+    """Métal poli teinté façon référence : violet en haut, bande blanche, horizon bleu nuit, pervenche, bas clair.
+    Aucune émission : la couleur vient des reflets d'un métal (base color d'un matériau métallique)."""
+    m = bpy.data.materials.new("ref_metal"); m.use_nodes = True
+    nt = m.node_tree; p = nt.nodes["Principled BSDF"]
+    p.inputs["Metallic"].default_value = 1.0
+    p.inputs["Roughness"].default_value = 0.16
+    uv = nt.nodes.new("ShaderNodeUVMap"); uv.uv_map = "orig"
+    sp = nt.nodes.new("ShaderNodeSeparateXYZ")
+    geo = nt.nodes.new("ShaderNodeNewGeometry"); sn = nt.nodes.new("ShaderNodeSeparateXYZ")
+    tilt = nt.nodes.new("ShaderNodeMath"); tilt.operation = "MULTIPLY"; tilt.inputs[1].default_value = 0.18
+    add = nt.nodes.new("ShaderNodeMath"); add.operation = "ADD"
+    ramp = nt.nodes.new("ShaderNodeValToRGB"); els = ramp.color_ramp.elements
+    els[0].position = 0.0; els[0].color = (0.78, 0.78, 0.96, 1)     # bas : clair
+    els[1].position = 1.0; els[1].color = (0.27, 0.22, 0.62, 1)     # haut : violet
+    for pp, col in ((0.24, (0.42, 0.39, 0.82, 1)), (0.44, (0.05, 0.045, 0.16, 1)), (0.47, (0.03, 0.025, 0.1, 1)),
+                    (0.5, (0.96, 0.96, 1.0, 1)), (0.56, (0.62, 0.58, 0.95, 1)), (0.68, (0.33, 0.28, 0.72, 1))):
+        e = els.new(pp); e.color = col
+    L = nt.links.new
+    L(uv.outputs["UV"], sp.inputs["Vector"])
+    L(geo.outputs["Normal"], sn.inputs["Vector"]); L(sn.outputs["Y"], tilt.inputs[0])
+    L(sp.outputs["Y"], add.inputs[0]); L(tilt.outputs[0], add.inputs[1])
+    L(add.outputs[0], ramp.inputs["Fac"]); L(ramp.outputs["Color"], p.inputs["Base Color"])
+    return m
+
+
 def part_title_chrome():
-    """MALICIOUS MUSIC en chrome gonflé et penché, qui sort de cuvettes creusées dans le châssis
-    (rebord chromé comme les boutons, fond sombre)."""
-    clear()   # pas de lampes : le chrome porte son propre dégradé, le studio (HDRI) éclaire le rebord
+    """MALICIOUS MUSIC en métal poli teinté (comme la référence), penché, en arc de cercle,
+    qui sort de cuvettes creusées dans le châssis (rebord comme les boutons)."""
+    import bmesh
+    clear()
+    # ciel uniformément clair : le métal plat vu de face renvoie alors exactement sa teinte (le dégradé)
+    wn = bpy.context.scene.world.node_tree
+    bgn = wn.nodes["Background"]
+    for lk in list(bgn.inputs["Color"].links):
+        wn.links.remove(lk)
+    bgn.inputs["Color"].default_value = (0.92, 0.92, 1.0, 1)
+    bgn.inputs["Strength"].default_value = 1.0
     font = bpy.data.fonts.load(os.path.join(ROOT, "design", "fonts", "RussoOne-Regular.ttf"), check_existing=True)
 
-    def text_mesh(name, offset, extrude, bevel, z, shear=0.18):
+    def text_mesh(name, offset, extrude, bevel, z, shear=0.16):
         cu = bpy.data.curves.new(name, "FONT")
         cu.body = "MALICIOUS MUSIC"; cu.font = font
         cu.align_x = "CENTER"; cu.align_y = "CENTER"
@@ -480,52 +514,62 @@ def part_title_chrome():
         bpy.ops.object.convert(target="MESH")
         return bpy.context.active_object
 
-    # rebord : contour élargi, percé au centre ; les contours voisins se recouvrent, on les fusionne d'abord
-    def merged(ob):
-        rm = ob.modifiers.new("remesh", "REMESH"); rm.mode = "VOXEL"; rm.voxel_size = 0.006
+    def merged(ob, voxel=0.006):
+        rm = ob.modifiers.new("remesh", "REMESH"); rm.mode = "VOXEL"; rm.voxel_size = voxel
         bpy.context.view_layer.objects.active = ob
         bpy.ops.object.modifier_apply(modifier="remesh")
         return ob
+
     rim = merged(text_mesh("rim", 0.075, 0.03, 0.0, -0.02))
     cut = merged(text_mesh("cut", 0.048, 0.2, 0.0, -0.1))
     bo = rim.modifiers.new("hole", "BOOLEAN"); bo.operation = "DIFFERENCE"; bo.object = cut; bo.solver = "MANIFOLD"
     bpy.context.view_layer.objects.active = rim
     bpy.ops.object.modifier_apply(modifier="hole")
-    bv = rim.modifiers.new("bevel", "BEVEL"); bv.width = 0.01; bv.segments = 3; bv.limit_method = "ANGLE"
     bpy.ops.object.shade_smooth()
     cut.hide_render = True
-    rim.data.materials.append(mat("rim_dark", (0.36, 0.37, 0.41), 1.0, 0.34))
+    rim.data.materials.append(mat("rim_dark", (0.2, 0.21, 0.24), 1.0, 0.42))
     well = text_mesh("well", 0.05, 0.004, 0.0, -0.05)
-    well.data.materials.append(mat("well", (0.012, 0.006, 0.02), 0.0, 0.5))
-    letters = text_mesh("letters", -0.016, 0.012, 0.046, 0.006)
-    rm = letters.modifiers.new("remesh", "REMESH"); rm.mode = "VOXEL"; rm.voxel_size = 0.0035
-    bpy.context.view_layer.objects.active = letters
-    bpy.ops.object.modifier_apply(modifier="remesh")
-    letters.data.materials.append(iridescent_edge_material())   # 0 : biseaux et flancs
-    letters.data.materials.append(candy_face_material())        # 1 : face avant
+    well.data.materials.append(mat("well", (0.012, 0.008, 0.02), 0.0, 0.5))
+
+    letters = merged(text_mesh("letters", -0.014, 0.012, 0.04, 0.006), 0.0035)
+    # coordonnées d'origine gardées en UV : le dégradé reste calé sur la hauteur des lettres après la courbure
+    bm = bmesh.new(); bm.from_mesh(letters.data)
+    uvl = bm.loops.layers.uv.new("orig")
+    for f in bm.faces:
+        for lp in f.loops:
+            lp[uvl].uv = (lp.vert.co.x, (lp.vert.co.y + 0.36) / 0.76)
+    bm.to_mesh(letters.data); bm.free()
+    letters.data.materials.append(mat("edge_chrome", (0.93, 0.93, 1.0), 1.0, 0.06))   # 0 : liserés brillants
+    letters.data.materials.append(ref_metal_material())                               # 1 : face
     for poly in letters.data.polygons:
         poly.material_index = 1 if poly.normal.z > 0.9 else 0
     bpy.context.view_layer.objects.active = letters
     bpy.ops.object.shade_smooth()
-    for ob in (letters, rim, well):         # vague légère : le mot ondule
+
+    # arc de cercle régulier : chaque point (x, y) part sur un cercle de rayon R
+    w0 = rim.dimensions.x
+    R = w0 * 1.9
+    for ob in (letters, rim, well):
         for v in ob.data.vertices:
-            v.co.y += 0.045 * math.sin(v.co.x * 0.55 + 0.6)
-    w = rim.dimensions.x
-    # éclairage : chaud en haut à gauche (reflets or), violet en bas à droite, bande claire au-dessus (reflet laqué)
+            x, y = v.co.x, v.co.y
+            a = x / R
+            v.co.x = (R + y) * math.sin(a)
+            v.co.y = (R + y) * math.cos(a) - R
+    # deux lampes blanches rasantes pour les liserés, rien qui éclaire la face de front
     target = bpy.data.objects.new("target", None); bpy.context.collection.objects.link(target)
-    for name, loc, col, energy, size in (("warm", (-6, 3.5, 2.2), (1.0, 0.72, 0.45), 380, 0.8),
-                                         ("cool", (6, -3.5, 2.2), (0.62, 0.35, 1.0), 380, 0.8)):
-        l = bpy.data.lights.new(name, "AREA"); l.color = col; l.energy = energy; l.size = size
+    for name, loc, energy in (("rimA", (-5, 4, 1.4), 260), ("rimB", (5, -4, 1.4), 140)):
+        l = bpy.data.lights.new(name, "AREA"); l.energy = energy; l.size = 0.6; l.color = (0.92, 0.9, 1.0)
         o = bpy.data.objects.new(name, l); o.location = loc; bpy.context.collection.objects.link(o)
         c = o.constraints.new("TRACK_TO"); c.target = target; c.track_axis = "TRACK_NEGATIVE_Z"; c.up_axis = "UP_Y"
-    sheen = bpy.data.lights.new("sheen", "AREA"); sheen.shape = "RECTANGLE"
-    sheen.size = w * 1.3; sheen.size_y = 0.16; sheen.energy = 28
-    so = bpy.data.objects.new("sheen", sheen); so.location = (0, 0.2, 3.0); bpy.context.collection.objects.link(so)
-    camera_top(w * 1.03, 1800, 300)
+    bpy.context.view_layer.update()
+    w = max(o.dimensions.x for o in (rim,))
+    camera_top(w * 1.03, 1800, 360)
+    bpy.context.scene.camera.location.y = rim.location.y - (R - R * math.cos((w0 / 2) / R)) / 2
     vs = bpy.context.scene.view_settings
     vs.view_transform, vs.look = "Standard", "None"
     render("title-chrome")
     vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+    setup_world(1.0, rot=math.radians(135))
 
 
 def candy_face_material():
