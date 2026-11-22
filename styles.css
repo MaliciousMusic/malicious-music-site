@@ -371,19 +371,19 @@ h2::before { content: "> "; }
    ========================================================= */
 .rbtn, a:hover > .rbtn, button.rbtn:hover, .rbtn.xs {
   width: calc(var(--s) * 1.22); height: calc(var(--s) * 1.22);
-  background: url("assets/hw/btn.png") center / 100% 100% no-repeat;
+  background: url("assets/hw/btn-frame.png") center / 100% 100% no-repeat;
   box-shadow: none; filter: drop-shadow(0 4px 5px rgba(0,0,0,.45));
 }
 .rbtn svg { width: 40%; height: 40%; }
 a:hover > .rbtn, button.rbtn:hover { filter: drop-shadow(0 4px 5px rgba(0,0,0,.45)) brightness(1.06); }
 a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
-  background: url("assets/hw/btn.png") center / 100% 100% no-repeat; box-shadow: none;
+  background: url("assets/hw/btn-frame.png") center / 100% 100% no-repeat; box-shadow: none;
   transform: translateY(1px) scale(.97); filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)) brightness(.9);
 }
 .nav-btn .led { top: calc(clamp(40px, 6.4vh, 54px) * .61 - 5.5px); }
 
 
-.pill, .pill:active { width: 64px; height: 32px; border-radius: 0; background: url("assets/hw/pill.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
+.pill, .pill:active { width: 64px; height: 32px; border-radius: 0; background: url("assets/hw/pill-frame.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
 .pill:active { transform: translateY(1px); filter: drop-shadow(0 1px 1px rgba(0,0,0,.5)) brightness(.9); }
 .pill svg { width: 20px; height: 20px; filter: drop-shadow(0 1px 0 #fff); }
 
@@ -398,8 +398,8 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
 .knob { transform: none; background: url("assets/hw/knob.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 10px 14px rgba(0,0,0,.55)); }
 .knob::after { left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px; transform: rotate(var(--a)) translateY(calc(var(--jog) * -.27)); }
 
-.power-ring { background: url("assets/hw/power-off.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.5)); width: calc(var(--jog) * .58); }
-.power-ring[aria-pressed="true"] { background-image: url("assets/hw/power-on.png"); box-shadow: none; filter: drop-shadow(0 0 10px rgba(91,234,63,.85)) drop-shadow(0 6px 8px rgba(0,0,0,.5)); }
+.power-ring { background: url("assets/hw/power-off-frame.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.5)); width: calc(var(--jog) * .58); }
+.power-ring[aria-pressed="true"] { background-image: url("assets/hw/power-on-frame.png"); box-shadow: none; filter: drop-shadow(0 0 10px rgba(91,234,63,.85)) drop-shadow(0 6px 8px rgba(0,0,0,.5)); }
 .power-ring span { inset: 34%; }
 
 /* =========================================================
@@ -461,8 +461,8 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
 .power-ring.blink { animation: pwr-blink .9s steps(1) 1; }
 .power-ring.blink::before { animation: pwr-blink-glow .9s steps(1) 1; }
 @keyframes pwr-blink {
-  0%, 22%, 44%, 66% { background-image: url("assets/hw/power-on.png"); }
-  11%, 33%, 55%, 77%, 100% { background-image: url("assets/hw/power-off.png"); }
+  0%, 22%, 44%, 66% { background-image: url("assets/hw/power-on-frame.png"); }
+  11%, 33%, 55%, 77%, 100% { background-image: url("assets/hw/power-off-frame.png"); }
 }
 @keyframes pwr-blink-glow { 0%, 22%, 44%, 66% { opacity: 1; } 11%, 33%, 55%, 77%, 100% { opacity: 0; } }
 
@@ -475,3 +475,63 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
 .knob::after { background: radial-gradient(circle at 35% 30%, #faf0ff, #c47bff 40%, #7a22e0); box-shadow: 0 0 8px #a64dff; }
 
 .ink-logo { mix-blend-mode: normal; filter: none; }
+
+/* =========================================================
+   BOUTONS EN DEUX PIÈCES : le cadre reste fixe, seul le bouton s'enfonce
+   ========================================================= */
+.rbtn, .rbtn.xs, a:hover > .rbtn, button.rbtn:hover, a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
+  background: url("assets/hw/btn-frame.png") center / 100% 100% no-repeat;
+  box-shadow: none; transform: none; filter: drop-shadow(0 4px 5px rgba(0,0,0,.45));
+}
+.rbtn::before, .pill::before, .power-ring::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: center / 100% 100% no-repeat;
+  transition: transform .07s ease-out, filter .07s ease-out;
+}
+.rbtn::before { background-image: url("assets/hw/btn-cap.png"); }
+.rbtn svg, .pill svg { position: relative; z-index: 1; transition: transform .07s ease-out, opacity .07s; }
+a:hover > .rbtn::before, button.rbtn:hover::before, .pill:hover::before, .power-ring:hover::after { filter: brightness(1.06); }
+a:active > .rbtn::before, button.rbtn:active::before, [aria-current="page"] > .rbtn::before,
+.pill:active::before, .power-ring:active::after {
+  transform: translateY(1.5px) scale(.955); filter: brightness(.72) contrast(1.06);
+}
+a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg, .pill:active svg {
+  transform: translateY(1.5px) scale(.955); opacity: .8;
+}
+
+.pill, .pill:active, .pill:hover { position: relative; transform: none; background: url("assets/hw/pill-frame.png") center / 100% 100% no-repeat; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
+.pill::before { background-image: url("assets/hw/pill-cap.png"); }
+
+.power-ring, .power-ring:active { transform: none; background-image: url("assets/hw/power-off-frame.png"); }
+.power-ring[aria-pressed="true"] { background-image: url("assets/hw/power-on-frame.png"); }
+.power-ring::after { background-image: url("assets/hw/power-cap.png"); }
+.power-ring span { z-index: 2; transition: transform .07s ease-out; }
+.power-ring:active span { transform: translateY(1.5px) scale(.955); }
+@keyframes pwr-blink {
+  0%, 22%, 44%, 66% { background-image: url("assets/hw/power-on-frame.png"); }
+  11%, 33%, 55%, 77%, 100% { background-image: url("assets/hw/power-off-frame.png"); }
+}
+
+/* =========================================================
+   GRADUATIONS DU POTARD GRAVÉES DANS LE CHROME
+   ========================================================= */
+.knob { z-index: 1; }
+.knob-wrap::before, .knob-wrap::after {
+  content: ""; position: absolute; left: 50%; top: calc(var(--jog) * .41);
+  width: calc(var(--jog) * .98); aspect-ratio: 1; border-radius: 50%; pointer-events: none;
+  transform: translate(-50%, -50%);
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 58.5% 68%, transparent 68.5%), conic-gradient(from -137deg, #000 0 274deg, transparent 274deg);
+  -webkit-mask-composite: source-in;
+  mask: radial-gradient(circle, transparent 58%, #000 58.5% 68%, transparent 68.5%), conic-gradient(from -137deg, #000 0 274deg, transparent 274deg);
+  mask-composite: intersect;
+}
+.knob-wrap::before { /* creux du trait */
+  background: repeating-conic-gradient(from -135.6deg, rgba(18,22,28,.78) 0 1.3deg, transparent 1.2deg 13.5deg);
+  filter: blur(.25px);
+}
+.knob-wrap::after { /* lumière sur la lèvre basse de la gravure */
+  background: repeating-conic-gradient(from -135.6deg, rgba(255,255,255,.95) 0 1.3deg, transparent 1.2deg 13.5deg);
+  transform: translate(-50%, calc(-50% + 1.2px));
+  filter: blur(.3px); z-index: 0; mix-blend-mode: screen;
+}
+.knob-wrap::before { z-index: 0; }

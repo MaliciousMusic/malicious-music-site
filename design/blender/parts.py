@@ -206,12 +206,28 @@ def sphere(loc, r, material):
 
 
 # ------------------------------------------------------------------ pièces
+def render_split(frame_name, cap_name, caps):
+    """Rend séparément le cadre fixe et le bouton mobile (pour qu'il s'enfonce seul au clic)."""
+    meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
+    if frame_name:
+        for o in meshes:
+            o.hide_render = o in caps
+        render(frame_name)
+    if cap_name:
+        for o in meshes:
+            o.hide_render = o not in caps
+        render(cap_name)
+    for o in meshes:
+        o.hide_render = False
+
+
 def part_button():
     clear(); key_light(); camera_top(2.12, 256, 256)
-    lathe("cap", [(0, 0.30), (0.25, 0.297), (0.5, 0.284), (0.66, 0.262), (0.74, 0.236), (0.775, 0.2), (0.785, 0.12)], CHROME())
+    cap = lathe("cap", [(0, 0.30), (0.25, 0.297), (0.5, 0.284), (0.66, 0.262), (0.74, 0.236), (0.775, 0.2), (0.785, 0.12)], CHROME())
     lathe("groove", [(0.785, 0.06), (0.83, 0.06)], DARK())
     lathe("bezel", [(0.83, 0.06), (0.85, 0.13), (0.89, 0.175), (0.95, 0.175), (0.985, 0.14), (1.0, 0.08), (1.0, 0.0)], SATIN())
     render("btn")
+    render_split("btn-frame", "btn-cap", [cap])
 
 
 def part_pill():
@@ -220,6 +236,7 @@ def part_pill():
     rounded_box("groove", 1.92, 0.82, 0.2, 0.4, DARK(), z=0.03)
     cap = rounded_box("cap", 1.84, 0.74, 0.34, 0.36, CHROME(), z=0.08)
     render("pill")
+    render_split("pill-frame", "pill-cap", [cap])
 
 
 def part_jog():
@@ -250,10 +267,11 @@ def part_power(on):
     clear(); key_light(); camera_top(2.12, 320, 320)
     green = mat("green_on", (0.02, 0.35, 0.01), 0.0, 0.3, emit=(0.04, 1.0, 0.0), emit_strength=0.55) if on \
         else mat("green_off", (0.32, 0.4, 0.34), 0.0, 0.35, transmission=0.4)
-    lathe("cap", [(0, 0.3), (0.3, 0.295), (0.48, 0.278), (0.57, 0.25), (0.6, 0.2), (0.605, 0.12)], CHROME())
+    cap = lathe("cap", [(0, 0.3), (0.3, 0.295), (0.48, 0.278), (0.57, 0.25), (0.6, 0.2), (0.605, 0.12)], CHROME())
     lathe("ring", [(0.62, 0.1), (0.64, 0.2), (0.7, 0.245), (0.76, 0.2), (0.78, 0.1)], green)
     lathe("bezel", [(0.79, 0.06), (0.82, 0.14), (0.88, 0.18), (0.95, 0.17), (0.99, 0.12), (1.0, 0.0)], SATIN())
     render("power-on" if on else "power-off")
+    render_split(("power-on" if on else "power-off") + "-frame", "power-cap" if on else None, [cap])
 
 
 def part_plate():
