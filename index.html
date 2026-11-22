@@ -4,7 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Malicious Music — MP3 to Stems &amp; Audioware</title>
-  <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et la gamme hardware Audioware." />
+  <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -12,32 +13,36 @@
 </head>
 <body>
   <header class="nav">
-    <a class="logo" href="#top">MALICIOUS<span>MUSIC</span></a>
-    <nav>
-      <a href="#software">Software</a>
-      <a href="#pricing">Tarif</a>
-      <a href="#audioware">Audioware</a>
+    <a class="logo" href="index.html"><img src="assets/malicious-bass-logo.svg" alt="" />MALICIOUS<span>MUSIC</span></a>
+    <nav class="nav-links">
+      <a href="software.html">Software</a>
+      <a href="audioware.html">Audioware</a>
+      <a href="software.html#pricing">Tarif</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn btn-small" href="#pricing">Essayer</a>
+    <div class="nav-right">
+      <a class="btn btn-small" href="software.html#pricing">S'abonner</a>
+      <button class="burger" aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
   </header>
 
-  <main id="top">
+  <main>
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-text">
-        <p class="eyebrow">Plugin VST3 · AU · <span class="ph">[formats à confirmer]</span></p>
+      <div>
+        <p class="eyebrow">Plugin VST3 · AU <span class="ph">[à confirmer]</span></p>
         <h1>Un MP3 entre.<br /><em>Des stems</em> sortent.</h1>
         <p class="lead">
-          <strong>Malicious Music</strong> sépare n'importe quel morceau en pistes
-          voix, batterie, basse et instruments — puis vous laisse les remixer directement dans votre DAW.
+          <strong>Malicious Music</strong> sépare n'importe quel morceau en pistes voix, batterie, basse
+          et instruments, puis vous laisse les remixer directement dans votre DAW.
         </p>
         <div class="hero-cta">
-          <a class="btn" href="#pricing">Commencer — 59 €/mois</a>
-          <a class="btn btn-ghost" href="#demo">Voir la démo</a>
+          <a class="btn" href="software.html#pricing">Commencer — 59 €/mois</a>
+          <a class="btn btn-ghost" href="software.html">Découvrir le plugin</a>
         </div>
+        <p class="hero-note">Une seule formule · tout inclus · sans engagement <span class="ph">[à confirmer]</span></p>
       </div>
-      <div class="hero-visual" aria-hidden="true">
+      <div class="wave-card" aria-hidden="true">
         <div class="track track-mix"><span>MIX.mp3</span><canvas data-wave="mix"></canvas></div>
         <div class="split-arrow">↓ split</div>
         <div class="track"><span>VOCALS</span><canvas data-wave="vox"></canvas></div>
@@ -47,151 +52,134 @@
       </div>
     </section>
 
-    <!-- SOFTWARE -->
-    <section id="software" class="section">
-      <p class="eyebrow">Le software</p>
-      <h2>MP3 → stems mixés, sans quitter votre session.</h2>
-      <div class="features">
-        <article class="feature">
-          <span class="num">01</span>
-          <h3>Séparation en stems</h3>
-          <p class="ph">[Placeholder] Voix, batterie, basse, autres — nombre de stems et qualité à préciser.</p>
-        </article>
-        <article class="feature">
-          <span class="num">02</span>
-          <h3>Mixage intégré</h3>
-          <p class="ph">[Placeholder] Volume, mute/solo, effets par stem directement dans le plugin.</p>
-        </article>
-        <article class="feature">
-          <span class="num">03</span>
-          <h3>Dans votre DAW</h3>
-          <p class="ph">[Placeholder] Ableton, FL Studio, Logic, Reaper… liste de compatibilité à confirmer.</p>
-        </article>
-        <article class="feature">
-          <span class="num">04</span>
-          <h3>Export</h3>
-          <p class="ph">[Placeholder] Export WAV / glisser-déposer des stems vers les pistes.</p>
-        </article>
+    <!-- SOFTWARE TEASER -->
+    <section class="section">
+      <div class="reveal">
+        <p class="eyebrow">Le software</p>
+        <h2>Du morceau fini aux <em>pistes séparées</em>, en un glisser-déposer.</h2>
       </div>
+      <div class="grid-4">
+        <article class="card reveal"><span class="num">01</span><h3>Séparation</h3><p>Voix, batterie, basse, autres. <span class="ph">[nombre de stems à confirmer]</span></p></article>
+        <article class="card reveal"><span class="num">02</span><h3>Mixage intégré</h3><p>Volume, mute et solo par stem, directement dans le plugin.</p></article>
+        <article class="card reveal"><span class="num">03</span><h3>Dans votre DAW</h3><p>Le plugin s'ouvre comme n'importe quel instrument ou effet.</p></article>
+        <article class="card reveal"><span class="num">04</span><h3>Export</h3><p>Glissez chaque stem vers une piste ou exportez en WAV.</p></article>
+      </div>
+      <p class="center" style="margin-top:40px"><a class="btn btn-ghost" href="software.html">Voir le plugin en détail →</a></p>
+    </section>
 
-      <div id="demo" class="demo">
-        <div class="demo-screen">
-          <span class="ph">[Vidéo démo / capture du plugin]</span>
+    <!-- AUDIOWARE TEASER -->
+    <section class="band">
+      <div class="section">
+        <div class="reveal">
+          <p class="eyebrow">Audioware by Malicious Music</p>
+          <h2>Le hardware qui <em>ne ressemble à rien</em> de connu.</h2>
+          <p class="lead">Trois objets audio, tous estampillés du logo Malicious Bass. Précommandes bientôt ouvertes.</p>
+        </div>
+
+        <div class="grid-3">
+          <a class="product reveal" href="audioware.html#pyramide">
+            <div class="product-visual">
+              <svg viewBox="0 0 200 160" role="img" aria-label="Illustration provisoire de la Pyramide">
+                <polygon points="100,12 186,148 14,148" class="stroke" />
+                <ellipse cx="100" cy="62" rx="22" ry="7" class="stroke accent" />
+                <line x1="100" y1="62" x2="122" y2="52" class="stroke" />
+                <line x1="52" y1="112" x2="148" y2="112" class="stroke dim" />
+                <line x1="62" y1="118" x2="62" y2="146" class="stroke dim" />
+                <line x1="72" y1="118" x2="72" y2="146" class="stroke dim" />
+                <line x1="82" y1="118" x2="82" y2="146" class="stroke dim" />
+                <line x1="92" y1="118" x2="92" y2="146" class="stroke dim" />
+                <circle cx="128" cy="132" r="12" class="stroke accent" />
+                <circle cx="128" cy="132" r="4" class="stroke accent" />
+              </svg>
+              <span class="stamp"><img src="assets/malicious-bass-logo.svg" alt="" />MALICIOUS BASS</span>
+            </div>
+            <p class="tag">Platine · Range-vinyles · Enceinte</p>
+            <h3>La Pyramide <span class="ph">[nom définitif]</span></h3>
+            <p>Une platine au sommet, vos vinyles dans la base, une enceinte intégrée.</p>
+          </a>
+
+          <a class="product reveal" href="audioware.html#geants">
+            <div class="product-visual">
+              <svg viewBox="0 0 200 160" role="img" aria-label="Illustration provisoire des écouteurs géants">
+                <g class="stroke">
+                  <circle cx="62" cy="70" r="36" />
+                  <circle cx="62" cy="70" r="20" class="accent" />
+                  <path d="M62 106 L62 148" />
+                  <circle cx="138" cy="70" r="36" />
+                  <circle cx="138" cy="70" r="20" class="accent" />
+                  <path d="M138 106 L138 148" />
+                </g>
+                <path d="M20 40 q-8 30 0 60 M180 40 q8 30 0 60" class="stroke dim" />
+              </svg>
+              <span class="stamp"><img src="assets/malicious-bass-logo.svg" alt="" />MALICIOUS BASS</span>
+            </div>
+            <p class="tag">Écouteurs XXL · Paire d'enceintes</p>
+            <h3>Les Géants <span class="ph">[nom définitif]</span></h3>
+            <p>Une paire d'écouteurs géants qui forment une vraie paire d'enceintes.</p>
+          </a>
+
+          <a class="product reveal" href="audioware.html#casque">
+            <div class="product-visual">
+              <svg viewBox="0 0 200 160" role="img" aria-label="Illustration provisoire du casque expérimental">
+                <path d="M40 100 Q40 24 100 24 Q160 24 160 100" class="stroke" />
+                <rect x="26" y="92" width="30" height="48" rx="10" class="stroke accent" />
+                <rect x="144" y="92" width="30" height="48" rx="10" class="stroke accent" />
+                <path d="M88 60 l12 -14 l-4 12 l10 0 l-12 14 l4 -12 z" class="stroke dim" />
+              </svg>
+              <span class="stamp"><img src="assets/malicious-bass-logo.svg" alt="" />MALICIOUS BASS</span>
+            </div>
+            <p class="tag">Expérimental · Sans recharge · Stockage intégré</p>
+            <h3>Le Casque <span class="ph">[nom définitif]</span></h3>
+            <p>Jamais besoin de le recharger. Il stocke lui-même votre musique.</p>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- PRICING -->
-    <section id="pricing" class="section pricing">
-      <p class="eyebrow">Tarif</p>
-      <h2>Une seule formule. Tout inclus.</h2>
-      <div class="plan">
-        <div class="plan-head">
-          <h3>Malicious Music</h3>
-          <p class="price"><span>59 €</span>/mois</p>
-          <p class="muted">TTC · sans engagement <span class="ph">[à confirmer]</span></p>
+    <!-- BRAND -->
+    <section class="section">
+      <div class="brand-band reveal">
+        <img class="big-logo" src="assets/malicious-bass-logo.svg" alt="Logo Malicious Bass (provisoire)" />
+        <div>
+          <p class="eyebrow">Une marque, deux univers</p>
+          <h2>Le son qu'on découpe. Le son qu'on porte.</h2>
+          <p class="lead">
+            Malicious Music fabrique les outils pour démonter la musique et les objets pour l'écouter.
+            Chaque produit porte le logo <strong>Malicious Bass</strong>.
+            <span class="ph">[Texte de marque à écrire]</span>
+          </p>
         </div>
-        <ul>
-          <li>Séparation illimitée <span class="ph">[à confirmer]</span></li>
-          <li>Plugin VST3 / AU <span class="ph">[à confirmer]</span></li>
-          <li>Mixeur de stems intégré</li>
-          <li>Mises à jour incluses</li>
-          <li>Support prioritaire <span class="ph">[à confirmer]</span></li>
-        </ul>
-        <a class="btn btn-block" href="#" data-placeholder="checkout">S'abonner</a>
-        <p class="muted small">Paiement : <span class="ph">[Stripe / Paddle — à brancher]</span></p>
-      </div>
-    </section>
-
-    <!-- AUDIOWARE -->
-    <section id="audioware" class="section">
-      <p class="eyebrow">Audioware</p>
-      <h2>Le hardware Malicious.</h2>
-      <p class="lead">Des objets audio qui ne ressemblent à rien de connu. Précommandes bientôt ouvertes.</p>
-
-      <div class="products">
-        <article class="product">
-          <div class="product-visual">
-            <svg viewBox="0 0 200 160" role="img" aria-label="Illustration provisoire de la Pyramide">
-              <polygon points="100,12 186,148 14,148" class="stroke" />
-              <ellipse cx="100" cy="62" rx="22" ry="7" class="stroke accent" />
-              <line x1="100" y1="62" x2="122" y2="52" class="stroke" />
-              <line x1="52" y1="112" x2="148" y2="112" class="stroke dim" />
-              <line x1="62" y1="118" x2="62" y2="146" class="stroke dim" />
-              <line x1="72" y1="118" x2="72" y2="146" class="stroke dim" />
-              <line x1="82" y1="118" x2="82" y2="146" class="stroke dim" />
-              <line x1="92" y1="118" x2="92" y2="146" class="stroke dim" />
-              <circle cx="128" cy="132" r="12" class="stroke accent" />
-              <circle cx="128" cy="132" r="4" class="stroke accent" />
-            </svg>
-          </div>
-          <p class="tag">Platine · Range-vinyles · Enceinte</p>
-          <h3>La Pyramide <span class="ph">[nom définitif]</span></h3>
-          <p>Une platine vinyle au sommet, le rangement de vos disques dans la base et une enceinte intégrée. Trois objets, une seule forme.</p>
-          <ul class="specs ph">
-            <li>[Dimensions]</li><li>[Capacité vinyles]</li><li>[Puissance enceinte]</li><li>[Prix]</li>
-          </ul>
-          <a class="btn btn-ghost btn-block" href="#contact">Être notifié</a>
-        </article>
-
-        <article class="product">
-          <div class="product-visual">
-            <svg viewBox="0 0 200 160" role="img" aria-label="Illustration provisoire des écouteurs géants">
-              <g class="stroke">
-                <circle cx="62" cy="70" r="36" />
-                <circle cx="62" cy="70" r="20" class="accent" />
-                <path d="M62 106 L62 148" />
-                <circle cx="138" cy="70" r="36" />
-                <circle cx="138" cy="70" r="20" class="accent" />
-                <path d="M138 106 L138 148" />
-              </g>
-              <path d="M20 40 q-8 30 0 60 M180 40 q8 30 0 60" class="stroke dim" />
-            </svg>
-          </div>
-          <p class="tag">Écouteurs XXL · Paire d'enceintes</p>
-          <h3>Les Géants <span class="ph">[nom définitif]</span></h3>
-          <p>Une paire d'écouteurs surdimensionnés qui se posent sur votre bureau comme une vraie paire d'enceintes stéréo.</p>
-          <ul class="specs ph">
-            <li>[Dimensions]</li><li>[Connectique]</li><li>[Autonomie]</li><li>[Prix]</li>
-          </ul>
-          <a class="btn btn-ghost btn-block" href="#contact">Être notifié</a>
-        </article>
-
-        <article class="product">
-          <div class="product-visual">
-            <svg viewBox="0 0 200 160" role="img" aria-label="Illustration provisoire du casque expérimental">
-              <path d="M40 100 Q40 24 100 24 Q160 24 160 100" class="stroke" />
-              <rect x="26" y="92" width="30" height="48" rx="10" class="stroke accent" />
-              <rect x="144" y="92" width="30" height="48" rx="10" class="stroke accent" />
-              <path d="M88 60 l12 -14 l-4 12 l10 0 l-12 14 l4 -12 z" class="stroke dim" />
-            </svg>
-          </div>
-          <p class="tag">Expérimental · Sans recharge · Stockage intégré</p>
-          <h3>Le Casque <span class="ph">[nom définitif]</span></h3>
-          <p>Un casque qui n'a jamais besoin d'être rechargé et qui stocke lui-même votre musique. Aucun téléphone, aucun câble.</p>
-          <ul class="specs ph">
-            <li>[Source d'énergie]</li><li>[Capacité de stockage]</li><li>[Poids]</li><li>[Prix]</li>
-          </ul>
-          <a class="btn btn-ghost btn-block" href="#contact">Être notifié</a>
-        </article>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section contact">
-      <h2>Restez dans la boucle.</h2>
-      <p class="lead">Sortie du plugin, précommandes Audioware : on vous prévient en premier.</p>
-      <form class="signup" onsubmit="event.preventDefault(); this.querySelector('.msg').hidden = false;">
-        <input type="email" placeholder="votre@email.com" required aria-label="Adresse email" />
-        <button class="btn" type="submit">S'inscrire</button>
-        <p class="msg muted small" hidden>Merci ! <span class="ph">[newsletter à brancher]</span></p>
-      </form>
+    <section id="contact" class="band">
+      <div class="section center">
+        <h2>Restez dans la boucle.</h2>
+        <p class="lead">Sortie du plugin, précommandes Audioware : on vous prévient en premier.</p>
+        <form class="signup">
+          <input type="email" placeholder="votre@email.com" required aria-label="Adresse email" />
+          <button class="btn" type="submit">S'inscrire</button>
+          <p class="msg muted small" hidden>Merci ! <span class="ph">[newsletter à brancher]</span></p>
+        </form>
+      </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Malicious Music · Audioware</p>
-    <p class="muted small ph">[Mentions légales] · [CGV] · [Réseaux sociaux]</p>
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html"><img src="assets/malicious-bass-logo.svg" alt="" />MALICIOUS<span>MUSIC</span></a>
+        <p class="small" style="margin-top:12px;max-width:32ch">Le plugin MP3 → stems et le hardware Audioware.</p>
+      </div>
+      <div><h4>Software</h4><ul><li><a href="software.html">Le plugin</a></li><li><a href="software.html#pricing">Tarif</a></li><li><a href="software.html#faq">FAQ</a></li></ul></div>
+      <div><h4>Audioware</h4><ul><li><a href="audioware.html#pyramide">La Pyramide</a></li><li><a href="audioware.html#geants">Les Géants</a></li><li><a href="audioware.html#casque">Le Casque</a></li></ul></div>
+      <div><h4>Infos</h4><ul><li><a href="legal.html">Mentions légales</a></li><li><a href="legal.html#cgv">CGV</a></li><li><a href="legal.html#confidentialite">Confidentialité</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span data-year></span> Malicious Music · Audioware</p>
+      <p class="ph">[Instagram] · [YouTube] · [TikTok]</p>
+    </div>
   </footer>
 
   <script src="main.js"></script>
