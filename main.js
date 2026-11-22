@@ -64,6 +64,12 @@ function layout() {
   document.getElementById("rim").setAttribute("d", inner);
   document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8));
   glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height)}')`;
+  // encoche gravée en haut au centre, à la largeur du titre
+  const tp = document.getElementById("title-plate").getBoundingClientRect();
+  const tw = tp.width + 36, cx = tp.left - d.left + tp.width / 2, D = (g.top - d.top) * 0.8, f = (n) => n.toFixed(1);
+  const a = cx - tw / 2, b = cx + tw / 2, k = D * 1.5;
+  document.getElementById("recess").setAttribute("d",
+    `M${f(a - k)} -4C${f(a - k * 0.4)} -4 ${f(a - k * 0.45)} ${f(D)} ${f(a)} ${f(D)}H${f(b)}C${f(b + k * 0.45)} ${f(D)} ${f(b + k * 0.4)} -4 ${f(b + k)} -4Z`);
 }
 layout();
 if ("ResizeObserver" in window) new ResizeObserver(layout).observe(device); else window.addEventListener("resize", layout);

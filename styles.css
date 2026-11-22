@@ -380,7 +380,7 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
   transform: translateY(1px) scale(.97); filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)) brightness(.9);
 }
 .nav-btn .led { top: calc(clamp(40px, 6.4vh, 54px) * .61 - 5.5px); }
-.side-l .nav-btn .led { right: -12px; } .side-r .nav-btn .led { left: -12px; }
+
 
 .pill, .pill:active { width: 64px; height: 32px; border-radius: 0; background: url("assets/hw/pill.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
 .pill:active { transform: translateY(1px); filter: drop-shadow(0 1px 1px rgba(0,0,0,.5)) brightness(.9); }
@@ -400,3 +400,42 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
 .power-ring { background: url("assets/hw/power-off.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.5)); width: calc(var(--jog) * .58); }
 .power-ring[aria-pressed="true"] { background-image: url("assets/hw/power-on.png"); box-shadow: none; filter: drop-shadow(0 0 10px rgba(91,234,63,.85)) drop-shadow(0 6px 8px rgba(0,0,0,.5)); }
 .power-ring span { inset: 34%; }
+
+/* =========================================================
+   TITRE GRAVÉ · STICKER · LED SERTIES
+   ========================================================= */
+.badge { display: none; }
+.dev-left, .dev-right { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 14px; }
+.dev-right { justify-content: flex-end; }
+.engraved-title {
+  flex: none; position: relative; z-index: 1;
+  font-family: "Orbitron", var(--sans); font-weight: 700; font-size: clamp(.7rem, 1.45vw, 1.05rem); letter-spacing: .34em; padding-left: .34em;
+  color: rgba(44, 50, 58, .82);
+  text-shadow: 0 1px 0 rgba(255,255,255,.85), 0 -1px 0 rgba(0,0,0,.45);
+  margin-top: calc(var(--top) * -.06);
+}
+.engraved-title:hover { color: rgba(30, 60, 150, .85); }
+.sticker {
+  position: absolute; z-index: 4; pointer-events: none;
+  top: calc(var(--top) * -.12); right: -6px; width: clamp(84px, 9.4vw, 136px); height: auto;
+  transform: rotate(6deg);
+}
+.jog-home svg { width: 46%; height: 46%; fill: none; stroke: rgba(44,50,58,.75); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 0 rgba(255,255,255,.9)); }
+
+/* LED dans une douille creusée dans le châssis */
+.led {
+  width: 10px; height: 10px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.85),
+    0 0 0 2px #1c2025, 0 0 0 3px #6a727c, 0 -1px 0 3.5px rgba(0,0,0,.35), 0 1px 0 3.5px rgba(255,255,255,.85);
+}
+.led.blue.on, [aria-current="page"] .led {
+  box-shadow: 0 0 6px #3d8bff, 0 0 14px rgba(61,139,255,.75), inset 0 1px 1px rgba(255,255,255,.7),
+    0 0 0 2px #1c2025, 0 0 0 3px #6a727c, 0 -1px 0 3.5px rgba(0,0,0,.35), 0 1px 0 3.5px rgba(255,255,255,.85);
+}
+.side-l .nav-btn .led { right: -21px; } .side-r .nav-btn .led { left: -21px; }
+
+@media (max-width: 760px) {
+  .dev-model { display: none; }
+  .sticker { width: 76px; right: -8px; top: -6px; }
+  .engraved-title { font-size: .62rem; letter-spacing: .26em; }
+}

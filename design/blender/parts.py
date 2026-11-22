@@ -295,7 +295,101 @@ def part_plate():
     sc.render.film_transparent = True
 
 
+def part_sticker():
+    """Sticker vinyle du logo : un pli en travers, des froissures et le coin bas gauche décollé."""
+    clear(); key_light(260, 4)
+    bpy.data.lights["softbox"].energy = 120
+    tex_path = os.path.join(ROOT, "design", "blender", "sticker-tex.png")
+    img = bpy.data.images.load(tex_path, check_existing=True)
+    tw, th = img.size
+    w, h = 1.0, th / tw
+
+    bpy.ops.mesh.primitive_grid_add(x_subdivisions=180, y_subdivisions=int(180 * h), size=1)
+    st = bpy.context.active_object
+    st.name = "sticker"
+    for v in st.data.vertices:
+        v.co.x *= w
+        v.co.y *= h
+
+    def gauss(d, s):
+        return math.exp(-(d / s) ** 2)
+
+    # pli principal (arête) et pli secondaire (creux), en travers du sticker
+    creases = [
+        ((-0.5, 0.2), (0.5, -0.02), 0.007, 0.03),
+        ((-0.3, 0.58), (0.05, -0.1), -0.004, 0.035),
+        ((0.15, 0.6), (0.5, 0.3), 0.003, 0.025),
+    ]
+    R = 0.055            # rayon de la boucle du coin décollé
+    nx, ny = (-1 / math.sqrt(2), 1 / math.sqrt(2))  # depuis le coin bas droit vers l'intérieur
+    fold_c = -0.5        # ligne de pliage du coin bas droit
+    for v in st.data.vertices:
+        x, y = v.co.x, v.co.y
+        z = 0.008  # au-dessus de l'attrape-ombre, même dans les creux
+        for (ax, ay), (bx, by), amp, s in creases:
+            dx, dy = bx - ax, by - ay
+            L = math.hypot(dx, dy)
+            d = abs((x - ax) * dy - (y - ay) * dx) / L
+            z += amp * gauss(d, s)
+        # petites froissures de vinyle
+        z += 0.0007 * (math.sin(x * 23 + y * 7 + 1.3) * math.sin(y * 19 - x * 5) + 0.6 * math.sin(x * 41 - y * 33 + 0.4))
+        # coin décollé : on enroule ce qui dépasse la ligne de pliage
+        u = x * nx + y * ny            # position le long de la diagonale
+        s = fold_c - u                 # > 0 au-delà de la ligne, côté coin
+        if s > 0:
+            a = s / R
+            back = R * math.sin(a)
+            lift = R * (1 - math.cos(a))
+            # on ramène le point vers la ligne de pli et on le soulève
+            x += nx * (s - back)
+            y += ny * (s - back)
+            z += lift
+        v.co = (x, y, z)
+    st.data.update()
+    bpy.ops.object.shade_smooth()
+    sub = st.modifiers.new("sub", "SUBSURF"); sub.levels = 1; sub.render_levels = 1
+    st.rotation_euler.z = math.radians(-11)
+
+    # matière : vinyle brillant au recto, papier dorsal au verso
+    m = bpy.data.materials.new("vinyl")
+    m.use_nodes = True
+    nt = m.node_tree
+    p = nt.nodes["Principled BSDF"]
+    it = nt.nodes.new("ShaderNodeTexImage"); it.image = img
+    p.inputs["Roughness"].default_value = 0.42
+    p.inputs["Coat Weight"].default_value = 0.25
+    p.inputs["Coat Roughness"].default_value = 0.15
+    back = nt.nodes.new("ShaderNodeBsdfPrincipled")
+    back.inputs["Base Color"].default_value = (0.86, 0.86, 0.84, 1)
+    back.inputs["Roughness"].default_value = 0.7
+    geo = nt.nodes.new("ShaderNodeNewGeometry")
+    mix = nt.nodes.new("ShaderNodeMixShader")
+    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+    cut = nt.nodes.new("ShaderNodeMixShader")
+    out = nt.nodes["Material Output"]
+    nt.links.new(it.outputs["Color"], p.inputs["Base Color"])
+    nt.links.new(geo.outputs["Backfacing"], mix.inputs["Fac"])
+    nt.links.new(p.outputs["BSDF"], mix.inputs[1])
+    nt.links.new(back.outputs["BSDF"], mix.inputs[2])
+    nt.links.new(it.outputs["Alpha"], cut.inputs["Fac"])
+    nt.links.new(tr.outputs["BSDF"], cut.inputs[1])
+    nt.links.new(mix.outputs["Shader"], cut.inputs[2])
+    nt.links.new(cut.outputs["Shader"], out.inputs["Surface"])
+    st.data.materials.append(m)
+
+    # attrape-ombre : l'ombre du sticker passe dans l'alpha du PNG
+    bpy.ops.mesh.primitive_plane_add(size=4, location=(0, 0, -0.002))
+    bpy.context.active_object.is_shadow_catcher = True
+
+    camera_top(1.42, 640, 640)
+    vs = bpy.context.scene.view_settings
+    vs.view_transform, vs.look = "Standard", "None"   # garder les violets du logo
+    render("sticker")
+    vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+
+
 PARTS = {
+    "sticker": part_sticker,
     "btn": part_button,
     "pill": part_pill,
     "jog": part_jog,

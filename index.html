@@ -8,8 +8,8 @@
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=7" />
   <link rel="preload" as="image" href="assets/hw/power-on.png" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -44,6 +44,21 @@
         <feComposite in="lit" in2="si" operator="arithmetic" k1="0" k2="1" k3=".8" k4="0" result="o"/>
         <feComposite in="o" in2="SourceAlpha" operator="in"/>
       </filter>
+      <filter id="f-recess" x="-5%" y="-30%" width="110%" height="160%" color-interpolation-filters="sRGB">
+        <feFlood flood-color="#000" flood-opacity=".16"/>
+        <feComposite in2="SourceAlpha" operator="in" result="tint"/>
+        <feComponentTransfer in="SourceAlpha" result="inv"><feFuncA type="table" tableValues="1 0"/></feComponentTransfer>
+        <feGaussianBlur in="inv" stdDeviation="2.6" result="ib"/>
+        <feOffset in="ib" dy="3" result="ibo"/>
+        <feFlood flood-color="#000" flood-opacity=".8"/>
+        <feComposite in2="ibo" operator="in"/>
+        <feComposite in2="SourceAlpha" operator="in" result="sh"/>
+        <feOffset in="ib" dy="-2" result="ibh"/>
+        <feFlood flood-color="#fff" flood-opacity=".85"/>
+        <feComposite in2="ibh" operator="in"/>
+        <feComposite in2="SourceAlpha" operator="in" result="hl"/>
+        <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="tint"/><feMergeNode in="sh"/><feMergeNode in="hl"/></feMerge>
+      </filter>
       <filter id="f-grain" x="0" y="0" width="100%" height="100%">
         <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/>
         <feColorMatrix type="matrix" values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0"/>
@@ -52,18 +67,21 @@
     <path id="body" fill="url(#p-plate)" fill-rule="evenodd" filter="url(#f-chrome)"/>
     <path id="body-sheen" fill="url(#g-sheen)" fill-rule="evenodd"/>
     <path id="body-shade" fill="url(#g-shade)" fill-rule="evenodd"/>
+    <path id="recess" fill="url(#p-plate)" filter="url(#f-recess)"/>
     <rect width="100%" height="100%" filter="url(#f-grain)" opacity=".16" style="mix-blend-mode:overlay"/>
   </svg>
 
   <!-- ===== HAUT ===== -->
   <header class="dev-top">
-    <a class="badge" href="#home"><img src="assets/malicious-bass-logo.png" alt="" /><span>maliciousmusic</span></a>
-    <span class="plate dev-model">MM-59 · MP3-TO-STEMS · AUDIOWARE</span>
-    <span class="dev-right">
-      <i class="led blue on" id="led"></i>
+    <span class="dev-left">
       <button class="rbtn xs" id="power-x" aria-label="Éteindre ou rallumer l'écran"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+      <i class="led blue on" id="led"></i>
+      <span class="engrave dev-model">MM-59 · MP3-TO-STEMS</span>
     </span>
+    <a class="engraved-title" id="title-plate" href="#home">MALICIOUS MUSIC</a>
+    <span class="dev-right" aria-hidden="true"></span>
   </header>
+  <img class="sticker" src="assets/hw/sticker.png" alt="" />
 
   <!-- ===== L'ÉCRAN ===== -->
   <div class="glass" id="glass">
@@ -316,7 +334,7 @@
       <div class="jog-disc">
         <button class="jog-btn prev" id="prev" aria-label="Page précédente"><svg viewBox="0 0 24 24"><path d="M12 6 6 12l6 6zM19 6l-6 6 6 6z"/></svg></button>
         <button class="jog-btn next" id="next" aria-label="Page suivante"><svg viewBox="0 0 24 24"><path d="M12 6l6 6-6 6zM5 6l6 6-6 6z"/></svg></button>
-        <a class="jog-home" href="#home" aria-label="Accueil"><img src="assets/malicious-bass-logo.png" alt="" /></a>
+        <a class="jog-home" href="#home" aria-label="Accueil"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></a>
       </div>
     </div>
 
@@ -351,6 +369,6 @@
     </div>
   </div>
 </div>
-<script src="main.js?v=5"></script>
+<script src="main.js?v=7"></script>
 </body>
 </html>
