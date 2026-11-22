@@ -107,7 +107,7 @@ const knob = document.getElementById("backlight");
     knob.setAttribute("aria-valuenow", Math.round(v * 100));
     glassEl.style.setProperty("--bl", (0.55 + v * 0.65).toFixed(3));
   };
-  set(0.7);
+  set(1); // rétroéclairage au maximum par défaut
   let y0 = null, v0 = 0;
   knob.addEventListener("pointerdown", (e) => { knob.setPointerCapture(e.pointerId); y0 = e.clientY; v0 = +knob.dataset.v; e.preventDefault(); });
   knob.addEventListener("pointermove", (e) => { if (y0 !== null) set(v0 + (y0 - e.clientY) / 160); });
@@ -158,7 +158,6 @@ function endBoot() {
 }
 function boot() {
   glass.classList.remove("off");
-  if (reduceMotion) return;
   glass.classList.remove("booting"); void glass.offsetWidth;
   glass.classList.add("booting");
   bootTimer = setTimeout(endBoot, 3800);
@@ -173,7 +172,9 @@ function togglePower() {
 }
 power.addEventListener("click", togglePower);
 document.getElementById("power-x").addEventListener("click", togglePower);
-boot();
+// À l'ouverture : écran éteint, puis on « appuie » sur POWER et l'appareil démarre
+glass.classList.add("off");
+setTimeout(togglePower, 650);
 
 // ---------------------------------------------------------
 // Player state (LCD spectrum + stem mixer)

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=8" />
   <link rel="preload" as="image" href="assets/hw/power-on.png" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -75,7 +75,7 @@
   <header class="dev-top">
     <span class="dev-left">
       <button class="rbtn xs" id="power-x" aria-label="Éteindre ou rallumer l'écran"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
-      <i class="led blue on" id="led"></i>
+      <i class="led blue" id="led"></i>
       <span class="engrave dev-model">MM-59 · MP3-TO-STEMS</span>
     </span>
     <a class="engraved-title" id="title-plate" href="#home">MALICIOUS MUSIC</a>
@@ -84,7 +84,7 @@
   <img class="sticker" src="assets/hw/sticker.png" alt="" />
 
   <!-- ===== L'ÉCRAN ===== -->
-  <div class="glass" id="glass">
+  <div class="glass off" id="glass">
 
     <div class="splash" id="splash" aria-hidden="true">
       <img class="splash-logo ink-logo" src="assets/malicious-bass-lcd.png" alt="" />
@@ -363,12 +363,12 @@
         <span class="engrave">BACKLIGHT</span>
       </div>
       <div class="power-wrap">
-        <button class="power-ring" id="power" aria-pressed="true" aria-label="Éteindre ou rallumer l'écran"><span></span></button>
+        <button class="power-ring" id="power" aria-pressed="false" aria-label="Éteindre ou rallumer l'écran"><span></span></button>
         <span class="engrave">POWER</span>
       </div>
     </div>
   </div>
 </div>
-<script src="main.js?v=7"></script>
+<script src="main.js?v=8"></script>
 </body>
 </html>

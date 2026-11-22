@@ -362,7 +362,8 @@ h2::before { content: "> "; }
   .nav-btn b { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; }
+  /* le splash d'allumage reste joué : c'est l'ouverture du site */
+  .view, .nosignal, .glass:not(.booting) { animation: none !important; }
 }
 
 /* =========================================================
