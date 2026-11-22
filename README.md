@@ -7,15 +7,17 @@ Site vitrine et de vente de Malicious Music :
 
 Site statique (HTML/CSS/JS, aucune dépendance).
 
-## Pages
+## Structure
 
-- `index.html` — tout le site, présenté comme une console analogique néo-rétro : moniteur cathodique (accueil), schéma néon, façade de synthé interactive (le plugin), fenêtre glossy rouge (tarif), écran filaire orange avec les 3 produits en 3D (Audioware), FAQ, contact
-- `legal.html` — mentions légales, CGV, confidentialité (à rédiger)
+Tout le site est un seul appareil : un cadre en métal brossé avec un écran LCD au centre (`index.html`).
 
-Tout est en HTML/CSS/JS : aucun rendu image, les produits en filaire sont dessinés en direct dans `main.js`.
+- Les boutons du cadre (ACCUEIL, PLUGIN, TARIF, AUDIOWARE, FAQ, CONTACT, flèches, POWER) changent ce que l'écran affiche. Chaque page a son adresse (`#plugin`, `#tarif`, `#pyramide`…).
+- À l'ouverture, l'écran s'allume : rétroéclairage, logo, titre MALICIOUSMUSIC, barre de chargement (un clic passe le splash).
+- Tout ce qui est dans l'écran est en HTML/CSS/JS, sans image : spectre, stems et produits en filaire 3D sont dessinés en direct dans `main.js`.
+- Les contenus provisoires sont entre crochets, en gris (classe `.ph`).
 
 `assets/malicious-bass-logo.png` : logo Malicious Bass (bar violet en dégradé, fond transparent), tiré de `~/Bureau/lonjaret/assets/logos/maliciousmusic/source-bass-degrade.png`.
- Les contenus provisoires sont marqués avec la classe `.ph` (affichés en orange).
+ 
 
 ## Lancer en local
 

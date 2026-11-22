@@ -2,304 +2,263 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Malicious Music — MP3 to Stems &amp; Audioware</title>
   <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=VT323&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-  <!-- FACEPLATE / NAV -->
-  <header class="topbar">
-    <a class="badge" href="index.html"><img src="assets/malicious-bass-logo.png" alt="" /><span>MALICIOUS<b>MUSIC</b></span></a>
-    <nav class="keys" aria-label="Navigation">
-      <a class="key" href="#software">SOFTWARE</a>
-      <a class="key" href="#pricing">TARIF</a>
-      <a class="key" href="#audioware">AUDIOWARE</a>
-      <a class="key" href="#contact">CONTACT</a>
-    </nav>
-    <span class="pwr"><i class="led on"></i>ON</span>
+<div class="device">
+
+  <!-- ===== HAUT DU CADRE ===== -->
+  <header class="dev-top">
+    <a class="badge" href="#home"><img src="assets/malicious-bass-logo.png" alt="" /><span>maliciousmusic</span></a>
+    <span class="dev-model">MM-59 · MP3-TO-STEMS · AUDIOWARE</span>
+    <span class="dev-right">
+      <i class="led on" id="led"></i>
+      <button class="pwr-btn" id="power" aria-pressed="true" aria-label="Éteindre ou rallumer l'écran">POWER</button>
+    </span>
   </header>
 
-  <main class="rack">
+  <!-- ===== L'ÉCRAN ===== -->
+  <div class="glass" id="glass">
 
-    <!-- ============ HERO : MONITEUR CRT ============ -->
-    <section class="crt" id="top">
-      <div class="crt-bezel">
-        <div class="screen green" id="hero-screen">
-          <p class="prompt">C:\&gt;MALICIOUS.EXE<span class="cursor">_</span></p>
-          <div class="boot">
-            <img class="boot-logo" src="assets/malicious-bass-logo.png" alt="Logo Malicious Bass" />
-            <div>
-              <p class="wordmark">MALICIOUS MUSIC</p>
-              <p class="sub">MP3-TO-STEMS · PLUGIN VST <span class="ph">[FORMATS À CONFIRMER]</span></p>
+    <!-- splash d'allumage -->
+    <div class="splash" id="splash" aria-hidden="true">
+      <img class="splash-logo ink-logo" src="assets/malicious-bass-logo.png" alt="" />
+      <p class="splash-title"><span>MALICIOUSMUSIC</span></p>
+      <p class="splash-sub">MP3-TO-STEMS · AUDIOWARE</p>
+      <div class="splash-bar"><i></i></div>
+    </div>
+
+    <p class="status"><span id="st-title">1. ACCUEIL</span><span class="st-right">MALICIOUSMUSIC&nbsp; STEREO&nbsp; 44.1KHZ</span></p>
+
+    <main class="views" id="views" tabindex="-1">
+
+      <!-- ---------- ACCUEIL ---------- -->
+      <section class="view active" id="home" data-view="home">
+        <div class="hero">
+          <img class="ink-logo" src="assets/malicious-bass-logo.png" alt="Logo Malicious Bass" />
+          <div>
+            <h1>MALICIOUSMUSIC</h1>
+            <p>MP3-TO-STEMS · PLUGIN VST <span class="ph">[FORMATS À CONFIRMER]</span></p>
+          </div>
+        </div>
+        <p class="big">UN MP3 ENTRE.<br />DES STEMS SORTENT.</p>
+        <p class="txt">Malicious Music sépare n'importe quel morceau en pistes voix, batterie, basse et instruments, puis vous laisse les remixer directement dans votre DAW.</p>
+        <div class="box scope" aria-hidden="true">
+          <div class="track track-mix"><span>MIX.MP3</span><canvas data-wave="mix"></canvas></div>
+          <div class="track"><span>VOCALS</span><canvas data-wave="vox"></canvas></div>
+          <div class="track"><span>DRUMS</span><canvas data-wave="drums"></canvas></div>
+          <div class="track"><span>BASS</span><canvas data-wave="bass"></canvas></div>
+          <div class="track"><span>OTHER</span><canvas data-wave="other"></canvas></div>
+        </div>
+        <div class="row">
+          <a class="btn inv" href="#tarif">COMMENCER — 59 €/MOIS</a>
+          <a class="btn" href="#plugin">VOIR LE PLUGIN</a>
+          <a class="btn" href="#audioware">AUDIOWARE</a>
+        </div>
+        <div class="grid3">
+          <a class="box tile" href="#pyramide"><b>LA PYRAMIDE</b>Platine · range-vinyles · enceinte</a>
+          <a class="box tile" href="#geants"><b>LES GÉANTS</b>Écouteurs XXL = paire d'enceintes</a>
+          <a class="box tile" href="#casque"><b>LE CASQUE</b>Sans recharge · stockage intégré</a>
+        </div>
+      </section>
+
+      <!-- ---------- PLUGIN ---------- -->
+      <section class="view" id="plugin" data-view="plugin">
+        <h2>LE PLUGIN</h2>
+        <p class="txt">Chargez un MP3, obtenez les stems séparés et mixez-les sans quitter votre session. Remix, sample, karaoké, travail d'oreille, préparation de DJ set.</p>
+
+        <div class="player">
+          <div class="box">
+            <p class="p-title">1. TRACK_FINAL_V3.MP3 (3:16)</p>
+            <p class="p-sub">320KBPS&nbsp; STEREO&nbsp; 44.1KHZ</p>
+            <div class="bar"><i id="lcd-prog"></i></div>
+            <div class="p-row"><span class="p-time" id="lcd-time">0:00</span><span>STEMS 4<br />SPLIT ON</span></div>
+            <canvas data-lcd aria-hidden="true"></canvas>
+            <div class="p-legend"><span>VOX</span><span>DRM</span><span>BAS</span><span>OTH</span></div>
+            <div class="row transport">
+              <button class="btn" id="t-rew" aria-label="Retour au début">|◀◀</button>
+              <button class="btn inv" id="t-play" aria-pressed="true" aria-label="Lecture / pause">PAUSE</button>
+              <button class="btn" id="t-stop" aria-label="Stop">STOP</button>
             </div>
           </div>
-          <h1>UN MP3 ENTRE.<br />DES STEMS SORTENT.</h1>
-          <p class="term">
-            Malicious Music sépare n'importe quel morceau en pistes voix, batterie, basse et instruments,
-            puis vous laisse les remixer directement dans votre DAW.
-          </p>
-          <div class="scope" aria-hidden="true">
-            <div class="track track-mix"><span>MIX.MP3</span><canvas data-wave="mix"></canvas></div>
-            <div class="track"><span>VOCALS</span><canvas data-wave="vox"></canvas></div>
-            <div class="track"><span>DRUMS</span><canvas data-wave="drums"></canvas></div>
-            <div class="track"><span>BASS</span><canvas data-wave="bass"></canvas></div>
-            <div class="track"><span>OTHER</span><canvas data-wave="other"></canvas></div>
-          </div>
-          <div class="term-cta">
-            <a class="tbtn-term" href="#pricing">[ COMMENCER — 59 €/MOIS ]</a>
-            <a class="tbtn-term ghost" href="#software">[ VOIR LE PLUGIN ]</a>
+          <div class="box mixer">
+            <p class="p-sub" style="text-align:left">MIXEUR DE STEMS</p>
+            <div class="strip" data-stem="0"><span>VOCALS</span><input class="lv" type="range" min="0" max="100" value="80" aria-label="Volume vocals" /><button class="btn sm m" aria-pressed="false" aria-label="Mute vocals">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo vocals">S</button></div>
+            <div class="strip" data-stem="1"><span>DRUMS</span><input class="lv" type="range" min="0" max="100" value="70" aria-label="Volume drums" /><button class="btn sm m" aria-pressed="false" aria-label="Mute drums">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo drums">S</button></div>
+            <div class="strip" data-stem="2"><span>BASS</span><input class="lv" type="range" min="0" max="100" value="90" aria-label="Volume bass" /><button class="btn sm m" aria-pressed="false" aria-label="Mute bass">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo bass">S</button></div>
+            <div class="strip" data-stem="3"><span>OTHER</span><input class="lv" type="range" min="0" max="100" value="60" aria-label="Volume other" /><button class="btn sm m" aria-pressed="false" aria-label="Mute other">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo other">S</button></div>
+            <p class="note">↑ Maquette : bougez les niveaux, essayez M (mute) et S (solo). <span class="ph">[à remplacer par le vrai plugin]</span></p>
           </div>
         </div>
-      </div>
-      <div class="crt-panel">
-        <span class="plate">MALICIOUS MUSIC · MODEL MM-59</span>
-        <span class="crt-ctrl">
-          <i class="rca y" title="Video"></i><i class="rca w" title="Audio"></i>
-          <i class="led on" id="hero-led"></i>
-          <button class="pwr-btn" id="hero-power" aria-pressed="true" aria-label="Allumer ou éteindre l'écran">POWER</button>
-        </span>
-      </div>
-    </section>
-    <div class="crt-base" aria-hidden="true"><span class="vents"></span><span class="floppy"><i></i></span><i class="led on"></i></div>
 
-    <!-- ============ COMMENT ÇA MARCHE : NÉON ============ -->
-    <section class="unit">
-      <header class="unit-head"><span class="unit-id">MM-01</span><h2>Comment ça marche</h2><i class="led on"></i></header>
-      <div class="neon">
-        <p class="neon-title">SÉPARER</p>
-        <svg viewBox="0 0 520 170" aria-hidden="true">
-          <g class="n-orange">
-            <path d="M20 40 h52 l22 22 v78 h-74 z M72 40 v22 h22" />
-            <text x="57" y="108" text-anchor="middle">MP3</text>
-          </g>
-          <text class="n-red-t" x="132" y="96" text-anchor="middle">010</text>
-          <g class="n-white">
-            <rect x="170" y="62" width="92" height="56" rx="3" />
-            <text x="216" y="96" text-anchor="middle">SPLIT</text>
-          </g>
-          <path class="n-red" d="M272 90 q8 -26 16 0 t16 0 t16 0 t16 0" />
-          <g class="n-cyan">
-            <path d="M356 40 h140 M356 74 h140 M356 108 h140 M356 142 h140" />
-            <text x="356" y="32">VOCALS</text><text x="356" y="66">DRUMS</text><text x="356" y="100">BASS</text><text x="356" y="134">OTHER</text>
-          </g>
-        </svg>
-        <ol class="neon-steps">
-          <li><b>CHARGEZ</b>Glissez un MP3 dans le plugin, sur n'importe quelle piste de votre DAW. <span class="ph">[WAV, FLAC ?]</span></li>
-          <li><b>SÉPAREZ</b>Malicious Music isole voix, batterie, basse et le reste. <span class="ph">[temps de traitement]</span></li>
-          <li><b>MIXEZ</b>Réglez chaque stem, puis glissez-les vers vos pistes ou exportez en WAV.</li>
+        <h3>COMMENT ÇA MARCHE</h3>
+        <ol class="grid3 steps">
+          <li class="box"><b>CHARGEZ</b>Glissez un MP3 dans le plugin, sur n'importe quelle piste de votre DAW. <span class="ph">[WAV, FLAC ?]</span></li>
+          <li class="box"><b>SÉPAREZ</b>Malicious Music isole voix, batterie, basse et le reste. <span class="ph">[temps de traitement]</span></li>
+          <li class="box"><b>MIXEZ</b>Réglez chaque stem, puis glissez-les vers vos pistes ou exportez en WAV.</li>
         </ol>
-      </div>
-    </section>
 
-    <!-- ============ SOFTWARE : LE PLUGIN ============ -->
-    <section class="unit" id="software">
-      <header class="unit-head"><span class="unit-id">MM-02</span><h2>Le plugin</h2><i class="led on"></i></header>
-      <p class="engraved-lead">
-        Chargez un MP3, obtenez les stems séparés et mixez-les sans quitter votre session.
-        Remix, sample, karaoké, travail d'oreille, préparation de DJ set : tout part de la même façade.
-      </p>
-
-      <div class="synth" aria-label="Maquette interactive du plugin">
-        <div class="synth-left">
-          <div class="lcd">
-            <p class="lcd-title">1. TRACK_FINAL_V3.MP3 (3:16)</p>
-            <p class="lcd-sub">320KBPS&nbsp; STEREO&nbsp; 44.1KHZ</p>
-            <div class="lcd-prog"><i id="lcd-prog"></i></div>
-            <div class="lcd-row"><span class="lcd-time" id="lcd-time">0:00</span><span>STEMS 4<br />SPLIT ON</span></div>
-            <canvas data-lcd aria-hidden="true"></canvas>
-            <div class="lcd-legend"><span>VOX</span><span>DRM</span><span>BAS</span><span>OTH</span></div>
-          </div>
-          <div class="transport">
-            <button class="tbtn" aria-label="Retour au début" id="t-rew">&#9664;&#xFE0E;&#9664;&#xFE0E;</button>
-            <button class="tbtn big" aria-label="Lecture / pause" id="t-play" aria-pressed="true">&#10074;&#10074;</button>
-            <button class="tbtn" aria-label="Stop" id="t-stop">&#9632;&#xFE0E;</button>
-            <span class="tbtn-label">MP3 <i>digital</i></span>
-          </div>
-        </div>
-
-        <div class="strips">
-          <div class="strip" data-stem="0">
-            <div class="knob" role="slider" tabindex="0" aria-label="Volume vocals" aria-valuemin="0" aria-valuemax="100" data-v="0.8"></div>
-            <span class="strip-name">VOCALS</span>
-            <div class="ms"><button class="m" aria-pressed="false" aria-label="Mute vocals">M</button><button class="s" aria-pressed="false" aria-label="Solo vocals">S</button></div>
-          </div>
-          <div class="strip" data-stem="1">
-            <div class="knob" role="slider" tabindex="0" aria-label="Volume drums" aria-valuemin="0" aria-valuemax="100" data-v="0.7"></div>
-            <span class="strip-name">DRUMS</span>
-            <div class="ms"><button class="m" aria-pressed="false" aria-label="Mute drums">M</button><button class="s" aria-pressed="false" aria-label="Solo drums">S</button></div>
-          </div>
-          <div class="strip" data-stem="2">
-            <div class="knob" role="slider" tabindex="0" aria-label="Volume bass" aria-valuemin="0" aria-valuemax="100" data-v="0.9"></div>
-            <span class="strip-name">BASS</span>
-            <div class="ms"><button class="m" aria-pressed="false" aria-label="Mute bass">M</button><button class="s" aria-pressed="false" aria-label="Solo bass">S</button></div>
-          </div>
-          <div class="strip" data-stem="3">
-            <div class="knob" role="slider" tabindex="0" aria-label="Volume other" aria-valuemin="0" aria-valuemax="100" data-v="0.6"></div>
-            <span class="strip-name">OTHER</span>
-            <div class="ms"><button class="m" aria-pressed="false" aria-label="Mute other">M</button><button class="s" aria-pressed="false" aria-label="Solo other">S</button></div>
-          </div>
-          <p class="synth-brand"><img src="assets/malicious-bass-logo.png" alt="" />malicious 1</p>
-        </div>
-      </div>
-      <p class="hint">↑ Maquette interactive : tournez les potards (glisser vers le haut ou le bas), essayez M, S et les touches de lecture. <span class="ph">[à remplacer par le vrai plugin]</span></p>
-
-      <div class="plates">
-        <div class="cell"><i class="led on"></i><h3>Séparation</h3><p><span class="ph">[Détails du moteur, nombre de stems]</span></p></div>
-        <div class="cell"><i class="led on"></i><h3>Mixeur de stems</h3><p>Volume, pan, mute et solo par stem, en temps réel.</p></div>
-        <div class="cell"><i class="led on"></i><h3>Glisser-déposer</h3><p>Chaque stem part directement vers une piste du projet.</p></div>
-        <div class="cell"><i class="led on"></i><h3>Export WAV</h3><p>Tous les stems d'un coup, calés au sample près.</p></div>
-        <div class="cell"><i class="led amber"></i><h3>Sync tempo</h3><p><span class="ph">[Détection BPM / sync DAW — à confirmer]</span></p></div>
-        <div class="cell"><i class="led amber"></i><h3>Traitement</h3><p><span class="ph">[Local ou cloud ? à préciser]</span></p></div>
-        <div class="cell"><i class="led amber"></i><h3>Mac &amp; Windows</h3><p><span class="ph">[Systèmes supportés à confirmer]</span></p></div>
-        <div class="cell"><i class="led on"></i><h3>Mises à jour</h3><p>Incluses dans l'abonnement.</p></div>
-      </div>
-
-      <div class="two">
-        <div class="tv" id="demo">
-          <div class="crt-bezel"><div class="screen static"><p>NO SIGNAL</p><p class="ph">[VIDÉO DÉMO DU PLUGIN]</p></div></div>
-          <div class="crt-panel"><span class="plate">DEMO · CH 03</span><span class="crt-ctrl"><i class="rca y"></i><i class="rca w"></i><i class="led on"></i></span></div>
-        </div>
-        <div>
-          <h3 class="engraved-h">Compatibilité</h3>
-          <p class="engraved">Format VST3 <span class="ph">[+ AU / AAX ?]</span>. Il s'ouvre là où vous travaillez <span class="ph">[liste à confirmer]</span> :</p>
-          <div class="chips">
-            <span>ABLETON LIVE</span><span>FL STUDIO</span><span>LOGIC PRO</span><span>CUBASE</span>
-            <span>REAPER</span><span>STUDIO ONE</span><span>BITWIG</span><span>PRO TOOLS</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ TARIF : FENÊTRE GLOSSY ============ -->
-    <section class="burner" id="pricing">
-      <div class="burner-bar">
-        <span class="burner-word">malicious</span>
-        <span class="burner-drop"><i></i>ABONNEMENT ▾</span>
-        <span class="burner-btns" aria-hidden="true"><i>?</i><i>–</i><i>×</i></span>
-      </div>
-      <div class="burner-glass">
-        <p class="burner-tab">Formule unique</p>
-        <h2>Une seule formule.<br />Tout inclus.</h2>
-        <p class="burner-price"><span>59 €</span>/mois</p>
-        <p class="burner-note">TTC · sans engagement <span class="ph">[à confirmer]</span></p>
-        <ul>
-          <li>Séparation illimitée <span class="ph">[à confirmer]</span></li>
-          <li>Plugin VST3 <span class="ph">[+ AU ?]</span></li>
-          <li>Mixeur de stems intégré</li>
-          <li>Export WAV de tous les stems</li>
-          <li>Toutes les mises à jour</li>
-          <li>Support par email</li>
+        <h3>FONCTIONS</h3>
+        <ul class="list">
+          <li><b>SÉPARATION</b> <span class="ph">[détails du moteur, nombre de stems]</span></li>
+          <li><b>MIXEUR DE STEMS</b> volume, pan, mute et solo par stem, en temps réel</li>
+          <li><b>GLISSER-DÉPOSER</b> chaque stem part directement vers une piste du projet</li>
+          <li><b>EXPORT WAV</b> tous les stems d'un coup, calés au sample près</li>
+          <li><b>SYNC TEMPO</b> <span class="ph">[détection BPM / sync DAW — à confirmer]</span></li>
+          <li><b>TRAITEMENT</b> <span class="ph">[local ou cloud ? à préciser]</span></li>
+          <li><b>MAC &amp; WINDOWS</b> <span class="ph">[systèmes supportés à confirmer]</span></li>
+          <li><b>MISES À JOUR</b> incluses dans l'abonnement</li>
         </ul>
-      </div>
-      <div class="burner-foot">
-        <span>Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span></span>
-        <a class="burn" href="#" data-placeholder="checkout" aria-label="S'abonner"><b>S'ABONNER</b></a>
-      </div>
-    </section>
 
-    <!-- ============ AUDIOWARE : HUD FILAIRE ============ -->
-    <section class="unit dark" id="audioware">
-      <header class="unit-head"><span class="unit-id">MM-03</span><h2>Audioware</h2><i class="led amber"></i></header>
-      <div class="hud">
-        <div class="hud-menu"><a href="#pyramide">PYRAMIDE</a><a href="#geants">GÉANTS</a><a href="#casque">CASQUE</a><span>DIAGNOSTIC</span><span>BUILD</span></div>
-        <p class="hud-lead">
-          &gt; AUDIOWARE BY MALICIOUS MUSIC<br />
-          &gt; TROIS OBJETS AUDIO QUI NE RESSEMBLENT À RIEN DE CONNU<br />
-          &gt; TOUS ESTAMPILLÉS DU LOGO MALICIOUS BASS
-        </p>
+        <h3>COMPATIBILITÉ</h3>
+        <p class="txt">Format VST3 <span class="ph">[+ AU / AAX ?]</span> <span class="ph">[liste à confirmer]</span></p>
+        <div class="row chips"><span>ABLETON LIVE</span><span>FL STUDIO</span><span>LOGIC PRO</span><span>CUBASE</span><span>REAPER</span><span>STUDIO ONE</span><span>BITWIG</span><span>PRO TOOLS</span></div>
 
-        <div class="hud-grid">
-          <article class="hud-card" id="pyramide">
-            <div class="hud-view"><canvas data-model="pyramid" aria-label="Vue filaire de la Pyramide" role="img"></canvas><span class="hud-stamp"><img src="assets/malicious-bass-logo.png" alt="" />MALICIOUS BASS</span></div>
+        <h3>DÉMO</h3>
+        <div class="box nosignal"><p>NO SIGNAL</p><p class="ph">[VIDÉO DÉMO DU PLUGIN]</p></div>
+        <div class="row"><a class="btn inv" href="#tarif">S'ABONNER — 59 €/MOIS</a></div>
+      </section>
+
+      <!-- ---------- TARIF ---------- -->
+      <section class="view" id="tarif" data-view="tarif">
+        <h2>TARIF</h2>
+        <p class="big">UNE SEULE FORMULE.<br />TOUT INCLUS.</p>
+        <div class="box price">
+          <p class="p-sub" style="text-align:left">MALICIOUSMUSIC · FORMULE UNIQUE</p>
+          <p class="amount">59 €<small>/MOIS</small></p>
+          <p>TTC · SANS ENGAGEMENT <span class="ph">[À CONFIRMER]</span></p>
+          <ul class="list">
+            <li>Séparation illimitée <span class="ph">[à confirmer]</span></li>
+            <li>Plugin VST3 <span class="ph">[+ AU ?]</span></li>
+            <li>Mixeur de stems intégré</li>
+            <li>Export WAV de tous les stems</li>
+            <li>Toutes les mises à jour</li>
+            <li>Support par email</li>
+          </ul>
+          <div class="row"><a class="btn inv xl" href="#" data-placeholder="checkout">S'ABONNER</a></div>
+          <p class="note">Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span></p>
+        </div>
+      </section>
+
+      <!-- ---------- AUDIOWARE ---------- -->
+      <section class="view" id="audioware" data-view="audioware">
+        <h2>AUDIOWARE</h2>
+        <p class="txt">Le hardware Malicious Music. Trois objets audio qui ne ressemblent à rien de connu, tous estampillés du logo Malicious Bass. Précommandes bientôt ouvertes.</p>
+
+        <div class="grid3 products">
+          <article class="box product" id="pyramide">
+            <div class="viewer"><canvas data-model="pyramid" role="img" aria-label="Vue filaire de la Pyramide"></canvas><span class="stamp"><img class="ink-logo" src="assets/malicious-bass-logo.png" alt="" />MALICIOUS BASS</span></div>
             <h3>LA PYRAMIDE <span class="ph">[NOM DÉFINITIF]</span></h3>
-            <p class="hud-tag">PLATINE · RANGE-VINYLES · ENCEINTE</p>
+            <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE</p>
             <p>Une platine vinyle au sommet, le rangement de votre collection dans la base et une enceinte intégrée dans la structure.</p>
-            <ul>
+            <ul class="list">
               <li>PLATINE: <span class="ph">[33/45, ENTRAÎNEMENT]</span></li>
               <li>RANGEMENT: <span class="ph">[NB VINYLES]</span></li>
               <li>ENCEINTE: <span class="ph">[PUISSANCE]</span></li>
               <li>DIMENSIONS: <span class="ph">[H × L × P]</span></li>
               <li>PRIX: <span class="ph">[€]</span></li>
             </ul>
-            <a class="hud-btn" href="#contact">ÊTRE NOTIFIÉ</a>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
           </article>
 
-          <article class="hud-card" id="geants">
-            <div class="hud-view"><canvas data-model="buds" aria-label="Vue filaire des écouteurs géants" role="img"></canvas><span class="hud-stamp"><img src="assets/malicious-bass-logo.png" alt="" />MALICIOUS BASS</span></div>
+          <article class="box product" id="geants">
+            <div class="viewer"><canvas data-model="buds" role="img" aria-label="Vue filaire des écouteurs géants"></canvas><span class="stamp"><img class="ink-logo" src="assets/malicious-bass-logo.png" alt="" />MALICIOUS BASS</span></div>
             <h3>LES GÉANTS <span class="ph">[NOM DÉFINITIF]</span></h3>
-            <p class="hud-tag">ÉCOUTEURS XXL · PAIRE D'ENCEINTES</p>
+            <p class="tag">ÉCOUTEURS XXL · PAIRE D'ENCEINTES</p>
             <p>Une paire d'écouteurs surdimensionnés qui se posent sur le bureau et forment une vraie paire d'enceintes stéréo.</p>
-            <ul>
+            <ul class="list">
               <li>FORMAT: <span class="ph">[HAUTEUR]</span></li>
               <li>HAUT-PARLEURS: <span class="ph">[DRIVERS]</span></li>
               <li>CONNECTIQUE: <span class="ph">[BT, USB-C…]</span></li>
               <li>ALIMENTATION: <span class="ph">[SECTEUR / BATTERIE]</span></li>
               <li>PRIX: <span class="ph">[€]</span></li>
             </ul>
-            <a class="hud-btn" href="#contact">ÊTRE NOTIFIÉ</a>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
           </article>
 
-          <article class="hud-card" id="casque">
-            <div class="hud-view"><canvas data-model="phones" aria-label="Vue filaire du casque expérimental" role="img"></canvas><span class="hud-stamp"><img src="assets/malicious-bass-logo.png" alt="" />MALICIOUS BASS</span></div>
+          <article class="box product" id="casque">
+            <div class="viewer"><canvas data-model="phones" role="img" aria-label="Vue filaire du casque expérimental"></canvas><span class="stamp"><img class="ink-logo" src="assets/malicious-bass-logo.png" alt="" />MALICIOUS BASS</span></div>
             <h3>LE CASQUE <span class="ph">[NOM DÉFINITIF]</span></h3>
-            <p class="hud-tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ</p>
+            <p class="tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ</p>
             <p>Un casque qui n'a jamais besoin d'être rechargé et qui stocke lui-même votre musique. Vous le mettez, il joue.</p>
-            <ul>
+            <ul class="list">
               <li>ÉNERGIE: <span class="ph">[TECHNOLOGIE]</span></li>
               <li>STOCKAGE: <span class="ph">[CAPACITÉ]</span></li>
               <li>TRANSFERT: <span class="ph">[MÉTHODE]</span></li>
               <li>STATUT: PROTOTYPE</li>
               <li>PRIX: <span class="ph">[€]</span></li>
             </ul>
-            <a class="hud-btn" href="#contact">ÊTRE NOTIFIÉ</a>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
           </article>
         </div>
-        <p class="hud-alert">PRÉCOMMANDES BIENTÔT OUVERTES</p>
-      </div>
-    </section>
+      </section>
 
-    <!-- ============ FAQ ============ -->
-    <section class="unit" id="faq">
-      <header class="unit-head"><span class="unit-id">MM-04</span><h2>Questions fréquentes</h2><i class="led on"></i></header>
-      <div class="faq">
-        <details><summary>Est-ce que je peux résilier quand je veux ?</summary><p><span class="ph">[À valider : oui, résiliable à tout moment depuis votre compte.]</span></p></details>
-        <details><summary>Sur combien d'ordinateurs puis-je l'installer ?</summary><p><span class="ph">[Nombre d'activations à définir]</span></p></details>
-        <details><summary>Quels formats audio sont acceptés ?</summary><p><span class="ph">[MP3 confirmé — WAV, FLAC, AIFF à confirmer]</span></p></details>
-        <details><summary>Faut-il une connexion internet ?</summary><p><span class="ph">[Dépend du traitement local ou cloud]</span></p></details>
-        <details><summary>Y a-t-il un essai gratuit ?</summary><p><span class="ph">[À décider]</span></p></details>
-        <details><summary>Puis-je utiliser les stems dans mes productions ?</summary><p>Le plugin sépare les pistes ; les droits sur la musique d'origine restent ceux de ses ayants droit. Vérifiez que vous avez l'autorisation avant de publier un remix. <span class="ph">[à faire valider]</span></p></details>
-      </div>
-    </section>
+      <!-- ---------- FAQ ---------- -->
+      <section class="view" id="faq" data-view="faq">
+        <h2>QUESTIONS FRÉQUENTES</h2>
+        <div class="faq">
+          <details><summary>Est-ce que je peux résilier quand je veux ?</summary><p><span class="ph">[À valider : oui, résiliable à tout moment depuis votre compte.]</span></p></details>
+          <details><summary>Sur combien d'ordinateurs puis-je l'installer ?</summary><p><span class="ph">[Nombre d'activations à définir]</span></p></details>
+          <details><summary>Quels formats audio sont acceptés ?</summary><p><span class="ph">[MP3 confirmé — WAV, FLAC, AIFF à confirmer]</span></p></details>
+          <details><summary>Faut-il une connexion internet ?</summary><p><span class="ph">[Dépend du traitement local ou cloud]</span></p></details>
+          <details><summary>Y a-t-il un essai gratuit ?</summary><p><span class="ph">[À décider]</span></p></details>
+          <details><summary>Puis-je utiliser les stems dans mes productions ?</summary><p>Le plugin sépare les pistes ; les droits sur la musique d'origine restent ceux de ses ayants droit. Vérifiez que vous avez l'autorisation avant de publier un remix. <span class="ph">[à faire valider]</span></p></details>
+        </div>
+      </section>
 
-    <!-- ============ CONTACT ============ -->
-    <section class="unit" id="contact">
-      <header class="unit-head"><span class="unit-id">MM-05</span><h2>Restez dans la boucle</h2><i class="led on"></i></header>
-      <p class="engraved-lead">Sortie du plugin, précommandes Audioware : on vous prévient en premier.</p>
-      <form class="signup">
-        <input class="lcd-input" type="email" placeholder="VOTRE@EMAIL.COM" required aria-label="Adresse email" />
-        <select class="lcd-input" aria-label="Ce qui vous intéresse">
-          <option>TOUT</option><option>LE PLUGIN</option><option>LA PYRAMIDE</option><option>LES GÉANTS</option><option>LE CASQUE</option>
-        </select>
-        <button class="key key-big" type="submit">S'INSCRIRE</button>
-        <p class="msg engraved" hidden>C'est noté ! <span class="ph">[liste à brancher]</span></p>
-      </form>
-    </section>
-  </main>
+      <!-- ---------- CONTACT ---------- -->
+      <section class="view" id="contact" data-view="contact">
+        <h2>RESTEZ DANS LA BOUCLE</h2>
+        <p class="txt">Sortie du plugin, précommandes Audioware : on vous prévient en premier.</p>
+        <form class="box signup">
+          <label>EMAIL<input type="email" placeholder="VOTRE@EMAIL.COM" required /></label>
+          <label>INTÉRÊT
+            <select><option>TOUT</option><option>LE PLUGIN</option><option>LA PYRAMIDE</option><option>LES GÉANTS</option><option>LE CASQUE</option></select>
+          </label>
+          <button class="btn inv" type="submit">S'INSCRIRE</button>
+          <p class="msg" hidden>C'EST NOTÉ ! <span class="ph">[liste à brancher]</span></p>
+        </form>
+        <p class="note"><span class="ph">[Instagram] [YouTube] [TikTok]</span> · <a href="#legal">MENTIONS LÉGALES</a></p>
+      </section>
 
-  <footer class="chassis-foot">
-    <span class="vents" aria-hidden="true"></span>
-    <div class="serial">
-      <p><b>MALICIOUS MUSIC</b> · AUDIOWARE · © <span data-year></span></p>
-      <p><a href="legal.html">Mentions légales</a> · <a href="legal.html#cgv">CGV</a> · <a href="legal.html#confidentialite">Confidentialité</a> · <span class="ph">[Instagram] [YouTube] [TikTok]</span></p>
+      <!-- ---------- LÉGAL ---------- -->
+      <section class="view" id="legal" data-view="legal">
+        <h2>MENTIONS LÉGALES</h2>
+        <h3>ÉDITEUR DU SITE</h3>
+        <p class="txt"><span class="ph">[Raison sociale, forme juridique, capital, SIRET, adresse, email, directeur de publication]</span></p>
+        <h3>HÉBERGEMENT</h3>
+        <p class="txt"><span class="ph">[Nom et adresse de l'hébergeur]</span></p>
+        <h3 id="cgv">CONDITIONS GÉNÉRALES DE VENTE</h3>
+        <p class="txt"><span class="ph">[CGV de l'abonnement Malicious Music à 59 €/mois et des produits Audioware — à faire rédiger]</span></p>
+        <h3 id="confidentialite">CONFIDENTIALITÉ</h3>
+        <p class="txt"><span class="ph">[Données collectées (newsletter, paiement), finalités, durée, droits RGPD, contact]</span></p>
+        <p class="note">© <span data-year></span> MALICIOUS MUSIC · AUDIOWARE</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== BOUTONS DU CADRE ===== -->
+  <nav class="dev-keys" aria-label="Navigation">
+    <button class="key arrow" id="prev" aria-label="Page précédente">&#9664;&#xFE0E;</button>
+    <div class="keyset">
+      <a class="key" href="#home" data-key="home">ACCUEIL</a>
+      <a class="key" href="#plugin" data-key="plugin">PLUGIN</a>
+      <a class="key" href="#tarif" data-key="tarif">TARIF</a>
+      <a class="key" href="#audioware" data-key="audioware">AUDIOWARE</a>
+      <a class="key" href="#faq" data-key="faq">FAQ</a>
+      <a class="key" href="#contact" data-key="contact">CONTACT</a>
     </div>
-    <span class="crt-ctrl" aria-hidden="true"><i class="rca y"></i><i class="rca w"></i><i class="led on"></i></span>
-  </footer>
-
-  <script src="main.js"></script>
+    <button class="key arrow" id="next" aria-label="Page suivante">&#9654;&#xFE0E;</button>
+  </nav>
+</div>
+<script src="main.js"></script>
 </body>
 </html>
