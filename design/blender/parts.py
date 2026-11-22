@@ -153,6 +153,30 @@ def mat(name, color=(0.8, 0.82, 0.85), metal=1.0, rough=0.12, aniso=0.0, radial=
     return m
 
 
+def violet_gradient():
+    m = bpy.data.materials.get("violet_grad")
+    if m:
+        return m
+    m = mat("violet_grad", (0.4, 0.1, 0.9), 0.0, 0.14, coat=1.0)
+    nt = m.node_tree
+    p = nt.nodes["Principled BSDF"]
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    mr = nt.nodes.new("ShaderNodeMapRange")
+    mr.inputs["From Min"].default_value = -0.6
+    mr.inputs["From Max"].default_value = 0.6
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].color = (0.035, 0.008, 0.12, 1)   # bas : violet nuit
+    ramp.color_ramp.elements[1].color = (0.42, 0.09, 1.0, 1)      # haut : violet vif
+    mid = ramp.color_ramp.elements.new(0.55)
+    mid.color = (0.17, 0.03, 0.5, 1)
+    nt.links.new(tc.outputs["Object"], sep.inputs["Vector"])
+    nt.links.new(sep.outputs["Y"], mr.inputs["Value"])
+    nt.links.new(mr.outputs["Result"], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs["Color"], p.inputs["Base Color"])
+    return m
+
+
 CHROME = lambda: mat("chrome", (0.86, 0.88, 0.91), 1.0, 0.2)
 SATIN = lambda: mat("satin", (0.78, 0.8, 0.84), 1.0, 0.3)
 BRUSHED_RADIAL = lambda: mat("brushed_radial", (0.85, 0.87, 0.9), 1.0, 0.22, aniso=0.85, radial=True)
@@ -246,7 +270,7 @@ def part_jog():
     for i in range(8):
         a = i * math.pi / 4
         sphere((0.81 * math.cos(a), 0.81 * math.sin(a), 0.262), 0.032, DARK())
-    lathe("disc", [(0, 0.205), (0.3, 0.2), (0.48, 0.186), (0.56, 0.16), (0.585, 0.11)], BLUE())
+    lathe("disc", [(0, 0.205), (0.3, 0.2), (0.48, 0.186), (0.56, 0.16), (0.585, 0.11)], violet_gradient())
     rounded_box("split_top", 0.022, 0.34, 0.06, 0.008, DARK(), z=0.19).location.y = 0.42
     rounded_box("split_bot", 0.022, 0.34, 0.06, 0.008, DARK(), z=0.19).location.y = -0.42
     lathe("cap_groove", [(0.23, 0.2), (0.265, 0.2)], DARK())
@@ -275,20 +299,13 @@ def part_power(on):
 
 
 def part_fader():
-    """Tirette de fader : corps chromé, dessus à nervures, trait violet au centre."""
+    """Tirette de fader : bouton chromé bombé sur sa semelle, trait violet au centre."""
     clear(); key_light(); camera_top(2.4, 360, 240)
-    rounded_box("body", 2.0, 1.22, 0.34, 0.14, SATIN(), z=0.0)
-    rounded_box("top", 1.82, 1.04, 0.12, 0.06, DARK(), z=0.16)
-    for i in range(-3, 4):
-        if i == 0:
-            continue
-        bpy.ops.mesh.primitive_cylinder_add(radius=0.05, depth=0.92, location=(i * 0.24, 0, 0.22), vertices=32)
-        ob = bpy.context.active_object
-        ob.rotation_euler.x = math.radians(90)
-        bpy.ops.object.shade_smooth()
-        ob.data.materials.append(CHROME())
-    violet = mat("violet_line", (0.45, 0.12, 0.9), 0.0, 0.3, emit=(0.55, 0.2, 1.0), emit_strength=0.9)
-    rounded_box("line", 0.07, 0.96, 0.08, 0.02, violet, z=0.23)
+    rounded_box("base", 2.0, 1.24, 0.2, 0.12, SATIN(), z=0.0)
+    rounded_box("groove", 1.9, 1.14, 0.2, 0.1, DARK(), z=0.02)
+    rounded_box("cap", 1.8, 1.04, 0.36, 0.3, CHROME(), z=0.09)
+    line = mat("violet_line", (0.45, 0.12, 0.9), 0.0, 0.3, emit=(0.55, 0.2, 1.0), emit_strength=0.9)
+    rounded_box("line", 0.07, 0.62, 0.05, 0.02, line, z=0.27)
     render("fader")
 
 

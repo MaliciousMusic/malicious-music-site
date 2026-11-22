@@ -593,3 +593,11 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 @media (max-width: 760px) {
   .pos-track { --tw: 54px; height: 50px; }
 }
+
+/* Rail : bande lumineuse en dégradé violet (comme le poisson) */
+.pos-track::before {
+  background:
+    linear-gradient(90deg, #3a0f8a, #7a2be0 55%, #c47bff) 0 50% / calc(var(--p) * (100% - var(--tw)) + var(--tw) / 2) 3px no-repeat,
+    linear-gradient(180deg, #050607, #1d2126 70%, #2c3239);
+}
+.pos-track { --th: calc(var(--tw) * .62); }
