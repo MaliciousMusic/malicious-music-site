@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=39" />
+  <link rel="stylesheet" href="styles.css?v=43" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.png" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.png" />
   <script>document.documentElement.classList.add("js");</script>
@@ -106,8 +106,8 @@
             <p>MP3-TO-STEMS · PLUGIN VST <span class="ph">[FORMATS À CONFIRMER]</span></p>
           </div>
         </div>
-        <p class="big">UN MP3 ENTRE.<br />DES STEMS SORTENT.</p>
-        <p class="txt">Malicious Music sépare n'importe quel morceau en pistes voix, batterie, basse et instruments, puis vous laisse les remixer directement dans votre DAW.</p>
+        <p class="big h-big">UN MP3 ENTRE.<br />DES STEMS SORTENT.</p>
+        <p class="txt h-txt">Malicious Music sépare n'importe quel morceau en pistes voix, batterie, basse et instruments, puis vous laisse les remixer directement dans votre DAW.</p>
         <div class="box scope" aria-hidden="true">
           <div class="track track-mix"><span>MIX.MP3</span><canvas data-wave="mix"></canvas></div>
           <div class="track"><span>VOCALS</span><canvas data-wave="vox"></canvas></div>
@@ -115,7 +115,7 @@
           <div class="track"><span>BASS</span><canvas data-wave="bass"></canvas></div>
           <div class="track"><span>OTHER</span><canvas data-wave="other"></canvas></div>
         </div>
-        <div class="row">
+        <div class="row h-cta">
           <a class="btn inv" href="#tarif">COMMENCER — 59 €/MOIS</a>
           <a class="btn" href="#plugin">VOIR LE PLUGIN</a>
           <a class="btn" href="#audioware">AUDIOWARE</a>
@@ -187,11 +187,15 @@
       <!-- ---------- TARIF ---------- -->
       <section class="view" id="tarif" data-view="tarif">
         <h2>TARIF</h2>
-        <p class="big">UNE SEULE FORMULE.<br />TOUT INCLUS.</p>
+        <p class="big">UNE SEULE FORMULE. TOUT INCLUS.</p>
         <div class="box price">
+          <div class="offer">
           <p class="p-sub" style="text-align:left">MALICIOUSMUSIC · FORMULE UNIQUE</p>
           <p class="amount">59 €<small>/MOIS</small></p>
           <p>TTC · SANS ENGAGEMENT <span class="ph">[À CONFIRMER]</span></p>
+          <div class="row"><a class="btn inv xl" href="#" data-placeholder="checkout">S'ABONNER</a></div>
+          <p class="note">Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span></p>
+          </div>
           <ul class="list">
             <li>Séparation illimitée <span class="ph">[à confirmer]</span></li>
             <li>Plugin VST3 <span class="ph">[+ AU ?]</span></li>
@@ -200,8 +204,6 @@
             <li>Toutes les mises à jour</li>
             <li>Support par email</li>
           </ul>
-          <div class="row"><a class="btn inv xl" href="#" data-placeholder="checkout">S'ABONNER</a></div>
-          <p class="note">Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span></p>
         </div>
       </section>
 
@@ -376,6 +378,6 @@
   <img class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.png" alt="" />
 </div>
 <img class="stylus" id="stylus" src="assets/hw/stylus.png" alt="" aria-hidden="true" />
-<script src="main.js?v=38"></script>
+<script src="main.js?v=42"></script>
 </body>
 </html>

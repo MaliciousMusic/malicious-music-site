@@ -106,6 +106,8 @@ function layout() {
   const jr = document.querySelector(".console > .jog").getBoundingClientRect();
   const jog = { cx: jr.left - d.left + jr.width / 2, cy: jr.top - d.top + jr.height / 2, r: jr.width * 0.5 + 12 };
   const inner = hole(x, y, g.width, g.height, notch, jog);
+  // hauteur mangée par la molette dans le coin bas-gauche : le contenu de l'écran s'arrête au-dessus
+  glassEl.style.setProperty("--bite", Math.max(0, Math.round(y + g.height - (jog.cy - jog.r))) + "px");
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
   const body = `M0 0H${W}V${H}H0Z` + inner;
   document.getElementById("body").setAttribute("d", body);

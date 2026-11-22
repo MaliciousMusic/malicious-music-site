@@ -723,3 +723,55 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 .knob-wrap .engrave { font-size: .5rem; }
 .power-wrap { --jog: var(--jog-p); }
 @media (max-width: 760px) { .device { --jog-big: var(--jog); } .console > .jog { align-self: center; margin: 0; } }
+
+/* =========================================================
+   MISE EN PAGE AJUSTÉE À L'ÉCRAN : l'écran LCD est un conteneur,
+   les tailles suivent sa largeur ET sa hauteur (cqw / cqh)
+   ========================================================= */
+.views { container: screen / size; }
+.big { font-size: clamp(1.5rem, min(5.2cqw, 9cqh), 3.6rem); }
+h1 { font-size: clamp(2rem, min(7.5cqw, 13cqh), 4.8rem); }
+h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
+.hero img { width: clamp(64px, min(12cqw, 21cqh), 140px); }
+
+/* tarif : offre à gauche, contenu à droite */
+.price { max-width: none; grid-template-columns: minmax(0, 1fr); align-items: center; }
+.offer { display: grid; gap: 10px; justify-items: start; }
+.amount { font-size: clamp(3.6rem, min(15cqw, 24cqh), 9rem); }
+@container screen (min-width: 640px) {
+  .price { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: clamp(16px, 4cqw, 48px); }
+  .price .list { border-left: 2px dotted var(--ink); padding-left: clamp(14px, 3cqw, 32px); gap: clamp(3px, 1.4cqh, 10px); font-size: 1.05em; }
+}
+
+/* accueil : texte et CTA à gauche, oscilloscope à droite */
+@container screen (min-width: 720px) {
+  #home { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); column-gap: clamp(16px, 3cqw, 36px); grid-template-areas: "hero scope" "big scope" "txt scope" "cta cta" "tiles tiles"; }
+  #home .hero { grid-area: hero; } #home .h-big { grid-area: big; } #home .h-txt { grid-area: txt; }
+  #home .h-cta { grid-area: cta; } #home .scope { grid-area: scope; align-self: stretch; align-content: space-evenly; } #home .grid3 { grid-area: tiles; }
+  #home .h-big { font-size: clamp(1.5rem, min(3.9cqw, 8cqh), 3rem); }
+  .track canvas { height: clamp(14px, 3.4cqh, 22px); } .track-mix canvas { height: clamp(22px, 5.6cqh, 34px); }
+}
+
+/* audioware : vues filaires plus basses pour tenir les trois fiches */
+.viewer canvas { aspect-ratio: auto; height: clamp(110px, 30cqh, 240px); }
+.product > p:not(.tag) { font-size: .95em; }
+#home .tile { padding-block: clamp(6px, 1.6cqh, 14px); }
+.views { padding-bottom: max(clamp(18px, 3vh, 30px), calc(var(--bite, 0px) + 10px)); }
+@container screen (min-width: 720px) {
+  #home { row-gap: clamp(8px, 2.2cqh, 18px); }
+  #home h1 { font-size: clamp(1.8rem, min(5.4cqw, 11cqh), 4.2rem); }
+  #home .hero img { width: clamp(56px, min(9cqw, 17cqh), 120px); }
+}
+/* audioware : titre et intro sur une ligne, fiches compactes */
+@container screen (min-width: 720px) {
+  #audioware { grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(16px, 3cqw, 40px); align-items: end; }
+  #audioware > .txt { font-size: .86em; max-width: none; }
+  #audioware > .products { grid-column: 1 / -1; }
+}
+.product { gap: clamp(4px, 1.1cqh, 8px); }
+.product h3 { font-size: clamp(1.15rem, min(2.4cqw, 4.6cqh), 1.6rem); }
+.product h3 .ph { display: block; font-size: .55em; letter-spacing: .06em; margin-top: 2px; }
+.product .tag { font-size: .8em; }
+.product > p:not(.tag) { font-size: .86em; line-height: 1.12; }
+.product .list { font-size: .86em; gap: 1px; }
+.viewer canvas { height: clamp(90px, 22cqh, 200px); }
