@@ -5,7 +5,7 @@ const allCanvases = [...document.querySelectorAll("canvas")];
 
 // Models are drawn at low resolution and scaled up: real dot-matrix pixels
 function fit(c) {
-  const k = c.dataset.model ? 1 / 2.5 : c.id === "ink" ? 1 / 3 : 0.5;
+  const k = c.dataset.model ? 1 / 2.5 : 0.5;
   const w = Math.max(1, Math.round(c.clientWidth * k));
   const h = Math.max(1, Math.round(c.clientHeight * k));
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
@@ -83,11 +83,6 @@ function layout() {
   document.getElementById("rim").setAttribute("d", inner);
   document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8, { ...notch, hw: notch.hw - 4, depth: notch.depth - 4 }));
   glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height, { ...notch, cx: notch.cx - x })}')`;
-  // plaque gravée autour du titre, dans l'encoche
-  const f = (v) => v.toFixed(1), px = 16, py = 7, rr = (tp.height + 2 * py) / 2;
-  const L = tp.left - d.left - px, R = tp.right - d.left + px, T = tp.top - d.top - py, B = tp.bottom - d.top + py;
-  document.getElementById("recess").setAttribute("d",
-    `M${f(L + rr)} ${f(T)}H${f(R - rr)}A${f(rr)} ${f(rr)} 0 0 1 ${f(R - rr)} ${f(B)}H${f(L + rr)}A${f(rr)} ${f(rr)} 0 0 1 ${f(L + rr)} ${f(T)}Z`);
 }
 layout();
 if ("ResizeObserver" in window) new ResizeObserver(layout).observe(device); else window.addEventListener("resize", layout);
@@ -397,7 +392,6 @@ function frame(t) {
     else if (c.hasAttribute("data-lcd")) drawLcd(c, t);
     else if (c.dataset.model) drawModel(c, t);
   }
-  fadeInk();
   if (!reduceMotion) requestAnimationFrame(frame);
 }
 if (reduceMotion) {
@@ -429,33 +423,8 @@ if (window.matchMedia("(pointer: fine)").matches) {
 }
 
 // ---------------------------------------------------------
-// Écran tactile : marque d'appui, trait d'encre, glisser pour défiler
+// Écran tactile : marque d'appui, glisser pour défiler
 // ---------------------------------------------------------
-const ink = document.getElementById("ink");
-const ictx = ink.getContext("2d");
-let inkLife = 0;
-function fadeInk() {
-  if (inkLife <= 0) return;
-  inkLife--;
-  ictx.globalCompositeOperation = "destination-out";
-  ictx.fillStyle = "rgba(0,0,0,0.06)";
-  ictx.fillRect(0, 0, ink.width, ink.height);
-  ictx.globalCompositeOperation = "source-over";
-  if (inkLife === 0) ictx.clearRect(0, 0, ink.width, ink.height);
-}
-function inkLine(x0, y0, x1, y1) {
-  const r = glassEl.getBoundingClientRect();
-  if (ink.width < 2) fit(ink);
-  const sx = ink.width / r.width, sy = ink.height / r.height;
-  ictx.strokeStyle = "rgba(38,51,44,.9)";
-  ictx.lineWidth = 1.25;
-  ictx.lineCap = ictx.lineJoin = "round";
-  ictx.beginPath();
-  ictx.moveTo((x0 - r.left) * sx, (y0 - r.top) * sy);
-  ictx.lineTo((x1 - r.left) * sx, (y1 - r.top) * sy);
-  ictx.stroke();
-  inkLife = 90;
-}
 function tapMark(x, y) {
   const r = glassEl.getBoundingClientRect();
   const m = document.createElement("span");
@@ -479,7 +448,6 @@ glassEl.addEventListener("pointerdown", (e) => {
 });
 window.addEventListener("pointermove", (e) => {
   if (!touch || e.pointerId !== touch.id) return;
-  inkLine(touch.x, touch.y, e.clientX, e.clientY);
   touch.mark.style.left = e.clientX - glassEl.getBoundingClientRect().left + "px";
   touch.mark.style.top = e.clientY - glassEl.getBoundingClientRect().top + "px";
   if (touch.scroll) {
