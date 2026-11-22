@@ -174,7 +174,8 @@ power.addEventListener("click", togglePower);
 document.getElementById("power-x").addEventListener("click", togglePower);
 // À l'ouverture : écran éteint, puis on « appuie » sur POWER et l'appareil démarre
 glass.classList.add("off");
-setTimeout(togglePower, 650);
+setTimeout(() => power.classList.add("blink"), 350);
+setTimeout(() => { power.classList.remove("blink"); togglePower(); }, 1300);
 
 // ---------------------------------------------------------
 // Player state (LCD spectrum + stem mixer)

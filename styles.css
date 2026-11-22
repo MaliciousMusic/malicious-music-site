@@ -440,3 +440,38 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
   .sticker { width: 76px; right: -8px; top: -6px; }
   .engraved-title { font-size: .62rem; letter-spacing: .26em; }
 }
+
+/* =========================================================
+   POWER : halo réaliste + clignotement · LED violettes · poisson LCD
+   ========================================================= */
+.power-ring[aria-pressed="true"] { filter: drop-shadow(0 6px 8px rgba(0,0,0,.5)); }
+.power-ring::before { /* lumière émise par l'anneau, limitée à l'anneau */
+  content: ""; position: absolute; inset: -16%; border-radius: 50%; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle closest-side, transparent 47%, rgba(140,255,90,.55) 54%, rgba(90,240,50,.38) 60%, rgba(60,220,30,.14) 72%, transparent 84%);
+  filter: blur(3px); mix-blend-mode: screen; transition: opacity .25s;
+}
+.power-wrap { position: relative; }
+.power-wrap::before { /* reflet vert sur le chrome autour */
+  content: ""; position: absolute; left: 50%; top: calc(var(--jog) * .29); width: calc(var(--jog) * 1.05); height: calc(var(--jog) * .82);
+  transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; opacity: 0;
+  background: radial-gradient(closest-side, rgba(110,255,70,.22), rgba(110,255,70,.07) 55%, transparent);
+  mix-blend-mode: soft-light; transition: opacity .25s;
+}
+.power-ring[aria-pressed="true"]::before, .power-wrap:has(.power-ring[aria-pressed="true"])::before { opacity: 1; }
+.power-ring.blink { animation: pwr-blink .9s steps(1) 1; }
+.power-ring.blink::before { animation: pwr-blink-glow .9s steps(1) 1; }
+@keyframes pwr-blink {
+  0%, 22%, 44%, 66% { background-image: url("assets/hw/power-on.png"); }
+  11%, 33%, 55%, 77%, 100% { background-image: url("assets/hw/power-off.png"); }
+}
+@keyframes pwr-blink-glow { 0%, 22%, 44%, 66% { opacity: 1; } 11%, 33%, 55%, 77%, 100% { opacity: 0; } }
+
+.led.blue.on, [aria-current="page"] .led {
+  background: radial-gradient(circle at 35% 30%, #faf0ff, #c47bff 40%, #7a22e0 75%);
+  box-shadow: 0 0 6px #a64dff, 0 0 14px rgba(166,77,255,.75), inset 0 1px 1px rgba(255,255,255,.7),
+    0 0 0 2px #1c2025, 0 0 0 3px #6a727c, 0 -1px 0 3.5px rgba(0,0,0,.35), 0 1px 0 3.5px rgba(255,255,255,.85);
+}
+.led { background: radial-gradient(circle at 35% 30%, #7a6c8f, #2a2238 70%); }
+.knob::after { background: radial-gradient(circle at 35% 30%, #faf0ff, #c47bff 40%, #7a22e0); box-shadow: 0 0 8px #a64dff; }
+
+.ink-logo { mix-blend-mode: normal; filter: none; }

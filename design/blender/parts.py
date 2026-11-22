@@ -248,7 +248,7 @@ def part_knob():
 
 def part_power(on):
     clear(); key_light(); camera_top(2.12, 320, 320)
-    green = mat("green_on", (0.25, 1.0, 0.2), 0.0, 0.25, emit=(0.12, 1.0, 0.05), emit_strength=1.6) if on \
+    green = mat("green_on", (0.02, 0.35, 0.01), 0.0, 0.3, emit=(0.04, 1.0, 0.0), emit_strength=0.55) if on \
         else mat("green_off", (0.32, 0.4, 0.34), 0.0, 0.35, transmission=0.4)
     lathe("cap", [(0, 0.3), (0.3, 0.295), (0.48, 0.278), (0.57, 0.25), (0.6, 0.2), (0.605, 0.12)], CHROME())
     lathe("ring", [(0.62, 0.1), (0.64, 0.2), (0.7, 0.245), (0.76, 0.2), (0.78, 0.1)], green)
