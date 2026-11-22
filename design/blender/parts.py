@@ -426,6 +426,90 @@ def part_title(on=True):
     vs.view_transform, vs.look = "AgX", "AgX - Punchy"
 
 
+def chrome80_material():
+    """Chrome façon lettrage 80/90 : ciel clair, ligne d'horizon sombre, sol violet rosé,
+    réparti sur la hauteur de la lettre et déformé par l'inclinaison de la surface."""
+    m = bpy.data.materials.new("chrome80"); m.use_nodes = True
+    nt = m.node_tree; p = nt.nodes["Principled BSDF"]
+    p.inputs["Metallic"].default_value = 0.0
+    p.inputs["Roughness"].default_value = 0.18
+    p.inputs["Coat Weight"].default_value = 1.0
+    p.inputs["Coat Roughness"].default_value = 0.02
+    tc = nt.nodes.new("ShaderNodeTexCoord"); geo = nt.nodes.new("ShaderNodeNewGeometry")
+    sp = nt.nodes.new("ShaderNodeSeparateXYZ"); sn = nt.nodes.new("ShaderNodeSeparateXYZ")
+    pos = nt.nodes.new("ShaderNodeMapRange")
+    pos.inputs["From Min"].default_value = -0.4; pos.inputs["From Max"].default_value = 0.42
+    nrm = nt.nodes.new("ShaderNodeMath"); nrm.operation = "MULTIPLY"; nrm.inputs[1].default_value = 0.32
+    add = nt.nodes.new("ShaderNodeMath"); add.operation = "ADD"
+    ramp = nt.nodes.new("ShaderNodeValToRGB"); els = ramp.color_ramp.elements
+    els[0].position = 0.0; els[0].color = (0.1, 0.01, 0.28, 1)
+    els[1].position = 1.0; els[1].color = (1, 1, 1, 1)
+    for pp, col in ((0.3, (0.55, 0.12, 0.85, 1)), (0.44, (0.95, 0.55, 1.0, 1)), (0.495, (1, 0.96, 1, 1)),
+                    (0.505, (0.05, 0.03, 0.12, 1)), (0.6, (0.3, 0.27, 0.45, 1)), (0.82, (0.86, 0.86, 0.97, 1))):
+        e = els.new(pp); e.color = col
+    emis = nt.nodes.new("ShaderNodeMath"); emis.operation = "MULTIPLY"
+    L = nt.links.new
+    L(tc.outputs["Object"], sp.inputs["Vector"]); L(sp.outputs["Y"], pos.inputs["Value"])
+    L(geo.outputs["Normal"], sn.inputs["Vector"]); L(sn.outputs["Y"], nrm.inputs[0])
+    L(pos.outputs["Result"], add.inputs[0]); L(nrm.outputs[0], add.inputs[1])
+    L(add.outputs[0], ramp.inputs["Fac"])
+    L(ramp.outputs["Color"], p.inputs["Base Color"]); L(ramp.outputs["Color"], p.inputs["Emission Color"])
+    p.inputs["Emission Strength"].default_value = 0.9
+    p.inputs["Coat Weight"].default_value = 0.5
+    p.inputs["Coat Roughness"].default_value = 0.08
+    return m
+
+
+def part_title_chrome():
+    """MALICIOUS MUSIC en chrome gonflé et penché, qui sort de cuvettes creusées dans le châssis
+    (rebord chromé comme les boutons, fond sombre)."""
+    clear()   # pas de lampes : le chrome porte son propre dégradé, le studio (HDRI) éclaire le rebord
+    font = bpy.data.fonts.load(os.path.join(ROOT, "design", "fonts", "RussoOne-Regular.ttf"), check_existing=True)
+
+    def text_mesh(name, offset, extrude, bevel, z, shear=0.18):
+        cu = bpy.data.curves.new(name, "FONT")
+        cu.body = "MALICIOUS MUSIC"; cu.font = font
+        cu.align_x = "CENTER"; cu.align_y = "CENTER"
+        cu.space_character = 1.12; cu.shear = shear
+        cu.offset = offset; cu.extrude = extrude
+        cu.bevel_depth = bevel; cu.bevel_resolution = 8 if bevel > 0.02 else 3
+        ob = bpy.data.objects.new(name, cu); bpy.context.collection.objects.link(ob)
+        ob.location.z = z
+        bpy.ops.object.select_all(action="DESELECT")
+        bpy.context.view_layer.objects.active = ob; ob.select_set(True)
+        bpy.ops.object.convert(target="MESH")
+        return bpy.context.active_object
+
+    # rebord : contour élargi, percé au centre ; les contours voisins se recouvrent, on les fusionne d'abord
+    def merged(ob):
+        rm = ob.modifiers.new("remesh", "REMESH"); rm.mode = "VOXEL"; rm.voxel_size = 0.006
+        bpy.context.view_layer.objects.active = ob
+        bpy.ops.object.modifier_apply(modifier="remesh")
+        return ob
+    rim = merged(text_mesh("rim", 0.075, 0.03, 0.0, -0.02))
+    cut = merged(text_mesh("cut", 0.048, 0.2, 0.0, -0.1))
+    bo = rim.modifiers.new("hole", "BOOLEAN"); bo.operation = "DIFFERENCE"; bo.object = cut; bo.solver = "MANIFOLD"
+    bpy.context.view_layer.objects.active = rim
+    bpy.ops.object.modifier_apply(modifier="hole")
+    bv = rim.modifiers.new("bevel", "BEVEL"); bv.width = 0.01; bv.segments = 3; bv.limit_method = "ANGLE"
+    bpy.ops.object.shade_smooth()
+    cut.hide_render = True
+    rim.data.materials.append(mat("rim_dark", (0.5, 0.52, 0.56), 1.0, 0.32))
+    well = text_mesh("well", 0.05, 0.004, 0.0, -0.05)
+    well.data.materials.append(mat("well", (0.025, 0.02, 0.04), 1.0, 0.45))
+    letters = text_mesh("letters", 0.0, 0.022, 0.026, 0.006)
+    letters.data.materials.append(chrome80_material())
+    for ob in (letters, rim, well):         # vague légère : le mot ondule
+        for v in ob.data.vertices:
+            v.co.y += 0.045 * math.sin(v.co.x * 0.55 + 0.6)
+    w = rim.dimensions.x
+    camera_top(w * 1.03, 1800, 300)
+    vs = bpy.context.scene.view_settings
+    vs.view_transform, vs.look = "Standard", "None"
+    render("title-chrome")
+    vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+
+
 # ------------------------------------------------------------------ charms
 CHARM_S = 1.35   # échelle de caméra commune : l'anneau est toujours à 4 % du haut de l'image
 
@@ -737,6 +821,7 @@ def part_sticker():
 
 
 PARTS = {
+    "title-chrome": part_title_chrome,
     "title-led": lambda: part_title(True),
     "title-off": lambda: part_title(False),
     "charm-bass": part_charm_bass,
