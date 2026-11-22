@@ -5,7 +5,7 @@ const allCanvases = [...document.querySelectorAll("canvas")];
 
 // Models are drawn at low resolution and scaled up: real dot-matrix pixels
 function fit(c) {
-  const k = c.dataset.model ? 1 / 2.5 : dpr();
+  const k = c.dataset.model ? 1 / 2.5 : 0.5;
   const w = Math.max(1, Math.round(c.clientWidth * k));
   const h = Math.max(1, Math.round(c.clientHeight * k));
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
@@ -26,7 +26,88 @@ const order = ["home", "plugin", "tarif", "audioware", "faq", "contact", "legal"
 const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "MENTIONS LÉGALES" };
 const scroller = document.getElementById("views");
 const stTitle = document.getElementById("st-title");
+const readout = document.getElementById("readout");
+const device = document.getElementById("device");
+const glassEl = document.getElementById("glass");
 let current = "home";
+
+// ---------------------------------------------------------
+// Chassis: chrome body drawn edge to edge around the screen
+// ---------------------------------------------------------
+function hole(x, y, w, h) {
+  const r = Math.min(54, w * 0.09, h * 0.14);
+  const bw = Math.min(12, w * 0.016), bt = Math.min(14, h * 0.03), bb = Math.min(26, h * 0.055);
+  const f = (n) => n.toFixed(1);
+  return [
+    `M${f(x + bw + r)} ${f(y + bt)}`,
+    `Q${f(x + w / 2)} ${f(y - bt)} ${f(x + w - bw - r)} ${f(y + bt)}`,
+    `Q${f(x + w - bw)} ${f(y + bt)} ${f(x + w - bw)} ${f(y + bt + r)}`,
+    `Q${f(x + w + bw)} ${f(y + h / 2)} ${f(x + w - bw)} ${f(y + h - r)}`,
+    `Q${f(x + w - bw)} ${f(y + h)} ${f(x + w - bw - r)} ${f(y + h)}`,
+    `Q${f(x + w / 2)} ${f(y + h - 2 * bb)} ${f(x + bw + r)} ${f(y + h)}`,
+    `Q${f(x + bw)} ${f(y + h)} ${f(x + bw)} ${f(y + h - r)}`,
+    `Q${f(x - bw)} ${f(y + h / 2)} ${f(x + bw)} ${f(y + bt + r)}`,
+    `Q${f(x + bw)} ${f(y + bt)} ${f(x + bw + r)} ${f(y + bt)}Z`,
+  ].join("");
+}
+function layout() {
+  const d = device.getBoundingClientRect(), g = glassEl.getBoundingClientRect();
+  const W = d.width, H = d.height, x = g.left - d.left, y = g.top - d.top;
+  const inner = hole(x, y, g.width, g.height);
+  ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
+  const body = `M0 0H${W}V${H}H0Z` + inner;
+  document.getElementById("body").setAttribute("d", body);
+  document.getElementById("body-sheen").setAttribute("d", body);
+  document.getElementById("rim").setAttribute("d", inner);
+  document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8));
+  glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height)}')`;
+}
+layout();
+if ("ResizeObserver" in window) new ResizeObserver(layout).observe(device); else window.addEventListener("resize", layout);
+if (document.fonts) document.fonts.ready.then(layout);
+
+// ---------------------------------------------------------
+// Position bar + scroll pills
+// ---------------------------------------------------------
+const posTrack = document.getElementById("pos-track");
+function updatePos() {
+  const max = scroller.scrollHeight - scroller.clientHeight;
+  posTrack.style.setProperty("--p", max > 0 ? (scroller.scrollTop / max).toFixed(4) : 0);
+}
+scroller.addEventListener("scroll", updatePos, { passive: true });
+posTrack.addEventListener("pointerdown", (e) => {
+  const seek = (ev) => {
+    const r = posTrack.getBoundingClientRect();
+    scroller.scrollTop = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width)) * (scroller.scrollHeight - scroller.clientHeight);
+  };
+  posTrack.setPointerCapture(e.pointerId); seek(e);
+  posTrack.onpointermove = (ev) => ev.buttons && seek(ev);
+});
+document.getElementById("up").addEventListener("click", () => scroller.scrollBy({ top: -scroller.clientHeight * 0.7, behavior: "smooth" }));
+document.getElementById("down").addEventListener("click", () => scroller.scrollBy({ top: scroller.clientHeight * 0.7, behavior: "smooth" }));
+
+// ---------------------------------------------------------
+// Backlight knob
+// ---------------------------------------------------------
+const knob = document.getElementById("backlight");
+(function () {
+  const set = (v) => {
+    v = Math.min(1, Math.max(0, v));
+    knob.dataset.v = v;
+    knob.style.setProperty("--a", v * 270 - 135 + "deg");
+    knob.setAttribute("aria-valuenow", Math.round(v * 100));
+    glassEl.style.setProperty("--bl", (0.55 + v * 0.65).toFixed(3));
+  };
+  set(0.7);
+  let y0 = null, v0 = 0;
+  knob.addEventListener("pointerdown", (e) => { knob.setPointerCapture(e.pointerId); y0 = e.clientY; v0 = +knob.dataset.v; e.preventDefault(); });
+  knob.addEventListener("pointermove", (e) => { if (y0 !== null) set(v0 + (y0 - e.clientY) / 160); });
+  ["pointerup", "pointercancel"].forEach((ev) => knob.addEventListener(ev, () => (y0 = null)));
+  knob.addEventListener("keydown", (e) => {
+    const d = { ArrowUp: 0.05, ArrowRight: 0.05, ArrowDown: -0.05, ArrowLeft: -0.05 }[e.key];
+    if (d) { set(+knob.dataset.v + d); e.preventDefault(); }
+  });
+})();
 
 function show(hash) {
   const target = hash && document.getElementById(hash);
@@ -37,8 +118,10 @@ function show(hash) {
     current = id;
     scroller.scrollTop = 0;
   }
-  document.querySelectorAll(".key[data-key]").forEach((k) => (k.dataset.key === id ? k.setAttribute("aria-current", "page") : k.removeAttribute("aria-current")));
+  document.querySelectorAll("[data-key]").forEach((k) => (k.dataset.key === id ? k.setAttribute("aria-current", "page") : k.removeAttribute("aria-current")));
   stTitle.textContent = order.indexOf(id) + 1 + ". " + names[id];
+  readout.textContent = String(order.indexOf(id) + 1).padStart(2, "0") + " " + names[id];
+  updatePos();
   document.title = (id === "home" ? "" : names[id].charAt(0) + names[id].slice(1).toLowerCase() + " — ") + "Malicious Music";
   if (target && target !== view) target.scrollIntoView({ block: "start" });
 }
@@ -73,12 +156,14 @@ function boot() {
 }
 glass.addEventListener("pointerdown", endBoot);
 window.addEventListener("keydown", endBoot);
-power.addEventListener("click", () => {
+function togglePower() {
   const on = power.getAttribute("aria-pressed") !== "true";
   power.setAttribute("aria-pressed", String(on));
   led.classList.toggle("on", on);
   if (on) boot(); else { clearTimeout(bootTimer); glass.classList.remove("booting"); glass.classList.add("off"); }
-});
+}
+power.addEventListener("click", togglePower);
+document.getElementById("power-x").addEventListener("click", togglePower);
 boot();
 
 // ---------------------------------------------------------
@@ -119,7 +204,7 @@ function drawWave(c, t) {
   const p = profiles[c.dataset.wave] || profiles.mix;
   const { width: w, height: h } = c;
   ctx.clearRect(0, 0, w, h);
-  const cell = 6 * dpr(), bars = Math.max(16, Math.floor(w / cell)), rows = Math.max(3, Math.floor(h / cell));
+  const cell = 3, bars = Math.max(16, Math.floor(w / cell)), rows = Math.max(3, Math.floor(h / cell));
   const bw = w / bars, rh = h / rows, d = Math.min(bw, rh) * 0.74;
   for (let i = 0; i < bars; i++) {
     const x = i / bars;
