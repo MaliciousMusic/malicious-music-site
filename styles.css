@@ -631,3 +631,44 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 .tap:not(.hold) { animation-play-state: running; }
 @keyframes tap-out { to { opacity: 0; transform: scale(1.9); box-shadow: 0 0 0 1px rgba(38,51,44,.1); } }
 .glass.scrolling .views { pointer-events: none; }
+
+/* =========================================================
+   ENCOCHE QUI DESCEND DANS L'ÉCRAN + GRAVURE STYLISÉE
+   ========================================================= */
+.engraved-title {
+  position: absolute; left: 50%; top: calc(var(--top) * 1.02); transform: translateX(-50%);
+  font-family: "Audiowide", var(--sans); font-weight: 400;
+  font-size: clamp(.95rem, 2.1vw, 1.5rem); letter-spacing: .14em; padding-left: .14em; margin: 0; white-space: nowrap;
+  color: rgba(40, 46, 54, .86);
+  text-shadow: 0 1px 0 rgba(255,255,255,.9), 0 -1px 0 rgba(0,0,0,.5), 0 0 1px rgba(0,0,0,.25);
+}
+@media (max-width: 760px) {
+  .engraved-title { font-size: .86rem; letter-spacing: .1em; top: calc(var(--top) * .92); }
+}
+
+/* Stylet : plus grand, pointe en bas à gauche */
+.stylus {
+  --sw: clamp(150px, 13vw, 200px);
+  margin: calc(var(--sw) * -.956) 0 0 calc(var(--sw) * -.044);
+  transform-origin: 4.4% 95.6%;
+  filter: drop-shadow(16px 14px 7px rgba(0,0,0,.28));
+}
+.stylus.down { filter: drop-shadow(5px 4px 2px rgba(0,0,0,.38)); }
+
+/* =========================================================
+   CHARMS ACCROCHÉS AU BOUT DU STYLET (cordons simulés dans main.js)
+   ========================================================= */
+.charms { --u: clamp(28px, 2.6vw, 38px); position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0; transition: opacity .15s; }
+.charms.show { opacity: 1; }
+.cords { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cords path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cords .cord { stroke: #5b22c2; stroke-width: 2.2; }
+.cords .cord-shadow { stroke: rgba(0,0,0,.22); stroke-width: 2.2; transform: translate(6px, 7px); filter: blur(1.5px); }
+.charm { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 0 0; will-change: transform; filter: drop-shadow(9px 10px 5px rgba(0,0,0,.28)); }
+
+/* stylet en perspective : point chaud = pointe */
+.stylus {
+  --sw: clamp(150px, 13vw, 200px);
+  margin: calc(var(--sw) * -0.9664) 0 0 calc(var(--sw) * -0.0371);
+  transform-origin: 3.71% 96.64%;
+}

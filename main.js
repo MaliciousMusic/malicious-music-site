@@ -34,13 +34,28 @@ let current = "home";
 // ---------------------------------------------------------
 // Chassis: chrome body drawn edge to edge around the screen
 // ---------------------------------------------------------
-function hole(x, y, w, h) {
+// n = encoche en U qui descend dans le haut de l'écran : { cx, hw (demi-largeur du fond), depth }
+function hole(x, y, w, h, n) {
   const r = Math.min(54, w * 0.09, h * 0.14);
   const bw = Math.min(12, w * 0.016), bt = Math.min(14, h * 0.03), bb = Math.min(26, h * 0.055);
-  const f = (n) => n.toFixed(1);
+  const f = (v) => v.toFixed(1);
+  let top;
+  if (n) {
+    const yt = y + bt, yb = yt + n.depth, k = n.depth * 1.7;   // k : longueur des épaules de l'encoche
+    const a = n.cx - n.hw, b = n.cx + n.hw;
+    top = [
+      `L${f(a - k)} ${f(yt)}`,
+      `C${f(a - k * 0.35)} ${f(yt)} ${f(a - k * 0.45)} ${f(yb)} ${f(a)} ${f(yb)}`,
+      `L${f(b)} ${f(yb)}`,
+      `C${f(b + k * 0.45)} ${f(yb)} ${f(b + k * 0.35)} ${f(yt)} ${f(b + k)} ${f(yt)}`,
+      `L${f(x + w - bw - r)} ${f(yt)}`,
+    ].join("");
+  } else {
+    top = `Q${f(x + w / 2)} ${f(y - bt)} ${f(x + w - bw - r)} ${f(y + bt)}`;
+  }
   return [
     `M${f(x + bw + r)} ${f(y + bt)}`,
-    `Q${f(x + w / 2)} ${f(y - bt)} ${f(x + w - bw - r)} ${f(y + bt)}`,
+    top,
     `Q${f(x + w - bw)} ${f(y + bt)} ${f(x + w - bw)} ${f(y + bt + r)}`,
     `Q${f(x + w + bw)} ${f(y + h / 2)} ${f(x + w - bw)} ${f(y + h - r)}`,
     `Q${f(x + w - bw)} ${f(y + h)} ${f(x + w - bw - r)} ${f(y + h)}`,
@@ -53,7 +68,11 @@ function hole(x, y, w, h) {
 function layout() {
   const d = device.getBoundingClientRect(), g = glassEl.getBoundingClientRect();
   const W = d.width, H = d.height, x = g.left - d.left, y = g.top - d.top;
-  const inner = hole(x, y, g.width, g.height);
+  const tp = document.getElementById("title-plate").getBoundingClientRect();
+  const bt = Math.min(14, g.height * 0.03);
+  const notch = { cx: tp.left - d.left + tp.width / 2, hw: tp.width / 2 + 30, depth: Math.max(24, tp.bottom - d.top + 14 - (y + bt)) };
+  const shifted = (dx, dy, extra = 0) => ({ cx: notch.cx + dx, hw: notch.hw + extra, depth: notch.depth + extra });
+  const inner = hole(x, y, g.width, g.height, notch);
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
   const body = `M0 0H${W}V${H}H0Z` + inner;
   document.getElementById("body").setAttribute("d", body);
@@ -62,14 +81,13 @@ function layout() {
   const pat = document.getElementById("p-plate"), img = document.getElementById("plate-img");
   [pat, img].forEach((el) => { el.setAttribute("width", W); el.setAttribute("height", H); });
   document.getElementById("rim").setAttribute("d", inner);
-  document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8));
-  glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height)}')`;
-  // encoche gravée en haut au centre, à la largeur du titre
-  const tp = document.getElementById("title-plate").getBoundingClientRect();
-  const tw = tp.width + 36, cx = tp.left - d.left + tp.width / 2, D = (g.top - d.top) * 0.8, f = (n) => n.toFixed(1);
-  const a = cx - tw / 2, b = cx + tw / 2, k = D * 1.5;
+  document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8, { ...notch, hw: notch.hw - 4, depth: notch.depth - 4 }));
+  glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height, { ...notch, cx: notch.cx - x })}')`;
+  // plaque gravée autour du titre, dans l'encoche
+  const f = (v) => v.toFixed(1), px = 16, py = 7, rr = (tp.height + 2 * py) / 2;
+  const L = tp.left - d.left - px, R = tp.right - d.left + px, T = tp.top - d.top - py, B = tp.bottom - d.top + py;
   document.getElementById("recess").setAttribute("d",
-    `M${f(a - k)} -4C${f(a - k * 0.4)} -4 ${f(a - k * 0.45)} ${f(D)} ${f(a)} ${f(D)}H${f(b)}C${f(b + k * 0.45)} ${f(D)} ${f(b + k * 0.4)} -4 ${f(b + k)} -4Z`);
+    `M${f(L + rr)} ${f(T)}H${f(R - rr)}A${f(rr)} ${f(rr)} 0 0 1 ${f(R - rr)} ${f(B)}H${f(L + rr)}A${f(rr)} ${f(rr)} 0 0 1 ${f(L + rr)} ${f(T)}Z`);
 }
 layout();
 if ("ResizeObserver" in window) new ResizeObserver(layout).observe(device); else window.addEventListener("resize", layout);
@@ -506,3 +524,96 @@ glassEl.addEventListener("click", (e) => {
   if (swallowClick) { e.preventDefault(); e.stopPropagation(); swallowClick = false; }
 }, true);
 window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
+
+// ---------------------------------------------------------
+// Charms au bout du stylet : cordons souples (Verlet) et charms lourds qui se cognent
+// ---------------------------------------------------------
+(function () {
+  const box = document.getElementById("charms");
+  if (!box) return;
+  if (!document.documentElement.classList.contains("stylus-on")) { box.hidden = true; return; }
+  const END = [0.8529, -0.8561];          // bout arrière du stylet par rapport à la pointe (× taille du stylet)
+  const cordEls = [...box.querySelectorAll(".cord")], shadowEls = [...box.querySelectorAll(".cord-shadow")];
+  const G = 2400, DRAG = 0.992, SUB = 3, ITER = 10;
+  let unit = 30, charms = [];
+  let mx = innerWidth / 2, my = innerHeight / 2, seen = false;
+  const pivot = () => { const sw = stylus.offsetWidth || 170; return [mx + END[0] * sw, my + END[1] * sw]; };
+
+  function build() {
+    unit = parseFloat(getComputedStyle(box).getPropertyValue("--u")) || 30;
+    const [px, py] = pivot();
+    charms = [...box.querySelectorAll(".charm")].map((img, i) => {
+      const L = +img.dataset.len * unit, W = +img.dataset.size * unit * 1.9;
+      const n = Math.max(4, Math.round(L / 7)), seg = L / n;
+      const pts = [];
+      for (let k = 0; k <= n; k++) pts.push({ x: px, y: py + k * seg, ox: px, oy: py + k * seg, w: k === 0 ? 0 : 1 });
+      const hang = W * 0.42;                       // anneau → centre du charm
+      const c = { x: px, y: py + L + hang, ox: px, oy: py + L + hang, w: 0.18 };   // plus lourd que le cordon
+      img.style.width = img.style.height = W + "px";
+      return { img, pts, c, seg, hang, W, r: W * 0.27 };
+    });
+  }
+  build();
+  window.addEventListener("resize", build);
+  window.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;
+    if (!seen) { mx = e.clientX; my = e.clientY; seen = true; build(); }
+    mx = e.clientX; my = e.clientY;
+  }, { passive: true });
+  window.addEventListener("pointerdown", () => charms.forEach((ch) => { ch.c.ox -= (Math.random() - 0.5) * 6; ch.c.oy += 3; }));
+
+  function link(a, b, len, rigid) {
+    const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6;
+    if (!rigid && d <= len) return;                // un cordon peut se détendre, pas s'étirer
+    const wsum = a.w + b.w; if (!wsum) return;
+    const k = (d - len) / d / wsum;
+    a.x += dx * k * a.w; a.y += dy * k * a.w;
+    b.x -= dx * k * b.w; b.y -= dy * k * b.w;
+  }
+  let last = performance.now();
+  function step(t) {
+    const dt = Math.min(0.033, (t - last) / 1000) / SUB; last = t;
+    const [px, py] = pivot();
+    for (let s = 0; s < SUB; s++) {
+      for (const ch of charms) {
+        for (const p of [...ch.pts, ch.c]) {
+          if (!p.w) continue;
+          const vx = (p.x - p.ox) * DRAG, vy = (p.y - p.oy) * DRAG;
+          p.ox = p.x; p.oy = p.y;
+          p.x += vx; p.y += vy + G * dt * dt;
+        }
+        ch.pts[0].x = ch.pts[0].ox = px; ch.pts[0].y = ch.pts[0].oy = py;
+      }
+      for (let it = 0; it < ITER; it++) {
+        for (const ch of charms) {
+          for (let k = 0; k < ch.pts.length - 1; k++) link(ch.pts[k], ch.pts[k + 1], ch.seg, false);
+          link(ch.pts[ch.pts.length - 1], ch.c, ch.hang, true);
+        }
+        // les charms se cognent au lieu de se traverser
+        for (let i = 0; i < charms.length; i++) for (let j = i + 1; j < charms.length; j++) {
+          const a = charms[i].c, b = charms[j].c, min = charms[i].r + charms[j].r;
+          const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6;
+          if (d < min) { const k = (min - d) / d * 0.5; a.x -= dx * k; a.y -= dy * k; b.x += dx * k; b.y += dy * k; }
+        }
+      }
+    }
+    box.classList.toggle("show", seen && stylus.classList.contains("show"));
+    charms.forEach((ch, i) => {
+      // cordon : courbe lissée passant par les points
+      const P = ch.pts;
+      let d = `M${P[0].x.toFixed(1)} ${P[0].y.toFixed(1)}`;
+      for (let k = 1; k < P.length - 1; k++) {
+        const mxp = (P[k].x + P[k + 1].x) / 2, myp = (P[k].y + P[k + 1].y) / 2;
+        d += `Q${P[k].x.toFixed(1)} ${P[k].y.toFixed(1)} ${mxp.toFixed(1)} ${myp.toFixed(1)}`;
+      }
+      const e = P[P.length - 1];
+      d += `L${e.x.toFixed(1)} ${e.y.toFixed(1)}`;
+      cordEls[i].setAttribute("d", d); shadowEls[i].setAttribute("d", d);
+      // charm : son anneau sur le bout du cordon, orienté vers son centre de gravité
+      const ang = -Math.atan2(ch.c.x - e.x, ch.c.y - e.y);
+      ch.img.style.transform = `translate(${e.x}px, ${e.y}px) rotate(${ang}rad) translate(${-ch.W / 2}px, ${-ch.W * 0.04}px)`;
+    });
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();

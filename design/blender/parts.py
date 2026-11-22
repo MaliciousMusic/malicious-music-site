@@ -310,8 +310,11 @@ def part_fader():
 
 
 def part_stylus():
-    """Stylet façon console portable : pointe grise, bague chromée, corps en plastique violet.
-    La pointe est dans le coin haut gauche de l'image (point chaud du curseur)."""
+    """Stylet vu en perspective : la pointe touche l'écran, l'arrière vient vers nous.
+    Écrit assets/hw/stylus.json avec la position (px) de la pointe et du bout arrière dans l'image."""
+    import json
+    from mathutils import Vector
+    from bpy_extras.object_utils import world_to_camera_view
     clear(); key_light(320, 4)
     tip = lathe("tip", [(0, 0), (0.012, 0.004), (0.022, 0.02), (0.036, 0.08), (0.06, 0.2), (0.074, 0.28)],
                 mat("tip_plastic", (0.62, 0.64, 0.68), 0.0, 0.32, coat=0.3))
@@ -319,15 +322,209 @@ def part_stylus():
     body = lathe("body", [(0.08, 0.35), (0.082, 0.4), (0.082, 2.36), (0.078, 2.44), (0.06, 2.52), (0.03, 2.565), (0, 2.575)],
                  mat("stylus_violet", (0.26, 0.05, 0.62), 0.0, 0.22, coat=1.0, transmission=0.15))
     grip = [lathe(f"grip{i}", [(0.0825, 0.46 + i * 0.07), (0.086, 0.475 + i * 0.07), (0.0825, 0.49 + i * 0.07)], DARK()) for i in range(5)]
-    for ob in [tip, ring, body] + grip:
-        ob.rotation_euler = (math.radians(90), 0, math.radians(45))
-        ob.location.z = 0.2
-    cam = bpy.data.cameras.new("cam"); cam.type = "ORTHO"; cam.ortho_scale = 2.0
-    co = bpy.data.objects.new("cam", cam); co.location = (0.91, -0.91, 10)
-    bpy.context.collection.objects.link(co); bpy.context.scene.camera = co
-    sc = bpy.context.scene
-    sc.render.resolution_x = sc.render.resolution_y = 320
+    # anneau de dragonne au bout, pour accrocher les charms
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.05, minor_radius=0.012, location=(0, 0, 2.6), rotation=(math.radians(90), 0, 0))
+    strap = bpy.context.active_object; bpy.ops.object.shade_smooth(); strap.data.materials.append(CHROME())
+    pivot = bpy.data.objects.new("pivot", None); bpy.context.collection.objects.link(pivot)
+    for ob in [tip, ring, body, strap] + grip:
+        ob.parent = pivot
+    phi = math.radians(58)                                   # inclinaison vers nous
+    d = Vector((math.cos(phi) * math.cos(math.radians(45)), math.cos(phi) * math.sin(math.radians(45)), math.sin(phi)))
+    pivot.rotation_mode = "QUATERNION"
+    pivot.rotation_quaternion = d.to_track_quat("Z", "Y")
+    cam = bpy.data.cameras.new("cam"); cam.lens = 30
+    co = bpy.data.objects.new("cam", cam); co.location = (0.6, 0.6, 3.6)
+    bpy.context.collection.objects.link(co); sc = bpy.context.scene; sc.camera = co
+    N = 640
+    sc.render.resolution_x = sc.render.resolution_y = N
+    bpy.context.view_layer.update()
+    def px(v):
+        u = world_to_camera_view(sc, co, v)
+        return [round(u.x * N, 1), round((1 - u.y) * N, 1)]
+    end = pivot.matrix_world @ Vector((0, 0, 2.6))
+    json.dump({"size": N, "tip": px(Vector((0, 0, 0))), "end": px(end)}, open(os.path.join(OUT, "stylus.json"), "w"))
+    vs = sc.view_settings
+    vs.view_transform, vs.look = "Standard", "None"
     render("stylus")
+    vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+
+
+# ------------------------------------------------------------------ charms
+CHARM_S = 1.35   # échelle de caméra commune : l'anneau est toujours à 4 % du haut de l'image
+
+
+def add_bail(y_top):
+    """Tige + anneau de suspension au-dessus de la pièce ; renvoie le haut de l'anneau."""
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.018, depth=0.12, location=(0, y_top + 0.03, 0.02), vertices=24)
+    pin = bpy.context.active_object
+    pin.rotation_euler.x = math.radians(90)
+    bpy.ops.object.shade_smooth()
+    pin.data.materials.append(CHROME())
+    R, r = 0.06, 0.015
+    cy = y_top + 0.09 + R
+    bpy.ops.mesh.primitive_torus_add(major_radius=R, minor_radius=r, location=(0, cy, 0.02), major_segments=48, minor_segments=16)
+    ring = bpy.context.active_object
+    bpy.ops.object.shade_smooth()
+    ring.data.materials.append(CHROME())
+    return cy + R + r
+
+
+def charm_render(name, ring_top):
+    camera_top(CHARM_S, 360, 360)
+    cam = bpy.context.scene.camera
+    cam.location = (0, ring_top - CHARM_S * 0.46, 10)
+    vs = bpy.context.scene.view_settings
+    vs.view_transform, vs.look = "Standard", "None"
+    render(name)
+    vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+
+
+def molded(name, color, rough=0.22, transmission=0.0):
+    """Plastique moulé brillant (vernis épais)."""
+    return mat(name, color, 0.0, rough, coat=1.0, transmission=transmission)
+
+
+def part_charm_bass():
+    """Le bass du logo, découpé et extrudé comme un charm en PVC moulé."""
+    import bmesh
+    import json
+    clear(); key_light(300, 4)
+    folder = os.path.join(ROOT, "design", "blender")
+    poly = json.load(open(os.path.join(folder, "fish.geojson")))["features"][0]["geometry"]["coordinates"][0]
+    img = bpy.data.images.load(os.path.join(folder, "fish-tex.png"), check_existing=True)
+    W, H = img.size
+    sc = 1.0 / H
+    me = bpy.data.meshes.new("bass")
+    bm = bmesh.new()
+    uv = bm.loops.layers.uv.new()
+    pts = poly[:-1] if poly[0] == poly[-1] else poly
+    verts = [bm.verts.new(((x - W / 2) * sc, (y - H / 2) * sc, 0.0)) for x, y in pts]
+    face = bm.faces.new(verts)
+    if face.normal.z < 0:
+        face.normal_flip()
+    ext = bmesh.ops.extrude_face_region(bm, geom=[face])
+    top = [e for e in ext["geom"] if isinstance(e, bmesh.types.BMVert)]
+    bmesh.ops.translate(bm, vec=(0, 0, 0.075), verts=top)
+    bmesh.ops.triangulate(bm, faces=[f for f in bm.faces if len(f.verts) > 4], quad_method="BEAUTY", ngon_method="BEAUTY")
+    for f in bm.faces:
+        for lp in f.loops:
+            co = lp.vert.co
+            lp[uv].uv = (co.x / (W * sc) + 0.5, co.y / (H * sc) + 0.5)
+    bm.to_mesh(me); bm.free()
+    ob = bpy.data.objects.new("bass", me)
+    bpy.context.collection.objects.link(ob)
+    bpy.context.view_layer.objects.active = ob
+    ob.select_set(True)
+    bv = ob.modifiers.new("bevel", "BEVEL")
+    bv.width = 0.022; bv.segments = 4; bv.limit_method = "ANGLE"; bv.angle_limit = math.radians(40)
+    ob.modifiers.new("wn", "WEIGHTED_NORMAL")
+    bpy.ops.object.shade_smooth()
+    m = mat("bass_pvc", (1, 1, 1), 0.0, 0.34, coat=0.45)
+    nt = m.node_tree
+    it = nt.nodes.new("ShaderNodeTexImage"); it.image = img; it.extension = "EXTEND"
+    nt.links.new(it.outputs["Color"], nt.nodes["Principled BSDF"].inputs["Base Color"])
+    ob.data.materials.append(m)
+    ys = [v.co.y for v in me.vertices if abs(v.co.x) < 0.05]
+    ring_top = add_bail(max(ys) - 0.02)
+    charm_render("charm-bass", ring_top)
+
+
+def part_charm_note():
+    """Croche en plastique moulé noir brillant."""
+    clear(); key_light(300, 4)
+    black = molded("note_black", (0.015, 0.012, 0.02), 0.18)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=1, location=(-0.12, -0.34, 0.0), segments=48, ring_count=24)
+    head = bpy.context.active_object
+    head.scale = (0.24, 0.165, 0.09)
+    head.rotation_euler.z = math.radians(24)
+    bpy.ops.object.shade_smooth(); head.data.materials.append(black)
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.034, depth=0.9, location=(0.095, 0.08, 0.0), vertices=32)
+    stem = bpy.context.active_object
+    stem.rotation_euler.x = math.radians(90)
+    bpy.ops.object.shade_smooth(); stem.data.materials.append(black)
+    # drapeau : tube aplati qui retombe en vague
+    cu = bpy.data.curves.new("flag", "CURVE"); cu.dimensions = "3D"
+    sp = cu.splines.new("BEZIER"); sp.bezier_points.add(2)
+    for bp, co, hl, hr in zip(sp.bezier_points,
+                              [(0.1, 0.5, 0), (0.33, 0.2, 0), (0.3, -0.12, 0)],
+                              [(0.1, 0.56, 0), (0.33, 0.32, 0), (0.36, -0.02, 0)],
+                              [(0.18, 0.4, 0), (0.33, 0.1, 0), (0.24, -0.2, 0)]):
+        bp.co, bp.handle_left, bp.handle_right = co, hl, hr
+    cu.bevel_depth = 0.045; cu.bevel_resolution = 6
+    fl = bpy.data.objects.new("flag", cu); bpy.context.collection.objects.link(fl)
+    fl.scale.z = 0.7
+    fl.data.materials.append(black)
+    ring_top = add_bail(0.53)
+    for o in bpy.context.scene.objects:
+        if o.name.startswith("Cylinder") and o is not stem:
+            o.location.x = 0.095
+        if o.name.startswith("Torus"):
+            o.location.x = 0.095
+    charm_render("charm-note", ring_top)
+
+
+def part_charm_emoji():
+    """Émoji malicieux : boule jaune moulée, sourcils froncés, regard en coin, sourire en biais."""
+    clear(); key_light(300, 4)
+    yellow = molded("emoji_yellow", (1.0, 0.62, 0.04), 0.25)
+    white = molded("emoji_white", (0.95, 0.96, 1.0), 0.2)
+    brown = molded("emoji_brown", (0.22, 0.09, 0.02), 0.3)
+    blue = molded("emoji_blue", (0.08, 0.25, 0.85), 0.15)
+    black = molded("emoji_black", (0.01, 0.01, 0.01), 0.15)
+    R, SZ = 0.5, 0.5
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=R, segments=64, ring_count=32)
+    ball = bpy.context.active_object; ball.scale.z = SZ
+    bpy.ops.object.shade_smooth(); ball.data.materials.append(yellow)
+
+    def surf(x, y):
+        return SZ * math.sqrt(max(0.0, R * R - x * x - y * y))
+
+    def blob(x, y, sx, sy, sz, m, rot=0.0, lift=0.0):
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=1, location=(x, y, surf(x, y) - sz * 0.35 + lift), segments=32, ring_count=16)
+        o = bpy.context.active_object; o.scale = (sx, sy, sz); o.rotation_euler.z = rot
+        bpy.ops.object.shade_smooth(); o.data.materials.append(m)
+        return o
+
+    def tube(points, radius, m):
+        cu = bpy.data.curves.new("t", "CURVE"); cu.dimensions = "3D"
+        sp = cu.splines.new("POLY"); sp.points.add(len(points) - 1)
+        for p_, (x, y) in zip(sp.points, points):
+            p_.co = (x, y, surf(x, y) + 0.012, 1)
+        sp.use_smooth = True
+        cu.bevel_depth = radius; cu.bevel_resolution = 4
+        o = bpy.data.objects.new("t", cu); bpy.context.collection.objects.link(o)
+        o.data.materials.append(m)
+        return o
+
+    # yeux : blanc, iris bleu tourné vers la droite, pupille, reflet
+    for ex, ey, s in ((-0.17, 0.02, 1.0), (0.15, 0.07, 1.12)):
+        blob(ex, ey, 0.11 * s, 0.125 * s, 0.035, white)
+        blob(ex + 0.045 * s, ey - 0.01, 0.052 * s, 0.056 * s, 0.03, blue, lift=0.01)
+        blob(ex + 0.05 * s, ey - 0.01, 0.028 * s, 0.03 * s, 0.03, black, lift=0.016)
+        blob(ex + 0.03 * s, ey + 0.02, 0.012, 0.012, 0.02, white, lift=0.024)
+    # sourcils froncés (le droit en accent circonflexe)
+    tube([(-0.33, 0.13), (-0.24, 0.16), (-0.12, 0.13), (-0.05, 0.08)], 0.022, brown)
+    tube([(0.03, 0.12), (0.1, 0.2), (0.16, 0.27), (0.24, 0.24)], 0.022, brown)
+    # sourire en biais : contour brun, dents blanches, ligne de dents
+    # sourire malicieux : croissant effilé qui remonte à droite (tube à rayon variable)
+    def crescent(points, radii, radius, m, dz=0.0):
+        cu = bpy.data.curves.new("smile", "CURVE"); cu.dimensions = "3D"
+        sp = cu.splines.new("POLY"); sp.points.add(len(points) - 1)
+        for p_, (x, y), rr in zip(sp.points, points, radii):
+            p_.co = (x, y, surf(x, y) - 0.01 + dz, 1)
+            p_.radius = rr
+        sp.use_smooth = True
+        cu.bevel_depth = radius; cu.bevel_resolution = 6
+        o = bpy.data.objects.new("smile", cu); bpy.context.collection.objects.link(o)
+        o.data.materials.append(m)
+        return o
+    arc = [(-0.2, -0.15), (-0.12, -0.215), (-0.02, -0.255), (0.09, -0.26), (0.19, -0.225), (0.27, -0.16), (0.32, -0.08)]
+    thick = [0.15, 0.55, 0.85, 1.0, 0.92, 0.6, 0.18]
+    crescent(arc, thick, 0.068, brown)
+    crescent(arc, [r * 0.86 for r in thick], 0.068, white, dz=0.008)
+    tube([(-0.1, -0.215), (0.0, -0.245), (0.1, -0.248), (0.2, -0.215), (0.26, -0.17)], 0.005, mat("teeth_line", (0.6, 0.6, 0.66), 0.0, 0.4))
+    ring_top = add_bail(R - 0.03)
+    charm_render("charm-emoji", ring_top)
 
 
 def part_plate():
@@ -463,6 +660,9 @@ def part_sticker():
 
 
 PARTS = {
+    "charm-bass": part_charm_bass,
+    "charm-note": part_charm_note,
+    "charm-emoji": part_charm_emoji,
     "stylus": part_stylus,
     "fader": part_fader,
     "sticker": part_sticker,
