@@ -35,10 +35,26 @@ let current = "home";
 // Chassis: chrome body drawn edge to edge around the screen
 // ---------------------------------------------------------
 // n = encoche en U qui descend dans le haut de l'écran : { cx, hw (demi-largeur du fond), depth }
-function hole(x, y, w, h, n) {
+function hole(x, y, w, h, n, jb) {
   const r = Math.min(54, w * 0.09, h * 0.14);
   const bw = Math.min(12, w * 0.016), bt = Math.min(14, h * 0.03), bb = Math.min(26, h * 0.055);
   const f = (v) => v.toFixed(1);
+  // morsure : le coin bas-gauche de l'écran contourne la molette (cercle jb = {cx, cy, r})
+  let bite = null;
+  if (jb) {
+    const yb = y + h, xl = x + bw, dy = yb - jb.cy, dx = xl - jb.cx;
+    if (Math.abs(dy) < jb.r && Math.abs(dx) < jb.r) {
+      const i1 = { x: jb.cx + Math.sqrt(jb.r * jb.r - dy * dy), y: yb };   // sortie sur le bord bas
+      const i2 = { x: xl, y: jb.cy - Math.sqrt(jb.r * jb.r - dx * dx) };   // sortie sur le bord gauche
+      if (i2.y < yb - 4 && i1.x > xl + 4 && i2.y > y + r) {
+        const fl = Math.min(18, jb.r * 0.16);                                // congés de raccord
+        const t1 = Math.atan2(i1.y - jb.cy, i1.x - jb.cx) - fl / jb.r;
+        const t2 = Math.atan2(i2.y - jb.cy, i2.x - jb.cx) + fl / jb.r;
+        const p = (t) => ({ x: jb.cx + jb.r * Math.cos(t), y: jb.cy + jb.r * Math.sin(t) });
+        bite = { i1, i2, a1: p(t1), a2: p(t2), r: jb.r, fl };
+      }
+    }
+  }
   let top;
   if (n) {
     const yt = y + bt, yb = yt + n.depth, k = n.depth * 1.7;   // k : longueur des épaules de l'encoche
@@ -60,9 +76,17 @@ function hole(x, y, w, h, n) {
     `Q${f(x + w - bw)} ${f(y + bt)} ${f(x + w - bw)} ${f(y + bt + r)}`,
     `Q${f(x + w + bw)} ${f(y + h / 2)} ${f(x + w - bw)} ${f(y + h - r)}`,
     `Q${f(x + w - bw)} ${f(y + h)} ${f(x + w - bw - r)} ${f(y + h)}`,
-    `Q${f(x + w / 2)} ${f(y + h - 2 * bb)} ${f(x + bw + r)} ${f(y + h)}`,
-    `Q${f(x + bw)} ${f(y + h)} ${f(x + bw)} ${f(y + h - r)}`,
-    `Q${f(x - bw)} ${f(y + h / 2)} ${f(x + bw)} ${f(y + bt + r)}`,
+    ...(bite ? [
+      `Q${f((x + w - bw - r + bite.i1.x + bite.fl) / 2)} ${f(y + h - 2 * bb)} ${f(bite.i1.x + bite.fl)} ${f(y + h)}`,
+      `Q${f(bite.i1.x)} ${f(bite.i1.y)} ${f(bite.a1.x)} ${f(bite.a1.y)}`,
+      `A${f(bite.r)} ${f(bite.r)} 0 0 0 ${f(bite.a2.x)} ${f(bite.a2.y)}`,
+      `Q${f(bite.i2.x)} ${f(bite.i2.y)} ${f(x + bw)} ${f(bite.i2.y - bite.fl)}`,
+      `Q${f(x - bw)} ${f((bite.i2.y - bite.fl + y + bt + r) / 2)} ${f(x + bw)} ${f(y + bt + r)}`,
+    ] : [
+      `Q${f(x + w / 2)} ${f(y + h - 2 * bb)} ${f(x + bw + r)} ${f(y + h)}`,
+      `Q${f(x + bw)} ${f(y + h)} ${f(x + bw)} ${f(y + h - r)}`,
+      `Q${f(x - bw)} ${f(y + h / 2)} ${f(x + bw)} ${f(y + bt + r)}`,
+    ]),
     `Q${f(x + bw)} ${f(y + bt)} ${f(x + bw + r)} ${f(y + bt)}Z`,
   ].join("");
 }
@@ -79,7 +103,9 @@ function layout() {
   const yc = tp.bottom - d.top - dropT + m;                         // fond de l'encoche sous le centre du titre
   const notch = { cx: tp.left - d.left + tp.width / 2, hw, depth: Math.max(24, yc + dropN - (y + bt)), r: Rn };
   const shifted = (dx, dy, extra = 0) => ({ cx: notch.cx + dx, hw: notch.hw + extra, depth: notch.depth + extra });
-  const inner = hole(x, y, g.width, g.height, notch);
+  const jr = document.querySelector(".console > .jog").getBoundingClientRect();
+  const jog = { cx: jr.left - d.left + jr.width / 2, cy: jr.top - d.top + jr.height / 2, r: jr.width * 0.5 + 12 };
+  const inner = hole(x, y, g.width, g.height, notch, jog);
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
   const body = `M0 0H${W}V${H}H0Z` + inner;
   document.getElementById("body").setAttribute("d", body);
@@ -88,8 +114,8 @@ function layout() {
   const pat = document.getElementById("p-plate"), img = document.getElementById("plate-img");
   [pat, img].forEach((el) => { el.setAttribute("width", W); el.setAttribute("height", H); });
   document.getElementById("rim").setAttribute("d", inner);
-  document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8, { ...notch, hw: notch.hw - 4, depth: notch.depth - 4 }));
-  glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height, { ...notch, cx: notch.cx - x })}')`;
+  document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8, { ...notch, hw: notch.hw - 4, depth: notch.depth - 4 }, { ...jog, r: jog.r - 4 }));
+  glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height, { ...notch, cx: notch.cx - x }, { cx: jog.cx - x, cy: jog.cy - y, r: jog.r })}')`;
 }
 layout();
 if ("ResizeObserver" in window) new ResizeObserver(layout).observe(device); else window.addEventListener("resize", layout);

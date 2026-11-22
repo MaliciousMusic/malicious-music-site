@@ -712,3 +712,14 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 
 /* focus programmatique sur l'écran au changement de page : pas de contour */
 .views:focus { outline: none; }
+
+/* =========================================================
+   PROPORTIONS DE LA CONSOLE : molette de navigation XXL qui mord dans l'écran,
+   backlight réduite, power agrandi (les pièces sont toutes dimensionnées sur --jog)
+   ========================================================= */
+.device { --jog-big: calc(var(--jog) * 1.45); --jog-k: calc(var(--jog) * .7); --jog-p: calc(var(--jog) * 1.4); }
+.console > .jog { --jog: var(--jog-big); align-self: start; margin: calc(var(--bottom) - 8px - max(14px, env(safe-area-inset-bottom)) - var(--jog)) 0 0; z-index: 4; }
+.knob-wrap { --jog: var(--jog-k); }
+.knob-wrap .engrave { font-size: .5rem; }
+.power-wrap { --jog: var(--jog-p); }
+@media (max-width: 760px) { .device { --jog-big: var(--jog); } .console > .jog { align-self: center; margin: 0; } }
