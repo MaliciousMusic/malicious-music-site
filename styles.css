@@ -658,7 +658,7 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 /* =========================================================
    CHARMS ACCROCHÉS AU BOUT DU STYLET (cordons simulés dans main.js)
    ========================================================= */
-.charms { --u: clamp(28px, 2.6vw, 38px); position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0; transition: opacity .15s; }
+.charms { --u: clamp(28px, 2.6vw, 38px); position: fixed; inset: 0; z-index: 10000; pointer-events: none; opacity: 0; transition: opacity .15s; }
 .charms.show { opacity: 1; }
 .cords { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .cords path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -672,3 +672,7 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
   margin: calc(var(--sw) * -0.9664) 0 0 calc(var(--sw) * -0.0371);
   transform-origin: 3.71% 96.64%;
 }
+
+/* nœud du cordon passé autour de l'anneau du stylet */
+.cords .loop { fill: none; stroke: #5b22c2; stroke-width: 2.4; }
+.cords .knot { fill: #3d1288; stroke: #7d3fe6; stroke-width: 1; }

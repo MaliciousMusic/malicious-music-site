@@ -534,10 +534,13 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
   if (!document.documentElement.classList.contains("stylus-on")) { box.hidden = true; return; }
   const END = [0.8529, -0.8561];          // bout arrière du stylet par rapport à la pointe (× taille du stylet)
   const cordEls = [...box.querySelectorAll(".cord")], shadowEls = [...box.querySelectorAll(".cord-shadow")];
-  const G = 2400, DRAG = 0.992, SUB = 3, ITER = 10;
+  const loopEl = box.querySelector(".loop"), knotEl = box.querySelector(".knot");
+  const G = 3000, DRAG = 0.982, SUB = 4, ITER = 14;
   let unit = 30, charms = [];
   let mx = innerWidth / 2, my = innerHeight / 2, seen = false;
-  const pivot = () => { const sw = stylus.offsetWidth || 170; return [mx + END[0] * sw, my + END[1] * sw]; };
+  const RING = 0.07;                                  // rayon de l'anneau de dragonne (× taille du stylet)
+  const ringBottom = () => { const sw = stylus.offsetWidth || 170; return [mx + END[0] * sw, my + END[1] * sw + RING * sw * 0.85]; };
+  const pivot = () => { const [x, y] = ringBottom(); return [x, y + 4]; };  // le nœud, juste sous la boucle
 
   function build() {
     unit = parseFloat(getComputedStyle(box).getPropertyValue("--u")) || 30;
@@ -548,7 +551,7 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
       const pts = [];
       for (let k = 0; k <= n; k++) pts.push({ x: px, y: py + k * seg, ox: px, oy: py + k * seg, w: k === 0 ? 0 : 1 });
       const hang = W * 0.42;                       // anneau → centre du charm
-      const c = { x: px, y: py + L + hang, ox: px, oy: py + L + hang, w: 0.18 };   // plus lourd que le cordon
+      const c = { x: px, y: py + L + hang, ox: px, oy: py + L + hang, w: 0.05 };   // bien plus lourd que le cordon
       img.style.width = img.style.height = W + "px";
       return { img, pts, c, seg, hang, W, r: W * 0.27 };
     });
@@ -560,7 +563,7 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
     if (!seen) { mx = e.clientX; my = e.clientY; seen = true; build(); }
     mx = e.clientX; my = e.clientY;
   }, { passive: true });
-  window.addEventListener("pointerdown", () => charms.forEach((ch) => { ch.c.ox -= (Math.random() - 0.5) * 6; ch.c.oy += 3; }));
+
 
   function link(a, b, len, rigid) {
     const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6;
@@ -574,6 +577,12 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
   function step(t) {
     const dt = Math.min(0.033, (t - last) / 1000) / SUB; last = t;
     const [px, py] = pivot();
+    // la souris a « sauté » (sortie/retour dans la fenêtre) : on déplace toute la grappe sans l'affoler
+    const p0 = charms[0] && charms[0].pts[0];
+    if (p0 && Math.hypot(px - p0.x, py - p0.y) > 220) {
+      const dx = px - p0.x, dy = py - p0.y;
+      charms.forEach((ch) => [...ch.pts, ch.c].forEach((p) => { p.x += dx; p.y += dy; p.ox += dx; p.oy += dy; }));
+    }
     for (let s = 0; s < SUB; s++) {
       for (const ch of charms) {
         for (const p of [...ch.pts, ch.c]) {
@@ -593,11 +602,14 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
         for (let i = 0; i < charms.length; i++) for (let j = i + 1; j < charms.length; j++) {
           const a = charms[i].c, b = charms[j].c, min = charms[i].r + charms[j].r;
           const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6;
-          if (d < min) { const k = (min - d) / d * 0.5; a.x -= dx * k; a.y -= dy * k; b.x += dx * k; b.y += dy * k; }
+          if (d < min) { const k = (min - d) / d * 0.22; a.x -= dx * k; a.y -= dy * k; b.x += dx * k; b.y += dy * k; }
         }
       }
     }
     box.classList.toggle("show", seen && stylus.classList.contains("show"));
+    const [rx, ry] = ringBottom();
+    loopEl.setAttribute("cx", rx); loopEl.setAttribute("cy", ry);
+    knotEl.setAttribute("cx", px); knotEl.setAttribute("cy", py);
     charms.forEach((ch, i) => {
       // cordon : courbe lissée passant par les points
       const P = ch.pts;
