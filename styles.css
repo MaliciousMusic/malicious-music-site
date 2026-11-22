@@ -535,3 +535,23 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
   filter: blur(.3px); z-index: 0; mix-blend-mode: screen;
 }
 .knob-wrap::before { z-index: 0; }
+
+/* =========================================================
+   MOLETTE : le clic assombrit seulement le demi-disque, pas le bouton home
+   ========================================================= */
+.jog-btn:hover, .jog-btn:active { background: none; }
+.jog-btn::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .07s;
+  background: radial-gradient(ellipse 100% 50% at var(--cx) 50%, rgba(0,0,40,.34), rgba(0,0,40,.18));
+  -webkit-mask: radial-gradient(ellipse 46% 23% at var(--cx) 50%, transparent 98%, #000 100%);
+  mask: radial-gradient(ellipse 46% 23% at var(--cx) 50%, transparent 98%, #000 100%);
+}
+.jog-btn.prev { --cx: 100%; } .jog-btn.next { --cx: 0%; }
+.jog-btn:hover::before { opacity: .35; background: rgba(255,255,255,.35); }
+.jog-btn:active::before { opacity: 1; background: radial-gradient(ellipse 100% 50% at var(--cx) 50%, rgba(0,0,40,.34), rgba(0,0,40,.18)); }
+.jog-btn svg { position: relative; z-index: 1; transition: transform .07s; }
+.jog-btn:active svg { transform: scale(.92); }
+.jog-home, .jog-home:active { transform: translate(-50%, -50%); border-radius: 50%; transition: background .07s; }
+.jog-home:active { background: radial-gradient(circle, rgba(0,0,0,.3), rgba(0,0,0,.14) 66%, transparent 70%); }
+.jog-home:active svg { transform: translateY(1px) scale(.94); }
+.jog-home svg { transition: transform .07s; }
