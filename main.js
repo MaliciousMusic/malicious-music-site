@@ -73,7 +73,7 @@ function layout() {
   const bt = Math.min(14, g.height * 0.03);
   // le titre est en arc : ses extrémités descendent plus bas que son centre (≈ 35 % de sa hauteur)
   const sag = tp.height * 0.35;
-  const notch = { cx: tp.left - d.left + tp.width / 2, hw: tp.width / 2 + 18, depth: Math.max(24, tp.bottom - d.top + 10 - (y + bt)), sag };
+  const notch = { cx: tp.left - d.left + tp.width / 2, hw: tp.width / 2 + 26, depth: Math.max(24, tp.bottom - d.top + 20 - (y + bt)), sag };
   const shifted = (dx, dy, extra = 0) => ({ cx: notch.cx + dx, hw: notch.hw + extra, depth: notch.depth + extra });
   const inner = hole(x, y, g.width, g.height, notch);
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
