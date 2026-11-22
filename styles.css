@@ -364,3 +364,39 @@ h2::before { content: "> "; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; }
 }
+
+/* =========================================================
+   PIÈCES RENDUES DANS BLENDER (design/blender/parts.py)
+   ========================================================= */
+.rbtn, a:hover > .rbtn, button.rbtn:hover, .rbtn.xs {
+  width: calc(var(--s) * 1.22); height: calc(var(--s) * 1.22);
+  background: url("assets/hw/btn.png") center / 100% 100% no-repeat;
+  box-shadow: none; filter: drop-shadow(0 4px 5px rgba(0,0,0,.45));
+}
+.rbtn svg { width: 40%; height: 40%; }
+a:hover > .rbtn, button.rbtn:hover { filter: drop-shadow(0 4px 5px rgba(0,0,0,.45)) brightness(1.06); }
+a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
+  background: url("assets/hw/btn.png") center / 100% 100% no-repeat; box-shadow: none;
+  transform: translateY(1px) scale(.97); filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)) brightness(.9);
+}
+.nav-btn .led { top: calc(clamp(40px, 6.4vh, 54px) * .61 - 5.5px); }
+.side-l .nav-btn .led { right: -12px; } .side-r .nav-btn .led { left: -12px; }
+
+.pill, .pill:active { width: 64px; height: 32px; border-radius: 0; background: url("assets/hw/pill.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
+.pill:active { transform: translateY(1px); filter: drop-shadow(0 1px 1px rgba(0,0,0,.5)) brightness(.9); }
+.pill svg { width: 20px; height: 20px; filter: drop-shadow(0 1px 0 #fff); }
+
+.jog { background: url("assets/hw/jog.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 10px 14px rgba(0,0,0,.55)); }
+.jog .dot { display: none; }
+.jog-disc { inset: 22.6%; background: none; box-shadow: none; }
+.jog-btn { color: #fff; }
+.jog-btn svg { width: 34%; height: 34%; filter: drop-shadow(0 1px 2px rgba(0,0,60,.9)); }
+.jog-home, .jog-home:active { width: 40%; height: 40%; background: none; box-shadow: none; }
+.jog-home img { width: 58%; }
+
+.knob { transform: none; background: url("assets/hw/knob.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 10px 14px rgba(0,0,0,.55)); }
+.knob::after { left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px; transform: rotate(var(--a)) translateY(calc(var(--jog) * -.27)); }
+
+.power-ring { background: url("assets/hw/power-off.png") center / 100% 100% no-repeat; box-shadow: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.5)); width: calc(var(--jog) * .58); }
+.power-ring[aria-pressed="true"] { background-image: url("assets/hw/power-on.png"); box-shadow: none; filter: drop-shadow(0 0 10px rgba(91,234,63,.85)) drop-shadow(0 6px 8px rgba(0,0,0,.5)); }
+.power-ring span { inset: 34%; }

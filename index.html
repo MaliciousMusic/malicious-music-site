@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="preload" as="image" href="assets/hw/power-on.png" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -27,6 +28,13 @@
         <stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset=".88" stop-color="#fff" stop-opacity="0"/>
         <stop offset="1" stop-color="#000" stop-opacity=".28"/>
       </linearGradient>
+      <pattern id="p-plate" patternUnits="userSpaceOnUse" width="1600" height="1000">
+        <image id="plate-img" href="assets/hw/plate.jpg" width="1600" height="1000" preserveAspectRatio="none"/>
+      </pattern>
+      <linearGradient id="g-shade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".1" stop-color="#fff" stop-opacity="0"/>
+        <stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/>
+      </linearGradient>
       <filter id="f-chrome" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
         <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="b"/>
         <feDiffuseLighting in="b" surfaceScale="9" diffuseConstant="1" lighting-color="#fff" result="d"><feDistantLight azimuth="235" elevation="52"/></feDiffuseLighting>
@@ -41,8 +49,9 @@
         <feColorMatrix type="matrix" values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0"/>
       </filter>
     </defs>
-    <path id="body" fill="url(#g-metal)" fill-rule="evenodd" filter="url(#f-chrome)"/>
+    <path id="body" fill="url(#p-plate)" fill-rule="evenodd" filter="url(#f-chrome)"/>
     <path id="body-sheen" fill="url(#g-sheen)" fill-rule="evenodd"/>
+    <path id="body-shade" fill="url(#g-shade)" fill-rule="evenodd"/>
     <rect width="100%" height="100%" filter="url(#f-grain)" opacity=".16" style="mix-blend-mode:overlay"/>
   </svg>
 
@@ -342,6 +351,6 @@
     </div>
   </div>
 </div>
-<script src="main.js"></script>
+<script src="main.js?v=5"></script>
 </body>
 </html>

@@ -58,6 +58,9 @@ function layout() {
   const body = `M0 0H${W}V${H}H0Z` + inner;
   document.getElementById("body").setAttribute("d", body);
   document.getElementById("body-sheen").setAttribute("d", body);
+  document.getElementById("body-shade").setAttribute("d", body);
+  const pat = document.getElementById("p-plate"), img = document.getElementById("plate-img");
+  [pat, img].forEach((el) => { el.setAttribute("width", W); el.setAttribute("height", H); });
   document.getElementById("rim").setAttribute("d", inner);
   document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8));
   glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height)}')`;

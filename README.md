@@ -26,3 +26,16 @@ python3 -m http.server 8000
 ```
 
 Puis ouvrir http://localhost:8000
+
+## Pièces 3D (Blender)
+
+Les boutons ronds, la molette, le potard, le bouton POWER, les touches et la plaque de métal du châssis sont rendus dans Blender (`assets/hw/`).
+
+- Script : `design/blender/parts.py` (modélise et rend chaque pièce, fond transparent)
+- Éclairage : HDRI studio Poly Haven (CC0), à placer dans `design/hdri/studio_small_09_1k.hdr` (non versionné)
+
+```bash
+blender -b -P design/blender/parts.py              # toutes les pièces
+blender -b -P design/blender/parts.py -- jog knob  # seulement certaines
+```
+
