@@ -349,6 +349,83 @@ def part_stylus():
     vs.view_transform, vs.look = "AgX", "AgX - Punchy"
 
 
+def led_face_material(name, on=True):
+    """Face en acrylique violet derrière laquelle une matrice de LED s'allume (dégradé violet comme le poisson)."""
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    p = nt.nodes["Principled BSDF"]
+    p.inputs["Base Color"].default_value = (0.03, 0.006, 0.09, 1)
+    p.inputs["Roughness"].default_value = 0.3
+    p.inputs["Coat Weight"].default_value = 0.35
+    p.inputs["Coat Roughness"].default_value = 0.12
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    # dégradé vertical : violet vif en haut, violet profond en bas
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    mr = nt.nodes.new("ShaderNodeMapRange")
+    mr.inputs["From Min"].default_value = -0.35
+    mr.inputs["From Max"].default_value = 0.35
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].color = (0.16, 0.0, 0.62, 1)
+    ramp.color_ramp.elements[1].color = (0.62, 0.2, 1.0, 1)
+    # matrice de points LED
+    mp = nt.nodes.new("ShaderNodeMapping")
+    mp.inputs["Scale"].default_value = (26, 26, 1)
+    sep2 = nt.nodes.new("ShaderNodeSeparateXYZ")
+    fx = nt.nodes.new("ShaderNodeMath"); fx.operation = "FRACT"
+    fy = nt.nodes.new("ShaderNodeMath"); fy.operation = "FRACT"
+    cmb = nt.nodes.new("ShaderNodeCombineXYZ")
+    sub = nt.nodes.new("ShaderNodeVectorMath"); sub.operation = "SUBTRACT"; sub.inputs[1].default_value = (0.5, 0.5, 0)
+    ln = nt.nodes.new("ShaderNodeVectorMath"); ln.operation = "LENGTH"
+    dot = nt.nodes.new("ShaderNodeMapRange")
+    dot.inputs["From Min"].default_value = 0.36
+    dot.inputs["From Max"].default_value = 0.22
+    dot.inputs["To Min"].default_value = 0.12
+    dot.inputs["To Max"].default_value = 1.0
+    strength = nt.nodes.new("ShaderNodeMath"); strength.operation = "MULTIPLY"
+    strength.inputs[1].default_value = 2.6 if on else 0.0
+    L = nt.links.new
+    L(tc.outputs["Object"], sep.inputs["Vector"]); L(sep.outputs["Y"], mr.inputs["Value"]); L(mr.outputs["Result"], ramp.inputs["Fac"])
+    L(tc.outputs["Object"], mp.inputs["Vector"]); L(mp.outputs["Vector"], sep2.inputs["Vector"])
+    L(sep2.outputs["X"], fx.inputs[0]); L(sep2.outputs["Y"], fy.inputs[0])
+    L(fx.outputs[0], cmb.inputs["X"]); L(fy.outputs[0], cmb.inputs["Y"])
+    L(cmb.outputs["Vector"], sub.inputs[0]); L(sub.outputs["Vector"], ln.inputs[0])
+    L(ln.outputs["Value"], dot.inputs["Value"]); L(dot.outputs["Result"], strength.inputs[0])
+    L(ramp.outputs["Color"], p.inputs["Emission Color"]); L(strength.outputs[0], p.inputs["Emission Strength"])
+    return m
+
+
+def part_title(on=True):
+    """MALICIOUS MUSIC en lettres-boîtiers : flancs chromés, face acrylique éclairée par des LED."""
+    clear(); key_light(260, 4)
+    font = bpy.data.fonts.load(os.path.join(ROOT, "design", "fonts", "RussoOne-Regular.ttf"), check_existing=True)
+    cu = bpy.data.curves.new("title", "FONT")
+    cu.body = "MALICIOUS MUSIC"
+    cu.font = font
+    cu.align_x = "CENTER"; cu.align_y = "CENTER"
+    cu.space_character = 1.08
+    cu.extrude = 0.09
+    cu.bevel_depth = 0.012; cu.bevel_resolution = 3
+    ob = bpy.data.objects.new("title", cu); bpy.context.collection.objects.link(ob)
+    bpy.context.view_layer.objects.active = ob; ob.select_set(True)
+    bpy.ops.object.convert(target="MESH")
+    ob = bpy.context.active_object
+    face = led_face_material("led_face_on" if on else "led_face_off", on)
+    ob.data.materials.clear()
+    ob.data.materials.append(CHROME())      # 0 : flancs et biseaux chromés
+    ob.data.materials.append(face)          # 1 : face avant éclairée
+    for poly in ob.data.polygons:
+        poly.material_index = 1 if poly.normal.z > 0.95 and poly.center.z > 0.09 else 0
+    bpy.ops.object.shade_auto_smooth() if hasattr(bpy.ops.object, "shade_auto_smooth") else None
+    w = ob.dimensions.x
+    camera_top(w * 1.04, 1800, int(1800 * 0.86 / w * 1.0 / 1.04) + 40)
+    bpy.data.lights["softbox"].energy = 90
+    vs = bpy.context.scene.view_settings
+    vs.view_transform, vs.look = "Standard", "None"
+    render("title-led" if on else "title-off")
+    vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+
+
 # ------------------------------------------------------------------ charms
 CHARM_S = 1.35   # échelle de caméra commune : l'anneau est toujours à 4 % du haut de l'image
 
@@ -660,6 +737,8 @@ def part_sticker():
 
 
 PARTS = {
+    "title-led": lambda: part_title(True),
+    "title-off": lambda: part_title(False),
     "charm-bass": part_charm_bass,
     "charm-note": part_charm_note,
     "charm-emoji": part_charm_emoji,
