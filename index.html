@@ -6,10 +6,24 @@
   <title>Malicious Music — MP3 to Stems &amp; Audioware</title>
   <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=36" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WZRJfWvsnNCPcxzZwvyhovnZGqhZaC+8gPGPRbx6wTk='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#1a1030" />
+  <link rel="canonical" href="https://maliciousmusic.github.io/malicious-music-site/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Malicious Music" />
+  <meta property="og:title" content="Malicious Music — MP3 to Stems &amp; Audioware" />
+  <meta property="og:description" content="Le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
+  <meta property="og:url" content="https://maliciousmusic.github.io/malicious-music-site/" />
+  <meta property="og:image" content="https://maliciousmusic.github.io/malicious-music-site/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Logo Malicious Bass et titre Malicious Music en chrome" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css?v=37" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.png" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.png" />
   <script>document.documentElement.classList.add("js");</script>
@@ -261,10 +275,10 @@
       <section class="view" id="contact" data-view="contact">
         <h2>RESTEZ DANS LA BOUCLE</h2>
         <p class="txt">Sortie du plugin, précommandes Audioware : on vous prévient en premier.</p>
-        <form class="box signup">
-          <label>EMAIL<input type="email" placeholder="VOTRE@EMAIL.COM" required /></label>
+        <form class="box signup" method="post" action="#contact">
+          <label>EMAIL<input type="email" name="email" autocomplete="email" placeholder="VOTRE@EMAIL.COM" required /></label>
           <label>INTÉRÊT
-            <select><option>TOUT</option><option>LE PLUGIN</option><option>LA PYRAMIDE</option><option>LES GÉANTS</option><option>LE CASQUE</option></select>
+            <select name="interest"><option>TOUT</option><option>LE PLUGIN</option><option>LA PYRAMIDE</option><option>LES GÉANTS</option><option>LE CASQUE</option></select>
           </label>
           <button class="btn inv" type="submit">S'INSCRIRE</button>
           <p class="msg" hidden>C'EST NOTÉ ! <span class="ph">[liste à brancher]</span></p>
@@ -363,6 +377,6 @@
   <img class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.png" alt="" />
 </div>
 <img class="stylus" id="stylus" src="assets/hw/stylus.png" alt="" aria-hidden="true" />
-<script src="main.js?v=36"></script>
+<script src="main.js?v=37"></script>
 </body>
 </html>

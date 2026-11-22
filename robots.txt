@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://maliciousmusic.github.io/malicious-music-site/sitemap.xml

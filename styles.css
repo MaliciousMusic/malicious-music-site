@@ -1,3 +1,5 @@
+/* Polices auto-hébergées VT323 (OFL, voir assets/fonts/OFL.txt) — aucune requête vers Google */
+@font-face { font-family: "VT323"; src: url("assets/fonts/vt323.woff2") format("woff2"); font-display: swap; }
 /* =========================================================
    MALICIOUS MUSIC — un lecteur chromé plein écran, écran LCD
    ========================================================= */
@@ -707,3 +709,6 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 }
 @keyframes chrome-sweep { 0%, 62% { background-position: 120% 0; } 100% { background-position: -20% 0; } }
 @media (max-width: 760px) { .title-chrome { height: auto; width: calc(100% - 160px); top: calc(var(--top) * .42); max-width: none; } }
+
+/* focus programmatique sur l'écran au changement de page : pas de contour */
+.views:focus { outline: none; }

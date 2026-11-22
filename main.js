@@ -168,7 +168,11 @@ function show(hash) {
   document.title = (id === "home" ? "" : names[id].charAt(0) + names[id].slice(1).toLowerCase() + " — ") + "Malicious Music";
   if (target && target !== view) target.scrollIntoView({ block: "start" });
 }
-window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+window.addEventListener("hashchange", () => {
+  show(location.hash.slice(1));
+  // lecteurs d'écran / clavier : le focus suit la page affichée
+  if (!document.activeElement || !document.activeElement.closest(".views")) scroller.focus({ preventScroll: true });
+});
 show(location.hash.slice(1));
 
 const step = (d) => { location.hash = order[(order.indexOf(current) + d + order.length) % order.length]; };
