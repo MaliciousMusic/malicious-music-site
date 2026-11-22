@@ -494,20 +494,68 @@ def part_title_chrome():
     bv = rim.modifiers.new("bevel", "BEVEL"); bv.width = 0.01; bv.segments = 3; bv.limit_method = "ANGLE"
     bpy.ops.object.shade_smooth()
     cut.hide_render = True
-    rim.data.materials.append(mat("rim_dark", (0.5, 0.52, 0.56), 1.0, 0.32))
+    rim.data.materials.append(mat("rim_dark", (0.36, 0.37, 0.41), 1.0, 0.34))
     well = text_mesh("well", 0.05, 0.004, 0.0, -0.05)
-    well.data.materials.append(mat("well", (0.025, 0.02, 0.04), 1.0, 0.45))
-    letters = text_mesh("letters", 0.0, 0.022, 0.026, 0.006)
-    letters.data.materials.append(chrome80_material())
+    well.data.materials.append(mat("well", (0.012, 0.006, 0.02), 0.0, 0.5))
+    letters = text_mesh("letters", -0.016, 0.012, 0.046, 0.006)
+    rm = letters.modifiers.new("remesh", "REMESH"); rm.mode = "VOXEL"; rm.voxel_size = 0.0035
+    bpy.context.view_layer.objects.active = letters
+    bpy.ops.object.modifier_apply(modifier="remesh")
+    letters.data.materials.append(iridescent_edge_material())   # 0 : biseaux et flancs
+    letters.data.materials.append(candy_face_material())        # 1 : face avant
+    for poly in letters.data.polygons:
+        poly.material_index = 1 if poly.normal.z > 0.9 else 0
+    bpy.context.view_layer.objects.active = letters
+    bpy.ops.object.shade_smooth()
     for ob in (letters, rim, well):         # vague légère : le mot ondule
         for v in ob.data.vertices:
             v.co.y += 0.045 * math.sin(v.co.x * 0.55 + 0.6)
     w = rim.dimensions.x
+    # éclairage : chaud en haut à gauche (reflets or), violet en bas à droite, bande claire au-dessus (reflet laqué)
+    target = bpy.data.objects.new("target", None); bpy.context.collection.objects.link(target)
+    for name, loc, col, energy, size in (("warm", (-6, 3.5, 2.2), (1.0, 0.72, 0.45), 380, 0.8),
+                                         ("cool", (6, -3.5, 2.2), (0.62, 0.35, 1.0), 380, 0.8)):
+        l = bpy.data.lights.new(name, "AREA"); l.color = col; l.energy = energy; l.size = size
+        o = bpy.data.objects.new(name, l); o.location = loc; bpy.context.collection.objects.link(o)
+        c = o.constraints.new("TRACK_TO"); c.target = target; c.track_axis = "TRACK_NEGATIVE_Z"; c.up_axis = "UP_Y"
+    sheen = bpy.data.lights.new("sheen", "AREA"); sheen.shape = "RECTANGLE"
+    sheen.size = w * 1.3; sheen.size_y = 0.16; sheen.energy = 28
+    so = bpy.data.objects.new("sheen", sheen); so.location = (0, 0.2, 3.0); bpy.context.collection.objects.link(so)
     camera_top(w * 1.03, 1800, 300)
     vs = bpy.context.scene.view_settings
     vs.view_transform, vs.look = "Standard", "None"
     render("title-chrome")
     vs.view_transform, vs.look = "AgX", "AgX - Punchy"
+
+
+def candy_face_material():
+    """Face des lettres : rose bonbon laqué, plus clair en haut (référence chrome rose)."""
+    m = bpy.data.materials.new("candy_face"); m.use_nodes = True
+    nt = m.node_tree; p = nt.nodes["Principled BSDF"]
+    p.inputs["Metallic"].default_value = 0.0
+    p.inputs["Roughness"].default_value = 0.22
+    p.inputs["Coat Weight"].default_value = 1.0
+    p.inputs["Coat Roughness"].default_value = 0.02
+    tc = nt.nodes.new("ShaderNodeTexCoord"); sp = nt.nodes.new("ShaderNodeSeparateXYZ")
+    mr = nt.nodes.new("ShaderNodeMapRange"); mr.inputs["From Min"].default_value = -0.38; mr.inputs["From Max"].default_value = 0.4
+    ramp = nt.nodes.new("ShaderNodeValToRGB"); els = ramp.color_ramp.elements
+    els[0].color = (0.72, 0.03, 0.68, 1)          # bas : magenta profond
+    els[1].color = (1.0, 0.72, 1.0, 1)            # haut : rose clair
+    e = els.new(0.5); e.color = (1.0, 0.22, 0.88, 1)
+    nt.links.new(tc.outputs["Object"], sp.inputs["Vector"]); nt.links.new(sp.outputs["Y"], mr.inputs["Value"])
+    nt.links.new(mr.outputs["Result"], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs["Color"], p.inputs["Base Color"]); nt.links.new(ramp.outputs["Color"], p.inputs["Emission Color"])
+    p.inputs["Emission Strength"].default_value = 0.42
+    return m
+
+
+def iridescent_edge_material():
+    """Biseaux : métal poli à film fin, reflets or pêche ↔ violet."""
+    m = mat("iridescent_edge", (1.0, 0.72, 0.68), 1.0, 0.1)
+    p = m.node_tree.nodes["Principled BSDF"]
+    p.inputs["Thin Film Thickness"].default_value = 560.0
+    p.inputs["Thin Film IOR"].default_value = 1.45
+    return m
 
 
 # ------------------------------------------------------------------ charms
