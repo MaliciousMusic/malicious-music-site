@@ -39,3 +39,23 @@ blender -b -P design/blender/parts.py              # toutes les pièces
 blender -b -P design/blender/parts.py -- jog knob  # seulement certaines
 ```
 
+
+## Traductions (21 langues)
+
+Le français du HTML est la langue source. `i18n.js` traduit au chargement tous les textes et les attributs accessibles (`aria-label`, `alt`, `placeholder`), choisit la langue du navigateur (ou celle mémorisée via le sélecteur de la barre de statut) et met à jour `<html lang>`.
+
+Après toute modification de texte :
+
+```bash
+python3 tools/i18n_extract.py   # régénère i18n/_source.json
+python3 tools/i18n_check.py     # liste les chaînes manquantes par langue
+```
+
+Puis compléter les `i18n/<code>.json` (clé = texte français exact, valeur = traduction). Une chaîne absente s'affiche en français. Les éléments `translate="no"` (marques) ne sont pas traduits.
+
+## Sécurité et confidentialité
+
+- CSP stricte (aucune ressource tierce, script inline autorisé par empreinte), anti-clickjacking, HTTPS forcé par GitHub Pages.
+- Polices hébergées sur le site, aucun cookie, aucun traceur ; seule la langue choisie est gardée en `localStorage`.
+- Démo audio synthétisée localement (Web Audio), rien n'est envoyé.
+- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : les crochets `[…]` sont à compléter avec les informations de la société, puis à faire valider par un juriste.

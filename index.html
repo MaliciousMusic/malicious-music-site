@@ -6,7 +6,7 @@
   <title>Malicious Music — MP3 to Stems &amp; Audioware</title>
   <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WZRJfWvsnNCPcxzZwvyhovnZGqhZaC+8gPGPRbx6wTk='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WZRJfWvsnNCPcxzZwvyhovnZGqhZaC+8gPGPRbx6wTk='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'none'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#1a1030" />
   <link rel="canonical" href="https://maliciousmusic.github.io/malicious-music-site/" />
@@ -23,9 +23,9 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=64" />
-  <link rel="preload" as="image" href="assets/hw/power-on-frame.png" />
-  <link rel="preload" as="image" href="assets/hw/power-off-frame.png" />
+  <link rel="stylesheet" href="styles.css?v=72" />
+  <link rel="preload" as="image" href="assets/hw/power-on-frame.webp" />
+  <link rel="preload" as="image" href="assets/hw/power-off-frame.webp" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -44,7 +44,7 @@
         <stop offset="1" stop-color="#000" stop-opacity=".28"/>
       </linearGradient>
       <pattern id="p-plate" patternUnits="userSpaceOnUse" width="1600" height="1000">
-        <image id="plate-img" href="assets/hw/plate.jpg" width="1600" height="1000" preserveAspectRatio="none"/>
+        <image id="plate-img" href="assets/hw/plate.webp" width="1600" height="1000" preserveAspectRatio="none"/>
       </pattern>
       <linearGradient id="g-shade" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".1" stop-color="#fff" stop-opacity="0"/>
@@ -77,23 +77,23 @@
       <i class="led blue" id="led"></i>
       <span class="engrave dev-model">MM-59 · MP3-TO-STEMS</span>
     </span>
-    <a class="title-chrome" id="title-plate" href="#home" aria-label="Malicious Music — accueil"><img src="assets/hw/title-chrome.png" alt="MALICIOUS MUSIC" /></a>
+    <a class="title-chrome" id="title-plate" href="#home" aria-label="Malicious Music — accueil"><img decoding="async" src="assets/hw/title-chrome.webp" alt="MALICIOUS MUSIC" /></a>
     <span class="dev-right" aria-hidden="true"></span>
   </header>
-  <img class="sticker" src="assets/hw/sticker.png" alt="" />
+  <img decoding="async" class="sticker" src="assets/hw/sticker.webp" alt="" />
 
 
   <!-- ===== L'ÉCRAN ===== -->
   <div class="glass off" id="glass">
 
     <div class="splash" id="splash" aria-hidden="true">
-      <img class="splash-logo ink-logo" src="assets/malicious-bass-lcd.png" alt="" />
+      <img decoding="async" class="splash-logo ink-logo" src="assets/malicious-bass-lcd.png" alt="" />
       <p class="splash-title"><span>MALICIOUSMUSIC</span></p>
       <p class="splash-sub">SUPERIOR SOFTWARE &amp; AUDIOWARE FOR PRO</p>
       <div class="splash-bar"><i></i></div>
     </div>
 
-    <p class="status"><span id="st-title">1. ACCUEIL</span><span class="st-right">STEREO&nbsp; 44.1KHZ</span></p>
+    <p class="status"><span id="st-title" data-i18n-skip>1. ACCUEIL</span><span class="st-right"><label class="lang"><span class="sr-only">Langue</span><select id="lang" translate="no" aria-label="Langue"></select></label></span></p>
 
     <main class="views" id="views" tabindex="-1">
 
@@ -101,9 +101,9 @@
       <section class="view active" id="home" data-view="home">
         <div class="h-top">
           <div class="hero">
-            <img class="ink-logo" src="assets/malicious-bass-lcd.png" alt="Logo Malicious Bass" />
+            <img decoding="async" class="ink-logo" src="assets/malicious-bass-lcd.png" alt="Logo Malicious Bass" />
             <div>
-              <h1>MALICIOUSMUSIC</h1>
+              <h1 translate="no">MALICIOUSMUSIC</h1>
               <p class="h-pitch">Un MP3 entre, les stems sortent : le plugin VST recompose chaque morceau en pistes séparées, prêtes à remixer dans votre DAW.</p>
             </div>
           </div>
@@ -113,7 +113,7 @@
         <div class="box demo" id="demo">
           <div class="demo-head">
             <p class="demo-title">DÉMO</p>
-            <div class="demo-pick" role="radiogroup" aria-label="Morceau de démo">
+            <div class="demo-pick" translate="no" role="radiogroup" aria-label="Morceau de démo">
               <button class="btn sm" role="radio" aria-checked="true" data-demo="0">01 NEON DRIVE</button>
               <button class="btn sm" role="radio" aria-checked="false" data-demo="1">02 BASEMENT 808</button>
               <button class="btn sm" role="radio" aria-checked="false" data-demo="2">03 SUNDAY LOFI</button>
@@ -121,9 +121,9 @@
           </div>
           <canvas class="demo-roll" data-demo-roll role="img" aria-label="Piano roll : le morceau recomposé en MIDI, stem par stem"></canvas>
           <div class="demo-foot">
-            <p class="demo-status" id="demo-status" aria-live="polite">CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION</p>
+            <p class="demo-status" id="demo-status" data-i18n-skip aria-live="polite">CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION</p>
             <div class="row demo-ctl">
-              <button class="btn inv" id="demo-run">▶ LANCER LA DÉMO</button>
+              <button class="btn inv" id="demo-run" data-i18n-skip>▶ LANCER LA DÉMO</button>
               <span class="demo-ab" id="demo-ab" hidden>
                 <button class="btn" data-ab="orig" aria-pressed="false">ORIGINAL</button>
                 <button class="btn" data-ab="final" aria-pressed="true">FINI</button>
@@ -150,7 +150,7 @@
             <div class="p-legend"><span>VOX</span><span>DRM</span><span>BAS</span><span>OTH</span></div>
             <div class="row transport">
               <button class="btn" id="t-rew" aria-label="Retour au début">|◀◀</button>
-              <button class="btn inv" id="t-play" aria-pressed="true" aria-label="Lecture / pause">PAUSE</button>
+              <button class="btn inv" id="t-play" data-i18n-skip aria-pressed="true" aria-label="Lecture / pause">PAUSE</button>
               <button class="btn" id="t-stop" aria-label="Stop">STOP</button>
             </div>
           </div>
@@ -208,7 +208,7 @@
           <p class="amount">59 €<small>/MOIS</small></p>
           <p>TTC · SANS ENGAGEMENT <span class="ph">[À CONFIRMER]</span></p>
           <div class="row"><a class="btn inv xl" href="#" data-placeholder="checkout">S'ABONNER</a></div>
-          <p class="note">Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span></p>
+          <p class="note">Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span> · <a href="#cgv">CGV</a> · <a href="#confidentialite">CONFIDENTIALITÉ</a></p>
           </div>
           <ul class="list">
             <li>Séparation illimitée <span class="ph">[à confirmer]</span></li>
@@ -348,23 +348,54 @@
           <label>INTÉRÊT
             <select name="interest"><option>TOUT</option><option>LE PLUGIN</option><option>LA PYRAMIDE</option><option>LES GÉANTS</option><option>LE CASQUE</option></select>
           </label>
+          <label class="consent"><input type="checkbox" name="consent" required /> <span>J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment. <a href="#confidentialite">Confidentialité</a></span></label>
           <button class="btn inv" type="submit">S'INSCRIRE</button>
           <p class="msg" hidden>C'EST NOTÉ ! <span class="ph">[liste à brancher]</span></p>
         </form>
-        <p class="note"><span class="ph">[Instagram] [YouTube] [TikTok]</span> · <a href="#legal">MENTIONS LÉGALES</a></p>
+        <p class="note"><span class="ph">[Instagram] [YouTube] [TikTok]</span> · <a href="#mentions">MENTIONS LÉGALES</a> · <a href="#cgv">CGV</a> · <a href="#cgu">CGU</a> · <a href="#confidentialite">CONFIDENTIALITÉ</a></p>
       </section>
 
       <!-- ---------- LÉGAL ---------- -->
-      <section class="view" id="legal" data-view="legal">
-        <h2>MENTIONS LÉGALES</h2>
-        <h3>ÉDITEUR DU SITE</h3>
-        <p class="txt"><span class="ph">[Raison sociale, forme juridique, capital, SIRET, adresse, email, directeur de publication]</span></p>
-        <h3>HÉBERGEMENT</h3>
-        <p class="txt"><span class="ph">[Nom et adresse de l'hébergeur]</span></p>
+      <section class="view legal" id="legal" data-view="legal">
+        <h2>INFORMATIONS LÉGALES</h2>
+        <nav class="row chips legal-toc" aria-label="Sommaire"><a href="#mentions">MENTIONS</a><a href="#cgv">CGV</a><a href="#cgu">CGU</a><a href="#confidentialite">CONFIDENTIALITÉ</a><a href="#cookies">COOKIES</a></nav>
+        <p class="note">Version du <span class="ph">[date de mise en ligne]</span>. En cas de traduction, la version française fait foi. <span class="ph">[textes à faire valider par un juriste avant ouverture des ventes]</span></p>
+
+        <h3 id="mentions">MENTIONS LÉGALES</h3>
+        <p class="txt"><b>Éditeur.</b> <span class="ph">[Raison sociale]</span>, <span class="ph">[forme juridique]</span> au capital de <span class="ph">[montant]</span> €, immatriculée au RCS de <span class="ph">[ville]</span> sous le numéro <span class="ph">[RCS]</span>, SIRET <span class="ph">[SIRET]</span>, TVA intracommunautaire <span class="ph">[numéro de TVA]</span>, siège social : <span class="ph">[adresse]</span>. Contact : <span class="ph">[email]</span>. Directeur de la publication : <span class="ph">[nom]</span>.</p>
+        <p class="txt"><b>Hébergement.</b> GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis — github.com.</p>
+        <p class="txt"><b>Propriété intellectuelle.</b> Les marques Malicious Music et Malicious Bass, les logos, visuels, modèles 3D, textes, sons et le code de ce site sont protégés. Toute reproduction ou réutilisation sans autorisation écrite est interdite.</p>
+        <p class="txt"><b>Crédits.</b> Police VT323 et police Russo One (titre), sous licence SIL Open Font License 1.1.</p>
+
         <h3 id="cgv">CONDITIONS GÉNÉRALES DE VENTE</h3>
-        <p class="txt"><span class="ph">[CGV de l'abonnement Malicious Music à 59 €/mois et des produits Audioware — à faire rédiger]</span></p>
-        <h3 id="confidentialite">CONFIDENTIALITÉ</h3>
-        <p class="txt"><span class="ph">[Données collectées (newsletter, paiement), finalités, durée, droits RGPD, contact]</span></p>
+        <p class="txt"><b>1. Objet.</b> Les présentes conditions régissent l'abonnement au plugin Malicious Music et les précommandes des produits Audioware conclus sur ce site entre <span class="ph">[Raison sociale]</span> (« nous ») et toute personne qui achète (« vous »).</p>
+        <p class="txt"><b>2. Prix.</b> L'abonnement coûte 59 € TTC par mois, TVA française incluse <span class="ph">[à confirmer selon le pays de l'acheteur]</span>. Le prix des produits Audioware est indiqué sur chaque fiche produit au moment de la commande.</p>
+        <p class="txt"><b>3. Commande et paiement.</b> Le paiement est encaissé par notre prestataire de paiement <span class="ph">[Stripe / Paddle]</span>. Nous n'avons jamais accès à vos données bancaires complètes et nous ne les stockons pas. La commande est confirmée par email.</p>
+        <p class="txt"><b>4. Durée et résiliation.</b> L'abonnement est mensuel, sans engagement, et se renouvelle automatiquement chaque mois. Vous pouvez le résilier à tout moment depuis votre compte ou par email ; la résiliation prend effet à la fin de la période déjà payée, sans frais.</p>
+        <p class="txt"><b>5. Droit de rétractation.</b> Vous disposez de 14 jours pour vous rétracter. Pour le plugin (contenu numérique fourni sans support matériel), l'accès immédiat n'est donné qu'avec votre accord exprès et votre reconnaissance de la perte du droit de rétractation (article L221-28 13° du Code de la consommation). Pour les produits Audioware, le délai court à partir de la réception ; le produit doit être retourné complet, dans son état d'origine, et le remboursement intervient sous 14 jours.</p>
+        <p class="txt"><b>6. Licence.</b> L'abonnement vous donne une licence personnelle, non exclusive et non cessible d'utilisation du plugin sur <span class="ph">[nombre]</span> ordinateurs, pendant la durée de l'abonnement. Il est interdit de décompiler, revendre ou contourner les protections du logiciel.</p>
+        <p class="txt"><b>7. Droits sur la musique.</b> Le plugin sépare les pistes des fichiers que vous lui fournissez. Vous êtes seul responsable de disposer des droits nécessaires sur ces œuvres et sur l'usage que vous faites des stems obtenus.</p>
+        <p class="txt"><b>8. Précommandes et livraison Audioware.</b> Les précommandes indiquent une date de livraison estimée <span class="ph">[délai]</span>. Vous serez prévenu de tout retard et pourrez alors annuler et être remboursé intégralement.</p>
+        <p class="txt"><b>9. Garanties.</b> Les produits bénéficient de la garantie légale de conformité (articles L217-3 et suivants du Code de la consommation, 2 ans) et de la garantie des vices cachés (articles 1641 et suivants du Code civil), indépendamment de toute garantie commerciale.</p>
+        <p class="txt"><b>10. Réclamations et médiation.</b> Contactez-nous d'abord à <span class="ph">[email]</span>. À défaut d'accord, vous pouvez recourir gratuitement au médiateur de la consommation <span class="ph">[nom et site du médiateur]</span>.</p>
+        <p class="txt"><b>11. Droit applicable.</b> Ces conditions sont soumises au droit français, sans vous priver de la protection des règles impératives de votre pays de résidence.</p>
+
+        <h3 id="cgu">CONDITIONS GÉNÉRALES D'UTILISATION</h3>
+        <p class="txt"><b>Accès.</b> Le site est accessible gratuitement. Nous pouvons le modifier, le suspendre ou l'interrompre, notamment pour maintenance.</p>
+        <p class="txt"><b>Usage.</b> Vous vous engagez à ne pas perturber le fonctionnement du site, ne pas tenter d'accéder à des données non publiques, ne pas l'aspirer massivement ni l'utiliser à des fins illicites.</p>
+        <p class="txt"><b>Démonstration.</b> La démo de l'accueil est entièrement générée dans votre navigateur : aucun son n'est envoyé ni enregistré.</p>
+        <p class="txt"><b>Responsabilité.</b> Les informations du site sont fournies à titre indicatif et peuvent évoluer, en particulier les caractéristiques des produits en développement.</p>
+
+        <h3 id="confidentialite">POLITIQUE DE CONFIDENTIALITÉ</h3>
+        <p class="txt"><b>Responsable du traitement.</b> <span class="ph">[Raison sociale]</span>, <span class="ph">[adresse]</span>, <span class="ph">[email]</span>.</p>
+        <p class="txt"><b>Ce que nous collectons.</b> Rien tant que vous naviguez : pas de compte, pas de statistiques, pas de publicité. Si vous vous inscrivez à la liste : votre email et votre centre d'intérêt (base : votre consentement, conservés jusqu'à votre désinscription). Si vous achetez : vos coordonnées et les informations de commande (base : exécution du contrat ; pièces comptables conservées 10 ans).</p>
+        <p class="txt"><b>Destinataires.</b> Nos seuls prestataires : l'hébergeur (GitHub), le prestataire de paiement <span class="ph">[Stripe / Paddle]</span> et l'outil d'emailing <span class="ph">[outil]</span>. Lorsque des données sont traitées hors de l'Union européenne, le transfert est encadré par le Data Privacy Framework UE–États-Unis ou par des clauses contractuelles types.</p>
+        <p class="txt"><b>Journaux techniques.</b> Comme tout serveur, l'hébergeur enregistre l'adresse IP des visiteurs dans ses journaux, pour la sécurité du service.</p>
+        <p class="txt"><b>Vos droits.</b> Accès, rectification, effacement, limitation, opposition, portabilité et retrait du consentement à tout moment : écrivez à <span class="ph">[email]</span>. Vous pouvez aussi saisir la CNIL (cnil.fr, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07).</p>
+        <p class="txt"><b>Sécurité.</b> Site servi uniquement en HTTPS, politique de sécurité du contenu stricte, aucune ressource tierce chargée (polices hébergées sur le site), aucun mot de passe ni donnée bancaire stockés par nous.</p>
+
+        <h3 id="cookies">COOKIES</h3>
+        <p class="txt">Ce site n'utilise aucun cookie ni traceur. Seule votre langue choisie est mémorisée dans votre navigateur (stockage local), sans jamais nous être transmise ; vous pouvez l'effacer à tout moment depuis les réglages du navigateur. Aucun bandeau de consentement n'est donc nécessaire.</p>
         <p class="note">© <span data-year></span> MALICIOUS MUSIC · AUDIOWARE</p>
       </section>
     </main>
@@ -413,7 +444,7 @@
         <div class="pos-track" id="pos-track"><i></i></div>
         <button class="pill" id="down" aria-label="Descendre dans l'écran"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6z"/></svg></button>
       </div>
-      <p class="readout"><span id="readout">01 ACCUEIL</span><span>MM-59</span></p>
+      <p class="readout"><span id="readout" data-i18n-skip>01 ACCUEIL</span><span>MM-59</span></p>
     </div>
 
     <nav class="mob-keys" aria-label="Pages">
@@ -439,13 +470,14 @@
   <!-- charms accrochés au bout du stylet : cordons souples simulés (main.js) -->
 <div class="charms" id="charms" aria-hidden="true">
   <svg class="cords" id="cords"><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord"/><path class="cord"/><path class="cord"/><circle class="loop" r="3.4"/><circle class="knot" r="2.9"/></svg>
-  <img class="charm" data-len="0.9" data-size="0.8" src="assets/hw/charm-note.png" alt="" />
-  <img class="charm" data-len="2.0" data-size="0.92" src="assets/hw/charm-emoji.png" alt="" />
-  <img class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.png" alt="" />
+  <img decoding="async" class="charm" data-len="0.9" data-size="0.8" src="assets/hw/charm-note.webp" alt="" />
+  <img decoding="async" class="charm" data-len="2.0" data-size="0.92" src="assets/hw/charm-emoji.webp" alt="" />
+  <img decoding="async" class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.webp" alt="" />
 </div>
-<img class="stylus" id="stylus" src="assets/hw/stylus.png" alt="" aria-hidden="true" />
-<script src="models.js?v=62"></script>
-<script src="main.js?v=62"></script>
-<script src="demo.js?v=62"></script>
+<img decoding="async" class="stylus" id="stylus" src="assets/hw/stylus.webp" alt="" aria-hidden="true" />
+<script src="i18n.js?v=72"></script>
+<script src="models.js?v=72"></script>
+<script src="main.js?v=72"></script>
+<script src="demo.js?v=72"></script>
 </body>
 </html>

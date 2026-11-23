@@ -233,16 +233,20 @@
   const pos = () => (playing ? ((ac.currentTime - playing.t0) % song.L + song.L) % song.L : 0);
 
   const wait = (ms, id) => new Promise((res, rej) => setTimeout(() => (id === run ? res() : rej("stop")), ms));
-  const setStatus = (s) => { statusEl.textContent = s; };
+  let lastStatus = null;
+  const T = (s, v) => (window.I18N ? I18N.t(s, v) : s);
+  const setStatus = (s, v) => { lastStatus = [s, v]; statusEl.textContent = T(s, v); };
+  const setRun = (s) => { runBtn.dataset.k = s; runBtn.textContent = T(s); };
+  if (window.I18N) I18N.onChange(() => { if (lastStatus) setStatus(...lastStatus); if (runBtn.dataset.k) setRun(runBtn.dataset.k); kick(); });
 
   async function go() {
     const id = ++run;
     ac = ac || new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === "suspended") ac.resume().catch(() => {});
     const demo = DEMOS[sel]; song = build(demo); lastBufs = null;
-    abWrap.hidden = true; runBtn.textContent = "↻ RELANCER";
+    abWrap.hidden = true; setRun("↻ RELANCER");
     state.phase = "analyse"; state.reveal = 0; state.t0 = performance.now(); peaks = null; kick();
-    setStatus(`ANALYSE DE ${demo.name.replace(" ", "_")}.MP3…`);
+    setStatus("ANALYSE DE {name}.MP3…", { name: demo.name.replace(" ", "_") });
     try {
       const bufs = { orig: await render(song, demo, "orig") };
       if (id !== run) return;
@@ -267,7 +271,7 @@
         const lv = { orig: Math.max(0, 0.35 - (i + 1) * 0.09) };
         for (let j = 0; j <= i; j++) lv["raw-" + REVEAL[j]] = 1;
         await wait(i === 0 ? 300 : D1 / 4, id); mixTo(lv, 0.25);
-        setStatus(`PASSE 1/3 · RECOMPOSITION MIDI — STEM ${REVEAL[i]} → ${i + 1}/4`);
+        setStatus("PASSE 1/3 · RECOMPOSITION MIDI — STEM {stem} → {n}/4", { stem: REVEAL[i], n: i + 1 });
       }
       await wait(D1 / 4, id);
       // PASSE 2 : vrais timbres et articulation
@@ -302,7 +306,7 @@
   function stop(msg) {
     run++; stopAudio();
     if (state.phase !== "idle") { state.phase = state.phase.startsWith("done") ? "stopped" : "idle"; }
-    runBtn.textContent = "▶ LANCER LA DÉMO";
+    setRun("▶ LANCER LA DÉMO");
     if (msg) setStatus(msg);
     abBtns.forEach((b) => b.setAttribute("aria-pressed", "false"));
     kick();
@@ -311,7 +315,7 @@
   runBtn.addEventListener("click", () => { go(); });
   abBtns.forEach((b) => b.addEventListener("click", () => {
     if (!playing && lastBufs) { // relance la comparaison sans refaire les passes
-      state.gains = {}; restartAt(lastBufs, 0); runBtn.textContent = "↻ RELANCER";
+      state.gains = {}; restartAt(lastBufs, 0); setRun("↻ RELANCER");
       setStatus("TERMINÉ · COMPAREZ L'ORIGINAL ET LE RÉSULTAT"); kick();
     }
     setAB(b.dataset.ab);
@@ -321,7 +325,7 @@
     sel = +b.dataset.demo;
     pickBtns.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
     stop(); lastBufs = null; state.phase = "idle"; abWrap.hidden = true; song = build(DEMOS[sel]); peaks = null;
-    setStatus(`${DEMOS[sel].name} · ${DEMOS[sel].bpm} BPM — PRÊT`);
+    setStatus("{name} · {bpm} BPM — PRÊT", { name: DEMOS[sel].name, bpm: DEMOS[sel].bpm });
     kick();
   }));
   window.addEventListener("hashchange", () => { if (playing && !document.getElementById("home").classList.contains("active")) stop("LECTURE ARRÊTÉE"); });
@@ -413,7 +417,7 @@
     }
     if (ph === "analyse") {
       g.fillStyle = ink(0.12); g.fillRect(x0, laneTop, tw * scan, h - laneTop);
-      g.fillStyle = ink(0.7); g.textAlign = "center"; g.fillText("ANALYSE SPECTRALE…", x0 + tw / 2, laneTop + (h - laneTop) / 2); g.textAlign = "left";
+      g.fillStyle = ink(0.7); g.textAlign = "center"; g.fillText(T("ANALYSE SPECTRALE…"), x0 + tw / 2, laneTop + (h - laneTop) / 2); g.textAlign = "left";
     }
   }
   const meter = {};

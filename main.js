@@ -1,3 +1,5 @@
+// anti-clickjacking : le site refuse d'être affiché dans un cadre d'un autre site
+if (window.top !== window.self) { try { window.top.location = window.self.location.href; } catch (e) { document.documentElement.style.display = "none"; } }
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
 const INK = "38,51,44";
@@ -23,7 +25,7 @@ if ("IntersectionObserver" in window) {
 // Views: the frame's keys switch what the screen shows
 // ---------------------------------------------------------
 const order = ["home", "plugin", "tarif", "audioware", "faq", "contact", "legal"];
-const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "MENTIONS LÉGALES", pyramide: "LA PYRAMIDE", geants: "LES GÉANTS", casque: "LE CASQUE" };
+const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "INFOS LÉGALES", pyramide: "LA PYRAMIDE", geants: "LES GÉANTS", casque: "LE CASQUE" };
 // pages produit : rangées sous Audioware dans la navigation
 const parentOf = { pyramide: "audioware", geants: "audioware", casque: "audioware" };
 const slot = (id) => order.indexOf(parentOf[id] || id);
@@ -206,10 +208,11 @@ function show(hash) {
     scroller.scrollTop = 0;
   }
   document.querySelectorAll("[data-key]").forEach((k) => (k.dataset.key === (parentOf[id] || id) ? k.setAttribute("aria-current", "page") : k.removeAttribute("aria-current")));
-  stTitle.textContent = slot(id) + 1 + ". " + names[id];
-  readout.textContent = String(slot(id) + 1).padStart(2, "0") + " " + names[id];
+  stTitle.textContent = slot(id) + 1 + ". " + I18N.t(names[id]);
+  readout.textContent = String(slot(id) + 1).padStart(2, "0") + " " + I18N.t(names[id]);
   updatePos();
-  document.title = (id === "home" ? "" : names[id].charAt(0) + names[id].slice(1).toLowerCase() + " — ") + "Malicious Music";
+  const nm = I18N.t(names[id]);
+  document.title = (id === "home" ? "" : nm.charAt(0) + nm.slice(1).toLowerCase() + " — ") + "Malicious Music";
   if (target && target !== view) target.scrollIntoView({ block: "start" });
 }
 window.addEventListener("hashchange", () => {
@@ -277,7 +280,7 @@ function stemLevel(i) {
 strips.forEach((st) => [st.m, st.s].forEach((b) => b.addEventListener("click", () => b.setAttribute("aria-pressed", String(!pressed(b))))));
 
 const playBtn = document.getElementById("t-play");
-const syncPlay = () => { playBtn.textContent = player.playing ? "PAUSE" : "PLAY ▶"; playBtn.setAttribute("aria-pressed", String(player.playing)); };
+const syncPlay = () => { playBtn.textContent = I18N.t(player.playing ? "PAUSE" : "PLAY ▶"); playBtn.setAttribute("aria-pressed", String(player.playing)); };
 playBtn.addEventListener("click", () => { player.playing = !player.playing; syncPlay(); });
 document.getElementById("t-stop").addEventListener("click", () => { player.playing = false; player.pos = 0; syncPlay(); });
 document.getElementById("t-rew").addEventListener("click", () => { player.pos = 0; });
@@ -682,3 +685,7 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
   }
   requestAnimationFrame(step);
 })();
+
+// langue : on retraduit les textes produits par le JS, puis on démarre la traduction
+I18N.onChange(() => { show(current); syncPlay(); });
+setTimeout(() => I18N.init(), 0);
