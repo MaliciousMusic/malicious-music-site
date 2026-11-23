@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=50" />
+  <link rel="stylesheet" href="styles.css?v=64" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.png" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.png" />
   <script>document.documentElement.classList.add("js");</script>
@@ -223,54 +223,106 @@
 
       <!-- ---------- AUDIOWARE ---------- -->
       <section class="view" id="audioware" data-view="audioware">
-        <h2>AUDIOWARE</h2>
-        <p class="txt">Le hardware Malicious Music. Trois objets audio qui ne ressemblent à rien de connu, tous estampillés du logo Malicious Bass. Précommandes bientôt ouvertes.</p>
-
         <div class="grid3 products">
-          <article class="box product" id="pyramide">
-            <div class="viewer"><canvas data-model="pyramid" role="img" aria-label="Vue filaire de la Pyramide"></canvas></div>
-            <h3>LA PYRAMIDE <span class="ph">[NOM DÉFINITIF]</span></h3>
+          <a class="box product" href="#pyramide">
+            <div class="viewer"><canvas data-model="pyramid" role="img" aria-label="Modèle 3D de la Pyramide"></canvas></div>
+            <h3>LA PYRAMIDE</h3>
             <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE</p>
-            <p>Une platine vinyle au sommet, le rangement de votre collection dans la base et une enceinte intégrée dans la structure.</p>
-            <ul class="list">
+            <p class="card-price"><span class="ph">[PRIX]</span> €</p>
+            <span class="btn">VOIR LE PRODUIT →</span>
+          </a>
+          <a class="box product" href="#geants">
+            <div class="viewer"><canvas data-model="buds" role="img" aria-label="Modèle 3D des Géants"></canvas></div>
+            <h3>LES GÉANTS</h3>
+            <p class="tag">ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES</p>
+            <p class="card-price"><span class="ph">[PRIX]</span> €</p>
+            <span class="btn">VOIR LE PRODUIT →</span>
+          </a>
+          <a class="box product" href="#casque">
+            <div class="viewer"><canvas data-model="phones" role="img" aria-label="Modèle 3D du Casque"></canvas></div>
+            <h3>LE CASQUE</h3>
+            <p class="tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ</p>
+            <p class="card-price"><span class="ph">[PRIX]</span> €</p>
+            <span class="btn">VOIR LE PRODUIT →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ---------- PRODUIT : LA PYRAMIDE ---------- -->
+      <section class="view pdp" id="pyramide" data-view="pyramide">
+        <div class="pdp-stage">
+          <canvas data-model="pyramid" data-orbit role="img" aria-label="Modèle 3D interactif de la Pyramide : glissez pour tourner, molette ou pincement pour zoomer"></canvas>
+          <p class="pdp-hint">GLISSER : TOURNER · MOLETTE / PINCER : ZOOM</p>
+        </div>
+        <div class="pdp-info">
+          <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
+          <h2>LA PYRAMIDE</h2>
+          <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE · <span class="ph">[NOM DÉFINITIF]</span></p>
+          <p class="txt">Une platine vinyle sous un capot vitré au sommet, une enceinte habillée de tissu dans le corps, et le rangement de votre collection tout autour de la base.</p>
+          <ul class="list">
               <li>PLATINE: <span class="ph">[33/45, ENTRAÎNEMENT]</span></li>
               <li>RANGEMENT: <span class="ph">[NB VINYLES]</span></li>
               <li>ENCEINTE: <span class="ph">[PUISSANCE]</span></li>
               <li>DIMENSIONS: <span class="ph">[H × L × P]</span></li>
-              <li>PRIX: <span class="ph">[€]</span></li>
-            </ul>
+              <li>FINITION: <span class="ph">[MATIÈRES]</span></li>
+          </ul>
+          <div class="pdp-buy">
+            <p class="amount pdp-price"><span class="ph">[PRIX]</span> €</p>
+            <a class="btn inv xl" href="#" data-placeholder="preorder">PRÉCOMMANDER</a>
             <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
-          </article>
+          </div>
+        </div>
+      </section>
 
-          <article class="box product" id="geants">
-            <div class="viewer"><canvas data-model="buds" role="img" aria-label="Vue filaire des écouteurs géants"></canvas></div>
-            <h3>LES GÉANTS <span class="ph">[NOM DÉFINITIF]</span></h3>
-            <p class="tag">ÉCOUTEURS XXL · PAIRE D'ENCEINTES</p>
-            <p>Une paire d'écouteurs surdimensionnés qui se posent sur le bureau et forment une vraie paire d'enceintes stéréo.</p>
-            <ul class="list">
-              <li>FORMAT: <span class="ph">[HAUTEUR]</span></li>
+      <!-- ---------- PRODUIT : LES GÉANTS ---------- -->
+      <section class="view pdp" id="geants" data-view="geants">
+        <div class="pdp-stage">
+          <canvas data-model="buds" data-orbit role="img" aria-label="Modèle 3D interactif des Géants : glissez pour tourner, molette ou pincement pour zoomer"></canvas>
+          <p class="pdp-hint">GLISSER : TOURNER · MOLETTE / PINCER : ZOOM</p>
+        </div>
+        <div class="pdp-info">
+          <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
+          <h2>LES GÉANTS</h2>
+          <p class="tag">ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES · <span class="ph">[NOM DÉFINITIF]</span></p>
+          <p class="txt">Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.</p>
+          <ul class="list">
+              <li>FORMAT: <span class="ph">[LONGUEUR]</span></li>
               <li>HAUT-PARLEURS: <span class="ph">[DRIVERS]</span></li>
-              <li>CONNECTIQUE: <span class="ph">[BT, USB-C…]</span></li>
-              <li>ALIMENTATION: <span class="ph">[SECTEUR / BATTERIE]</span></li>
-              <li>PRIX: <span class="ph">[€]</span></li>
-            </ul>
+              <li>CONNECTIQUE: JACK 3,5 MM <span class="ph">[+ ADAPTATEURS ?]</span></li>
+              <li>CÂBLE: <span class="ph">[LONGUEUR]</span></li>
+              <li>ALIMENTATION: <span class="ph">[SECTEUR / PASSIF ?]</span></li>
+          </ul>
+          <div class="pdp-buy">
+            <p class="amount pdp-price"><span class="ph">[PRIX]</span> €</p>
+            <a class="btn inv xl" href="#" data-placeholder="preorder">PRÉCOMMANDER</a>
             <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
-          </article>
+          </div>
+        </div>
+      </section>
 
-          <article class="box product" id="casque">
-            <div class="viewer"><canvas data-model="phones" role="img" aria-label="Vue filaire du casque expérimental"></canvas></div>
-            <h3>LE CASQUE <span class="ph">[NOM DÉFINITIF]</span></h3>
-            <p class="tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ</p>
-            <p>Un casque qui n'a jamais besoin d'être rechargé et qui stocke lui-même votre musique. Vous le mettez, il joue.</p>
-            <ul class="list">
+      <!-- ---------- PRODUIT : LE CASQUE ---------- -->
+      <section class="view pdp" id="casque" data-view="casque">
+        <div class="pdp-stage">
+          <canvas data-model="phones" data-orbit role="img" aria-label="Modèle 3D interactif du Casque : glissez pour tourner, molette ou pincement pour zoomer"></canvas>
+          <p class="pdp-hint">GLISSER : TOURNER · MOLETTE / PINCER : ZOOM</p>
+        </div>
+        <div class="pdp-info">
+          <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
+          <h2>LE CASQUE</h2>
+          <p class="tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ · <span class="ph">[NOM DÉFINITIF]</span></p>
+          <p class="txt">Un casque qui n'a jamais besoin d'être rechargé et qui stocke lui-même votre musique. Commandes de lecture et de volume directement sur l'écouteur. Vous le mettez, il joue.</p>
+          <ul class="list">
               <li>ÉNERGIE: <span class="ph">[TECHNOLOGIE]</span></li>
               <li>STOCKAGE: <span class="ph">[CAPACITÉ]</span></li>
               <li>TRANSFERT: <span class="ph">[MÉTHODE]</span></li>
+              <li>COMMANDES: LECTURE · PISTES · VOLUME</li>
               <li>STATUT: PROTOTYPE</li>
-              <li>PRIX: <span class="ph">[€]</span></li>
-            </ul>
+          </ul>
+          <div class="pdp-buy">
+            <p class="amount pdp-price"><span class="ph">[PRIX]</span> €</p>
+            <a class="btn inv xl" href="#" data-placeholder="preorder">PRÉCOMMANDER</a>
             <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
-          </article>
+          </div>
         </div>
       </section>
 
@@ -392,8 +444,8 @@
   <img class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.png" alt="" />
 </div>
 <img class="stylus" id="stylus" src="assets/hw/stylus.png" alt="" aria-hidden="true" />
-<script src="models.js?v=55"></script>
-<script src="main.js?v=50"></script>
-<script src="demo.js?v=50"></script>
+<script src="models.js?v=62"></script>
+<script src="main.js?v=62"></script>
+<script src="demo.js?v=62"></script>
 </body>
 </html>

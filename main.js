@@ -23,7 +23,10 @@ if ("IntersectionObserver" in window) {
 // Views: the frame's keys switch what the screen shows
 // ---------------------------------------------------------
 const order = ["home", "plugin", "tarif", "audioware", "faq", "contact", "legal"];
-const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "MENTIONS LÉGALES" };
+const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "MENTIONS LÉGALES", pyramide: "LA PYRAMIDE", geants: "LES GÉANTS", casque: "LE CASQUE" };
+// pages produit : rangées sous Audioware dans la navigation
+const parentOf = { pyramide: "audioware", geants: "audioware", casque: "audioware" };
+const slot = (id) => order.indexOf(parentOf[id] || id);
 const scroller = document.getElementById("views");
 const stTitle = document.getElementById("st-title");
 const readout = document.getElementById("readout");
@@ -202,9 +205,9 @@ function show(hash) {
     current = id;
     scroller.scrollTop = 0;
   }
-  document.querySelectorAll("[data-key]").forEach((k) => (k.dataset.key === id ? k.setAttribute("aria-current", "page") : k.removeAttribute("aria-current")));
-  stTitle.textContent = order.indexOf(id) + 1 + ". " + names[id];
-  readout.textContent = String(order.indexOf(id) + 1).padStart(2, "0") + " " + names[id];
+  document.querySelectorAll("[data-key]").forEach((k) => (k.dataset.key === (parentOf[id] || id) ? k.setAttribute("aria-current", "page") : k.removeAttribute("aria-current")));
+  stTitle.textContent = slot(id) + 1 + ". " + names[id];
+  readout.textContent = String(slot(id) + 1).padStart(2, "0") + " " + names[id];
   updatePos();
   document.title = (id === "home" ? "" : names[id].charAt(0) + names[id].slice(1).toLowerCase() + " — ") + "Malicious Music";
   if (target && target !== view) target.scrollIntoView({ block: "start" });
@@ -216,7 +219,7 @@ window.addEventListener("hashchange", () => {
 });
 show(location.hash.slice(1));
 
-const step = (d) => { location.hash = order[(order.indexOf(current) + d + order.length) % order.length]; };
+const step = (d) => { location.hash = order[(slot(current) + d + order.length) % order.length]; };
 document.getElementById("prev").addEventListener("click", () => step(-1));
 document.getElementById("next").addEventListener("click", () => step(1));
 document.querySelectorAll('a[href="#"]').forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
@@ -405,8 +408,37 @@ function buildPhones() {
   return L;
 }
 const models = { pyramid: buildPyramid(), buds: buildBuds(), phones: buildPhones() };
+// visionneuse 3D interactive des pages produit : glisser pour tourner, molette / pincement pour zoomer
+document.querySelectorAll("canvas[data-orbit]").forEach((c) => {
+  const v = (c._orbit = { ay: 0.6, ax: 0.36, zoom: 1, vy: 0, idle: 0 });
+  const pts = new Map();
+  let last = null, pinch = 0;
+  c.addEventListener("pointerdown", (e) => { c.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); last = [e.clientX, e.clientY]; v.vy = 0; v.held = true; v.idle = performance.now(); e.preventDefault(); });
+  c.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pts.size === 2) {
+      const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (pinch) v.zoom = Math.min(2.2, Math.max(0.6, v.zoom * (d / pinch)));
+      pinch = d; return;
+    }
+    const dx = e.clientX - last[0], dy = e.clientY - last[1]; last = [e.clientX, e.clientY];
+    v.ay += dx * 0.012; v.vy = dx * 0.012;
+    v.ax = Math.min(1.25, Math.max(-0.35, v.ax + dy * 0.008));
+    v.idle = performance.now();
+  });
+  const up = (e) => { pts.delete(e.pointerId); pinch = 0; v.held = pts.size > 0; if (pts.size) last = [...pts.values()][0]; };
+  ["pointerup", "pointercancel"].forEach((ev) => c.addEventListener(ev, up));
+  c.addEventListener("wheel", (e) => { e.preventDefault(); v.zoom = Math.min(2.2, Math.max(0.6, v.zoom * Math.exp(-e.deltaY * 0.0015))); v.idle = performance.now(); }, { passive: false });
+  c.addEventListener("dblclick", () => { v.zoom = 1; v.ax = 0.36; });
+});
 function drawModel(c, t) {
-  if (window.MM3D) return window.MM3D.draw(c, t, c.dataset.model);
+  const v = c._orbit;
+  if (v) {
+    if (!v.held) { v.ay += v.vy; v.vy *= 0.94; }            // inertie
+    if (performance.now() - v.idle > 2500) v.ay += 0.004;                  // reprend sa rotation tout seul
+  }
+  if (window.MM3D) return window.MM3D.draw(c, t, c.dataset.model, v);
   const ctx = c.getContext("2d");
   const { width: w, height: h } = c;
   ctx.clearRect(0, 0, w, h);
@@ -491,7 +523,7 @@ function tapMark(x, y) {
 let touch = null, glide = 0, swallowClick = false;
 glassEl.addEventListener("pointerdown", (e) => {
   if (e.button > 0 || glassEl.classList.contains("off") || glassEl.classList.contains("booting")) return;
-  const field = e.target.closest("input, select, textarea, label, summary");
+  const field = e.target.closest("input, select, textarea, label, summary, [data-orbit]");
   cancelAnimationFrame(glide);
   touch = {
     id: e.pointerId, x: e.clientX, y: e.clientY, y0: e.clientY, top0: scroller.scrollTop,

@@ -839,3 +839,53 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
 .viewer { background: none; border-style: dotted; }
 .viewer canvas { height: clamp(170px, 40cqh, 340px); image-rendering: auto; }
 .glass .viewer canvas { image-rendering: auto; }
+
+/* =========================================================
+   AUDIOWARE : 3 fiches qui tiennent dans l'écran · PAGES PRODUIT
+   ========================================================= */
+.products .product { color: inherit; text-decoration: none; gap: clamp(4px, 1cqh, 8px); min-height: 0; }
+.products .product:hover { background: var(--ink-3); }
+.product .card-price { font-size: clamp(1.3rem, min(2.6cqw, 5cqh), 2rem); line-height: 1; }
+.product .btn { margin-top: auto; align-self: stretch; }
+.product .tag { min-height: 2.2em; }
+@container screen (min-width: 720px) {
+  #audioware { height: 100cqh; grid-template-rows: minmax(0, 1fr); }
+  #audioware .products { height: 100%; grid-column: 1 / -1; }
+  #audioware .product { display: flex; flex-direction: column; }
+  #audioware .viewer { flex: 1; min-height: 0; }
+  #audioware .viewer canvas { height: 100%; }
+}
+
+.pdp { grid-template-columns: minmax(0, 1fr); }
+.pdp-stage { position: relative; border: 2px dotted var(--ink); border-radius: 8px; min-height: 0; }
+.pdp-stage canvas { display: block; width: 100%; height: clamp(240px, 52cqh, 520px); touch-action: none; cursor: grab; image-rendering: auto; }
+.pdp-stage canvas:active { cursor: grabbing; }
+.pdp-hint { position: absolute; left: 10px; bottom: 6px; font-size: .78em; color: var(--ink-2); letter-spacing: .06em; pointer-events: none; }
+.pdp-info { display: grid; gap: clamp(6px, 1.4cqh, 12px); align-content: start; min-height: 0; }
+.pdp-back { justify-self: start; font-size: .9em; letter-spacing: .08em; }
+.pdp-back:hover { text-decoration: underline; }
+.pdp-info .txt { font-size: .95em; }
+.pdp-info .list { border-top: 2px dotted var(--ink); padding-top: 6px; font-size: .92em; }
+.pdp-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; border-top: 2px dotted var(--ink); padding-top: 10px; }
+.pdp-price { font-size: clamp(2.2rem, min(6cqw, 11cqh), 4.4rem); margin: 0; width: 100%; }
+@container screen (min-width: 720px) {
+  .pdp { height: 100cqh; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(16px, 3cqw, 40px); }
+  .pdp-stage canvas { height: 100%; }
+  .pdp-info { overflow: hidden; }
+}
+
+/* page produit : tout tient dans la colonne */
+.pdp-info { gap: clamp(4px, 1cqh, 10px); }
+.pdp-info h2 { font-size: clamp(1.5rem, min(3.6cqw, 7cqh), 2.6rem); }
+.pdp-info .tag { font-size: .8em; }
+.pdp-info .txt { font-size: .88em; line-height: 1.12; }
+.pdp-info .list { font-size: .86em; gap: 0; }
+.pdp-buy { flex-wrap: nowrap; padding-top: 8px; }
+.pdp-price { width: auto; flex: 1; font-size: clamp(1.8rem, min(4.4cqw, 8cqh), 3.4rem); white-space: nowrap; }
+.pdp-buy .btn.xl { font-size: 1.25em; padding: 4px 16px; }
+@container screen (max-width: 560px) { .pdp-buy { flex-wrap: wrap; } .pdp-price { width: 100%; } }
+@container screen (min-width: 720px) { .pdp { grid-template-rows: minmax(0, 1fr); } }
+.pdp-buy .btn { white-space: nowrap; }
+.pdp-info { grid-template-columns: minmax(0, 1fr); }
+.pdp-buy { flex-wrap: wrap; }
+.pdp-price { flex: none; margin-right: 4px; }

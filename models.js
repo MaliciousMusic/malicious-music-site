@@ -233,13 +233,13 @@
   // ---------------- rendu ----------------
   const LIGHT = norm([-0.45, 0.75, -0.55]);
   const mix = (k) => `rgb(${LCD.map((c, i) => Math.round(c + (INK[i] - c) * k)).join(",")})`;
-  function draw(c, t, name) {
+  function draw(c, t, name, orbit) {
     const m = MODELS[name]; if (!m) return;
     const g = c.getContext("2d"), w = c.width, h = c.height;
     g.clearRect(0, 0, w, h);
-    const ay = t * 0.00045 + 0.6, ax = 0.36;
+    const ay = orbit ? orbit.ay : t * 0.00045 + 0.6, ax = orbit ? orbit.ax : 0.36;
     const cY = Math.cos(ay), sY = Math.sin(ay), cX = Math.cos(ax), sX = Math.sin(ax);
-    const scale = Math.min(w * 0.36, h * 0.46) * m.s, cam = 5;
+    const scale = Math.min(w * 0.36, h * 0.46) * m.s * (orbit ? orbit.zoom : 1), cam = 5;
     const view = (p) => { const x1 = p[0] * cY + p[2] * sY, z1 = -p[0] * sY + p[2] * cY; return [x1, p[1] * cX - z1 * sX, p[1] * sX + z1 * cX]; };
     const proj = (q) => { const k = cam / (cam + q[2]); return [w / 2 + q[0] * k * scale, h * 0.5 - (q[1] - m.y) * k * scale]; };
     // ombre portée au sol
