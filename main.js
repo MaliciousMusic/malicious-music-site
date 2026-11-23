@@ -139,7 +139,8 @@ function layout() {
   const pat = document.getElementById("p-plate"), img = document.getElementById("plate-img");
   [pat, img].forEach((el) => { el.setAttribute("width", W); el.setAttribute("height", H); });
   document.getElementById("rim").setAttribute("d", inner);
-  document.getElementById("rim-hi").setAttribute("d", hole(x - 4, y - 4, g.width + 8, g.height + 8, { ...notch, hw: notch.hw - 4, depth: notch.depth - 4 }, { ...jog, r: jog.r - 4 }));
+  document.getElementById("rim-hi").setAttribute("d", inner);
+  document.getElementById("clip-out-p").setAttribute("d", body);
   glassEl.style.clipPath = `path('${hole(0, 0, g.width, g.height, { ...notch, cx: notch.cx - x }, { cx: jog.cx - x, cy: jog.cy - y, r: jog.r })}')`;
 }
 layout();
