@@ -792,3 +792,8 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
   #plugin > :not(h2):not(.txt) { grid-column: 1 / -1; }
   .two { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
 }
+
+/* trait sous la barre de statut : deux segments, interrompus sous l'encoche du titre */
+.status { border-bottom: 0; padding-bottom: 6px;
+  background: linear-gradient(var(--ink), var(--ink)) left bottom / var(--gap-l, 100%) 2px no-repeat,
+              linear-gradient(var(--ink), var(--ink)) right bottom / var(--gap-r, 0px) 2px no-repeat; }

@@ -107,6 +107,19 @@ function layout() {
   const jog = { cx: jr.left - d.left + jr.width / 2, cy: jr.top - d.top + jr.height / 2, r: jr.width * 0.5 + 12 };
   const inner = hole(x, y, g.width, g.height, notch, jog);
   // hauteur mangée par la molette dans le coin bas-gauche : le contenu de l'écran s'arrête au-dessus
+  // le trait sous la barre de statut s'interrompt là où il rencontre l'encoche du titre
+  {
+    const st = glassEl.querySelector(".status"), ly = st.offsetHeight - 1;              // y du trait (repère de l'écran)
+    const yt = bt, yb = bt + notch.depth, k = notch.depth * 1.7, a = notch.cx - x - notch.hw;
+    const bz = (t, p0, p1, p2, p3) => ((1 - t) ** 3) * p0 + 3 * ((1 - t) ** 2) * t * p1 + 3 * (1 - t) * t * t * p2 + t ** 3 * p3;
+    let cross = a;
+    for (let t = 0; t <= 1; t += 0.005) {                                              // épaule gauche de l'encoche
+      if (bz(t, yt, yt, yb, yb) >= ly) { cross = bz(t, a - k, a - k * 0.35, a - k * 0.45, a); break; }
+    }
+    const gap = Math.max(0, notch.cx - x - cross) + 8;
+    st.style.setProperty("--gap-l", Math.max(0, notch.cx - x - gap).toFixed(1) + "px");
+    st.style.setProperty("--gap-r", Math.max(0, g.width - (notch.cx - x + gap)).toFixed(1) + "px");
+  }
   glassEl.style.setProperty("--bite", Math.max(0, Math.round(y + g.height - (jog.cy - jog.r))) + "px");
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
   const body = `M0 0H${W}V${H}H0Z` + inner;
