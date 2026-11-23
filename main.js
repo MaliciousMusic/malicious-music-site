@@ -62,8 +62,11 @@ function hole(x, y, w, h, n, jb) {
   }
   let top;
   if (n) {
-    const yt = y + bt, yb = yt + n.depth, k = n.depth * 1.7;   // k : longueur des épaules de l'encoche
-    const a = n.cx - n.hw, b = n.cx + n.hw;
+    // l'encoche (et ses épaules) ne doit jamais empiéter sur les coins arrondis
+    const room = Math.min(n.cx - (x + bw + r), x + w - bw - r - n.cx) - 4;
+    const hw = Math.min(n.hw, room - 10), k = Math.max(6, Math.min(n.depth * 1.7, room - hw));
+    const yt = y + bt, yb = yt + n.depth;   // k : longueur des épaules de l'encoche
+    const a = n.cx - hw, b = n.cx + hw;
     top = [
       `L${f(a - k)} ${f(yt)}`,
       `C${f(a - k * 0.35)} ${f(yt)} ${f(a - k * 0.45)} ${f(yb)} ${f(a)} ${f(yb)}`,
@@ -121,10 +124,12 @@ function layout() {
     for (let t = 0; t <= 1; t += 0.005) {                                              // épaule gauche de l'encoche
       if (bz(t, yt, yt, yb, yb) >= ly) { cross = bz(t, a - k, a - k * 0.35, a - k * 0.45, a); break; }
     }
-    const gap = Math.max(0, notch.cx - x - cross) + 8;
+    const below = ly > yt + notch.depth + 2;                                            // statut sous l'encoche (mobile)
+    const gap = below ? -1e4 : Math.max(0, notch.cx - x - cross) + 8;
     st.style.setProperty("--gap-l", Math.max(0, notch.cx - x - gap).toFixed(1) + "px");
     st.style.setProperty("--gap-r", Math.max(0, g.width - (notch.cx - x + gap)).toFixed(1) + "px");
   }
+  glassEl.style.setProperty("--notch-d", Math.round(bt + notch.depth) + "px");
   glassEl.style.setProperty("--bite", Math.max(0, Math.round(y + g.height - (jog.cy - jog.r))) + "px");
   ["chassis", "bezel"].forEach((id) => document.getElementById(id).setAttribute("viewBox", `0 0 ${W} ${H}`));
   const body = `M0 0H${W}V${H}H0Z` + inner;
