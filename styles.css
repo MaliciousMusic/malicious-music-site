@@ -910,3 +910,28 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
 .lang option { color: #111; background: #e8efe9; }
 @media (max-width: 760px) { .st-right { display: block; } }
 .lang select { max-width: 7.2em; font-size: .85em; text-overflow: ellipsis; }
+
+/* sélecteur de langue : bouton LCD + panneau dans l'écran */
+.lang-btn { font-family: var(--term); font-size: .9em; color: var(--ink); border: 2px solid var(--ink); border-radius: 6px; padding: 0 8px; letter-spacing: .06em; background: transparent; cursor: pointer; }
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { background: var(--ink); color: var(--lcd-hi); }
+.lang-pop { position: absolute; z-index: 5; right: clamp(24px, 4.6vw, 60px); top: calc(clamp(14px, 2.4vh, 22px) + 2.2em);
+  width: min(260px, calc(100% - 48px)); max-height: calc(100% - 4.6em - var(--bite, 0px));
+  display: flex; flex-direction: column; border: 2px solid var(--ink); border-radius: 8px;
+  background: var(--lcd-hi); box-shadow: 4px 4px 0 rgba(38,51,44,.35); font-size: clamp(1rem, 1.6vw, 1.2rem); }
+.lang-pop[hidden] { display: none; }
+.lang-head { padding: 6px 12px 4px; border-bottom: 2px dotted var(--ink); letter-spacing: .14em; font-size: .85em; }
+.lang-list { list-style: none; overflow-y: auto; overscroll-behavior: contain; padding: 4px; scrollbar-width: thin; scrollbar-color: var(--ink) transparent; }
+.lang-list button { display: flex; gap: 10px; width: 100%; text-align: left; font: inherit; color: var(--ink); background: none; border: 0; border-radius: 4px; padding: 3px 8px; cursor: pointer; }
+.lang-list button b { font-weight: 400; min-width: 2.2ch; letter-spacing: .06em; }
+.lang-list button span { font-family: var(--term), system-ui, sans-serif; }
+.lang-list button:hover, .lang-list button:focus-visible { background: var(--ink-3); outline: none; }
+.lang-list button[aria-selected="true"] { background: var(--ink); color: var(--lcd-hi); }
+
+/* sticker décollable : la colle reste sur le chrome */
+.glue { position: absolute; z-index: 3; pointer-events: none; top: calc(var(--top) * -.12); right: -6px; width: clamp(84px, 9.4vw, 136px); height: auto; transform: rotate(6deg); opacity: .9; mix-blend-mode: screen; }
+.glue.tacky { pointer-events: auto; cursor: pointer; }
+.sticker { pointer-events: auto; cursor: grab; touch-action: none; transform-origin: 50% 50%; will-change: transform; user-select: none; -webkit-user-drag: none; }
+.sticker.peeling { cursor: grabbing; transition: none; }
+.sticker.snap { transition: transform .35s cubic-bezier(.2,1.6,.4,1), filter .35s; }
+.sticker.gone { display: none; }
+@media (max-width: 760px) { .glue { width: 76px; right: -8px; top: -6px; } }

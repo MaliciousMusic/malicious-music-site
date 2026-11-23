@@ -526,7 +526,7 @@ function tapMark(x, y) {
 let touch = null, glide = 0, swallowClick = false;
 glassEl.addEventListener("pointerdown", (e) => {
   if (e.button > 0 || glassEl.classList.contains("off") || glassEl.classList.contains("booting")) return;
-  const field = e.target.closest("input, select, textarea, label, summary, [data-orbit]");
+  const field = e.target.closest("input, select, textarea, label, summary, [data-orbit], .lang-pop");
   cancelAnimationFrame(glide);
   touch = {
     id: e.pointerId, x: e.clientX, y: e.clientY, y0: e.clientY, top0: scroller.scrollTop,
@@ -689,3 +689,58 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
 // langue : on retraduit les textes produits par le JS, puis on démarre la traduction
 I18N.onChange(() => { show(current); syncPlay(); });
 setTimeout(() => I18N.init(), 0);
+
+// ---------------------------------------------------------
+// Sticker décollable : on l'attrape, il se soulève puis se décolle et tombe ;
+// la colle reste sur le chrome. Un clic sur la colle le recolle.
+// ---------------------------------------------------------
+(function () {
+  const st = document.getElementById("sticker"), glue = document.querySelector(".glue");
+  if (!st || !glue) return;
+  const BASE = "rotate(6deg)";
+  let drag = null, fall = 0;
+  const lift = (dx, dy, k) => {
+    const d = Math.hypot(dx, dy), l = Math.min(1, d / 110);
+    st.style.transform = `translate(${dx * k}px, ${dy * k}px) perspective(500px) rotateX(${(-dy * 0.22).toFixed(1)}deg) rotateY(${(dx * 0.22).toFixed(1)}deg) rotate(${6 + dx * 0.12}deg) scale(${1 + 0.07 * l})`;
+    st.style.filter = `drop-shadow(${(4 + 10 * l).toFixed(1)}px ${(6 + 16 * l).toFixed(1)}px ${(6 + 14 * l).toFixed(1)}px rgba(0,0,0,${(0.35 + 0.2 * l).toFixed(2)}))`;
+  };
+  st.addEventListener("pointerdown", (e) => {
+    if (e.button > 0) return;
+    e.preventDefault(); e.stopPropagation();
+    st.setPointerCapture(e.pointerId);
+    st.classList.remove("snap"); st.classList.add("peeling");
+    drag = { x: e.clientX, y: e.clientY, off: false, vx: 0, vy: 0, lx: e.clientX, ly: e.clientY, t: performance.now() };
+  });
+  st.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y, now = performance.now(), dt = Math.max(1, now - drag.t);
+    drag.vx = 0.7 * drag.vx + 0.3 * ((e.clientX - drag.lx) / dt) * 16; drag.vy = 0.7 * drag.vy + 0.3 * ((e.clientY - drag.ly) / dt) * 16;
+    drag.lx = e.clientX; drag.ly = e.clientY; drag.t = now;
+    if (!drag.off && Math.hypot(dx, dy) > 95) drag.off = true;     // la colle lâche
+    // encore collé : il résiste (élastique) ; décollé : il suit le doigt
+    lift(dx, dy, drag.off ? 1 : 0.35 + 0.004 * Math.hypot(dx, dy));
+  });
+  const end = (e) => {
+    if (!drag) return;
+    const d = drag; drag = null; st.classList.remove("peeling");
+    if (!d.off) { st.classList.add("snap"); st.style.transform = ""; st.style.filter = ""; return; }
+    // il tombe avec son élan et la gravité, en tournoyant
+    let x = (e.clientX - d.x), y = (e.clientY - d.y), vx = d.vx, vy = d.vy, r = 6 + x * 0.12, vr = vx * 0.6 + (Math.random() - 0.5) * 6;
+    cancelAnimationFrame(fall);
+    const step = () => {
+      vy += 1.1; vx *= 0.99; x += vx; y += vy; r += vr;
+      st.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(1.05)`;
+      if (st.getBoundingClientRect().top < innerHeight + 40) fall = requestAnimationFrame(step);
+      else { st.classList.add("gone"); glue.classList.add("tacky"); glue.title = "Recoller"; }
+    };
+    fall = requestAnimationFrame(step);
+  };
+  st.addEventListener("pointerup", end); st.addEventListener("pointercancel", end);
+  glue.addEventListener("click", () => {
+    if (!st.classList.contains("gone")) return;
+    glue.classList.remove("tacky"); glue.removeAttribute("title");
+    st.classList.remove("gone"); st.style.filter = "";
+    st.style.transform = "translate(0, -60px) rotate(-14deg) scale(1.25)";
+    requestAnimationFrame(() => requestAnimationFrame(() => { st.classList.add("snap"); st.style.transform = ""; }));
+  });
+})();

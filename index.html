@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=72" />
+  <link rel="stylesheet" href="styles.css?v=73" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.webp" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.webp" />
   <script>document.documentElement.classList.add("js");</script>
@@ -80,7 +80,8 @@
     <a class="title-chrome" id="title-plate" href="#home" aria-label="Malicious Music — accueil"><img decoding="async" src="assets/hw/title-chrome.webp" alt="MALICIOUS MUSIC" /></a>
     <span class="dev-right" aria-hidden="true"></span>
   </header>
-  <img decoding="async" class="sticker" src="assets/hw/sticker.webp" alt="" />
+  <img decoding="async" class="glue" src="assets/hw/glue.webp" alt="" aria-hidden="true" draggable="false" />
+  <img decoding="async" class="sticker" id="sticker" src="assets/hw/sticker.webp" alt="" aria-hidden="true" draggable="false" />
 
 
   <!-- ===== L'ÉCRAN ===== -->
@@ -93,8 +94,12 @@
       <div class="splash-bar"><i></i></div>
     </div>
 
-    <p class="status"><span id="st-title" data-i18n-skip>1. ACCUEIL</span><span class="st-right"><label class="lang"><span class="sr-only">Langue</span><select id="lang" translate="no" aria-label="Langue"></select></label></span></p>
+    <p class="status"><span id="st-title" data-i18n-skip>1. ACCUEIL</span><span class="st-right"><button class="lang-btn" id="lang-btn" type="button" translate="no" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-pop">FR ▾</button></span></p>
 
+    <div class="lang-pop" id="lang-pop" hidden>
+      <p class="lang-head" aria-hidden="true">Langue</p>
+      <ul class="lang-list" id="lang-list" role="listbox" aria-label="Langue" translate="no"></ul>
+    </div>
     <main class="views" id="views" tabindex="-1">
 
       <!-- ---------- ACCUEIL ---------- -->
@@ -475,9 +480,9 @@
   <img decoding="async" class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.webp" alt="" />
 </div>
 <img decoding="async" class="stylus" id="stylus" src="assets/hw/stylus.webp" alt="" aria-hidden="true" />
-<script src="i18n.js?v=72"></script>
-<script src="models.js?v=72"></script>
-<script src="main.js?v=72"></script>
-<script src="demo.js?v=72"></script>
+<script src="i18n.js?v=73"></script>
+<script src="models.js?v=73"></script>
+<script src="main.js?v=73"></script>
+<script src="demo.js?v=73"></script>
 </body>
 </html>

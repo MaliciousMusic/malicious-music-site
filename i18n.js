@@ -20,7 +20,7 @@ window.I18N = (() => {
     "ÉCRAN ÉTEINT · LECTURE ARRÊTÉE", "Malicious Music — MP3 to Stems & Audioware", "Langue",
   ];
   const ATTRS = ["aria-label", "alt", "placeholder", "title"];
-  const SKIP = "script, style, select#lang, [translate='no'], [data-i18n-skip]";
+  const SKIP = "script, style, #lang-btn, #lang-list, [translate='no'], [data-i18n-skip]";
   const norm = (s) => s.replace(/\s+/g, " ").trim();
   let lang = "fr", dict = {};
   const subs = [];
@@ -40,7 +40,7 @@ window.I18N = (() => {
   }
   function attrs(root, cb) {
     root.querySelectorAll(ATTRS.map((a) => `[${a}]`).join(",")).forEach((el) => {
-      if (el.closest("script, style, select#lang")) return;
+      if (el.closest("script, style, #lang-list")) return;
       ATTRS.forEach((a) => { if (el.hasAttribute(a) && el.getAttribute(a).trim()) cb(el, a); });
     });
   }
@@ -69,7 +69,8 @@ window.I18N = (() => {
     lang = code;
     if (save) { try { localStorage.setItem("mm-lang", code); } catch (e) {} }
     apply();
-    const sel = document.getElementById("lang"); if (sel) sel.value = code;
+    const btn = document.getElementById("lang-btn"); if (btn) btn.textContent = code.toUpperCase() + " ▾";
+    document.querySelectorAll("#lang-list [data-lang]").forEach((o) => o.setAttribute("aria-selected", String(o.dataset.lang === code)));
     subs.forEach((f) => f(code));
   }
   function detect() {
@@ -89,10 +90,33 @@ window.I18N = (() => {
     return [...out].filter((s) => /\p{L}/u.test(s));
   }
   function init() {
-    const sel = document.getElementById("lang");
-    if (sel) {
-      sel.innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}">${k.toUpperCase()} · ${v}</option>`).join("");
-      sel.addEventListener("change", () => set(sel.value, true));
+    // sélecteur de langue : panneau qui s'ouvre DANS l'écran LCD, avec sa propre zone de défilement
+    const btn = document.getElementById("lang-btn"), pop = document.getElementById("lang-pop"), list = document.getElementById("lang-list");
+    if (btn && pop && list) {
+      for (const [k, v] of Object.entries(LANGS)) {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button"; b.dataset.lang = k; b.setAttribute("role", "option"); b.lang = k;
+        b.innerHTML = "<b></b><span></span>"; b.firstChild.textContent = k.toUpperCase(); b.lastChild.textContent = v;
+        b.addEventListener("click", () => { set(k, true); close(true); });
+        li.appendChild(b); list.appendChild(li);
+      }
+      const items = () => [...list.querySelectorAll("button")];
+      const open = () => {
+        pop.hidden = false; btn.setAttribute("aria-expanded", "true");
+        const cur = list.querySelector('[aria-selected="true"]') || items()[0];
+        cur.scrollIntoView({ block: "center" }); cur.focus({ preventScroll: true });
+      };
+      const close = (refocus) => { if (pop.hidden) return; pop.hidden = true; btn.setAttribute("aria-expanded", "false"); if (refocus) btn.focus({ preventScroll: true }); };
+      btn.addEventListener("click", (e) => { e.stopPropagation(); pop.hidden ? open() : close(); });
+      pop.addEventListener("keydown", (e) => {
+        const it = items(), i = it.indexOf(document.activeElement);
+        if (e.key === "Escape") { e.preventDefault(); close(true); }
+        else if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); it[(i + (e.key === "ArrowDown" ? 1 : -1) + it.length) % it.length].focus(); }
+        else if (e.key === "Home" || e.key === "End") { e.preventDefault(); it[e.key === "Home" ? 0 : it.length - 1].focus(); }
+      });
+      document.addEventListener("pointerdown", (e) => { if (!pop.contains(e.target) && e.target !== btn) close(); });
+      window.addEventListener("hashchange", () => close());
     }
     set(detect(), false);
   }
