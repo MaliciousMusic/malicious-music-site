@@ -321,5 +321,8 @@
  "Descendre dans l'écran": "Görgetés lefelé a kijelzőn",
  "Rétroéclairage de l'écran": "Kijelző háttérvilágítása",
  "Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass.": "Malicious Music: a VST plugin, amely bármilyen MP3-at keverhető stemekké alakít, és az Audioware, a Malicious Bass márkajelzésű audiohardver.",
- "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass logó és króm Malicious Music felirat"
+ "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass logó és króm Malicious Music felirat",
+ "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VÁLASSZ EGY SZÁMOT, MAJD INDÍTSD EL A SZÉTVÁLASZTÁST",
+ "Recoller": "Visszaragasztás",
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM"
 }

@@ -693,7 +693,7 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
 })();
 
 // langue : on retraduit les textes produits par le JS, puis on démarre la traduction
-I18N.onChange(() => { show(current); syncPlay(); });
+I18N.onChange(() => { show(current); syncPlay(); const gl = document.querySelector(".glue.tacky"); if (gl) gl.title = I18N.t("Recoller"); });
 setTimeout(() => I18N.init(), 0);
 
 // ---------------------------------------------------------
@@ -737,7 +737,7 @@ setTimeout(() => I18N.init(), 0);
       vy += 1.1; vx *= 0.99; x += vx; y += vy; r += vr;
       st.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(1.05)`;
       if (st.getBoundingClientRect().top < innerHeight + 40) fall = requestAnimationFrame(step);
-      else { st.classList.add("gone"); glue.classList.add("tacky"); glue.title = "Recoller"; }
+      else { st.classList.add("gone"); glue.classList.add("tacky"); glue.title = I18N.t("Recoller"); }
     };
     fall = requestAnimationFrame(step);
   };

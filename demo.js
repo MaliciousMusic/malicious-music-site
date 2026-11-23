@@ -238,6 +238,8 @@
   const setStatus = (s, v) => { lastStatus = [s, v]; statusEl.textContent = T(s, v); };
   const setRun = (s) => { runBtn.dataset.k = s; runBtn.textContent = T(s); };
   if (window.I18N) I18N.onChange(() => { if (lastStatus) setStatus(...lastStatus); if (runBtn.dataset.k) setRun(runBtn.dataset.k); kick(); });
+  // textes de départ gérés par le JS (traduits et retraduits à chaque changement de langue)
+  setStatus("CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION"); setRun("▶ LANCER LA DÉMO");
 
   async function go() {
     const id = ++run;
@@ -412,7 +414,7 @@
     if (playing) { const px = x0 + p * tw; g.fillStyle = ink(0.95); g.fillRect(px, 0, 2, h); }
     if (ph === "idle") {
       g.fillStyle = ink(0.55); g.textAlign = "center";
-      g.fillText(`${DEMOS[sel].name} · ${DEMOS[sel].bpm} BPM · 4 STEMS`, x0 + tw / 2, laneTop + (h - laneTop) / 2);
+      g.fillText(T("{name} · {bpm} BPM · 4 STEMS", { name: DEMOS[sel].name, bpm: DEMOS[sel].bpm }), x0 + tw / 2, laneTop + (h - laneTop) / 2);
       g.textAlign = "left";
     }
     if (ph === "analyse") {

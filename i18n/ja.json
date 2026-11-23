@@ -321,5 +321,8 @@
  "Descendre dans l'écran": "画面内を下へスクロール",
  "Rétroéclairage de l'écran": "画面のバックライト",
  "Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass.": "Malicious Music：あらゆる MP3 をミックス可能なステムに変換する VST プラグイン、そして Malicious Bass ブランドのオーディオハードウェア Audioware。",
- "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass ロゴとクローム仕上げの Malicious Music タイトル"
+ "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass ロゴとクローム仕上げの Malicious Music タイトル",
+ "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "曲を選んで、分離を開始してください",
+ "Recoller": "貼り直す",
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 ステム"
 }

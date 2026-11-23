@@ -51,7 +51,7 @@ python3 tools/i18n_extract.py   # régénère i18n/_source.json
 python3 tools/i18n_check.py     # liste les chaînes manquantes par langue
 ```
 
-Puis compléter les `i18n/<code>.json` (clé = texte français exact, valeur = traduction). Une chaîne absente s'affiche en français. Les éléments `translate="no"` (marques) ne sont pas traduits.
+Puis compléter les `i18n/<code>.json` et incrémenter `DICT_V` dans `i18n.js` (clé = texte français exact, valeur = traduction). Une chaîne absente s'affiche en français. Les éléments `translate="no"` (marques) ne sont pas traduits.
 
 ## Sécurité et confidentialité
 

@@ -321,5 +321,8 @@
  "Descendre dans l'écran": "在屏幕内向下滚动",
  "Rétroéclairage de l'écran": "屏幕背光",
  "Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass.": "Malicious Music：将任意 MP3 转换为可混音分轨的 VST 插件，以及 Malicious Bass 品牌的音频硬件 Audioware。",
- "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass 标志与镀铬 Malicious Music 标题"
+ "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass 标志与镀铬 Malicious Music 标题",
+ "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "选择一首曲目，然后开始分离",
+ "Recoller": "重新贴上",
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 条分轨"
 }

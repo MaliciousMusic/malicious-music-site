@@ -321,5 +321,8 @@
  "Descendre dans l'écran": "Κύλιση προς τα κάτω στην οθόνη",
  "Rétroéclairage de l'écran": "Οπίσθιος φωτισμός οθόνης",
  "Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass.": "Malicious Music: το plugin VST που μετατρέπει οποιοδήποτε MP3 σε stems έτοιμα για μίξη, και Audioware, το audio hardware με τη σφραγίδα Malicious Bass.",
- "Logo Malicious Bass et titre Malicious Music en chrome": "Λογότυπο Malicious Bass και τίτλος Malicious Music σε χρώμιο"
+ "Logo Malicious Bass et titre Malicious Music en chrome": "Λογότυπο Malicious Bass και τίτλος Malicious Music σε χρώμιο",
+ "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "ΕΠΙΛΕΞΤΕ ΚΟΜΜΑΤΙ ΚΑΙ ΞΕΚΙΝΗΣΤΕ ΤΟ ΔΙΑΧΩΡΙΣΜΟ",
+ "Recoller": "Επανακόλληση",
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
 }

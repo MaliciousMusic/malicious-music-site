@@ -321,5 +321,8 @@
  "Descendre dans l'écran": "Skrolla ner i skärmen",
  "Rétroéclairage de l'écran": "Skärmens bakgrundsbelysning",
  "Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass.": "Malicious Music: VST-pluginet som förvandlar vilken MP3 som helst till mixbara stems, och Audioware, ljudhårdvaran med Malicious Bass-stämpeln.",
- "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass-logotyp och Malicious Music-titel i krom"
+ "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass-logotyp och Malicious Music-titel i krom",
+ "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VÄLJ ETT SPÅR OCH STARTA SEPARERINGEN",
+ "Recoller": "Klistra tillbaka",
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
 }

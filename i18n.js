@@ -18,7 +18,9 @@ window.I18N = (() => {
     "TERMINÉ · COMPAREZ L'ORIGINAL ET LE RÉSULTAT", "AUDIO INDISPONIBLE SUR CE NAVIGATEUR", "↻ RELANCER", "▶ LANCER LA DÉMO",
     "LECTURE ARRÊTÉE · RELANCEZ OU CHANGEZ DE MORCEAU", "{name} · {bpm} BPM — PRÊT", "LECTURE ARRÊTÉE", "ANALYSE SPECTRALE…",
     "ÉCRAN ÉTEINT · LECTURE ARRÊTÉE", "Malicious Music — MP3 to Stems & Audioware", "Langue",
+    "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION", "Recoller", "{name} · {bpm} BPM · 4 STEMS",
   ];
+  const DICT_V = 3;                       // à incrémenter à chaque mise à jour des traductions (cache)
   const ATTRS = ["aria-label", "alt", "placeholder", "title"];
   const SKIP = "script, style, #lang-btn, #lang-list, [translate='no'], [data-i18n-skip]";
   const norm = (s) => s.replace(/\s+/g, " ").trim();
@@ -64,7 +66,7 @@ window.I18N = (() => {
   async function set(code, save) {
     if (!LANGS[code]) code = "fr";
     if (code !== "fr") {
-      try { const r = await fetch(`i18n/${code}.json?v=1`); dict = r.ok ? await r.json() : {}; } catch (e) { dict = {}; }
+      try { const r = await fetch(`i18n/${code}.json?v=${DICT_V}`); dict = r.ok ? await r.json() : {}; } catch (e) { dict = {}; }
     } else dict = {};
     lang = code;
     if (save) { try { localStorage.setItem("mm-lang", code); } catch (e) {} }
