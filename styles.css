@@ -797,3 +797,36 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
 .status { border-bottom: 0; padding-bottom: 6px;
   background: linear-gradient(var(--ink), var(--ink)) left bottom / var(--gap-l, 100%) 2px no-repeat,
               linear-gradient(var(--ink), var(--ink)) right bottom / var(--gap-r, 0px) 2px no-repeat; }
+
+/* =========================================================
+   ACCUEIL : 100 % software — présentation courte + prix, puis la démo en vedette
+   ========================================================= */
+#home { grid-template-columns: minmax(0, 1fr); grid-template-areas: none; row-gap: clamp(8px, 2cqh, 16px); }
+@container screen (min-width: 720px) { #home { grid-template-columns: minmax(0, 1fr); grid-template-areas: none; } }
+.h-top { display: flex; align-items: center; justify-content: space-between; gap: clamp(12px, 3cqw, 36px); }
+.h-top .hero { min-width: 0; }
+#home h1 { font-size: clamp(1.8rem, min(5.4cqw, 10cqh), 4.2rem); }
+#home .hero img { width: clamp(52px, min(9cqw, 15cqh), 120px); }
+.h-pitch { max-width: 60ch; font-size: .95em; margin-top: 4px; }
+.h-price { flex: none; display: grid; justify-items: center; line-height: .9; padding: 8px clamp(14px, 2.4cqw, 26px); font-size: clamp(1.4rem, min(3.6cqw, 6.5cqh), 2.4rem); }
+.h-price small { font-size: .42em; letter-spacing: .18em; margin-top: 4px; }
+
+.demo { display: grid; gap: clamp(6px, 1.4cqh, 12px); }
+.demo-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.demo-title { font-size: 1.25em; letter-spacing: .12em; }
+.demo-title::before { content: "◉ "; }
+.demo-pick { display: flex; flex-wrap: wrap; gap: 6px; }
+.demo-pick .btn[aria-checked="true"] { background: var(--ink); color: var(--lcd-hi); }
+.demo-roll { width: 100%; height: clamp(170px, 42cqh, 460px); image-rendering: auto; border-top: 2px dotted var(--ink); border-bottom: 2px dotted var(--ink); padding-block: 4px; }
+.demo-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.demo-status { letter-spacing: .06em; min-height: 1.1em; }
+.demo-ctl { flex: none; }
+.demo-ab { display: inline-flex; gap: 6px; }
+.demo-ab[hidden] { display: none; }
+.demo-note { margin-top: -4px; }
+@container screen (max-width: 560px) {
+  .h-top { flex-direction: column; align-items: stretch; }
+  .h-price { justify-self: start; align-self: flex-start; }
+  .demo-roll { height: 230px; }
+  .demo-pick .btn { font-size: .9em; }
+}

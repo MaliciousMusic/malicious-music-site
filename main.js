@@ -1,7 +1,7 @@
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
 const INK = "38,51,44";
-const allCanvases = [...document.querySelectorAll("canvas")];
+const allCanvases = [...document.querySelectorAll("canvas:not([data-demo-roll])")];
 
 // Models are drawn at low resolution and scaled up: real dot-matrix pixels
 function fit(c) {

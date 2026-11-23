@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=45" />
+  <link rel="stylesheet" href="styles.css?v=47" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.png" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.png" />
   <script>document.documentElement.classList.add("js");</script>
@@ -99,32 +99,40 @@
 
       <!-- ---------- ACCUEIL ---------- -->
       <section class="view active" id="home" data-view="home">
-        <div class="hero">
-          <img class="ink-logo" src="assets/malicious-bass-lcd.png" alt="Logo Malicious Bass" />
-          <div>
-            <h1>MALICIOUSMUSIC</h1>
-            <p>MP3-TO-STEMS · PLUGIN VST <span class="ph">[FORMATS À CONFIRMER]</span></p>
+        <div class="h-top">
+          <div class="hero">
+            <img class="ink-logo" src="assets/malicious-bass-lcd.png" alt="Logo Malicious Bass" />
+            <div>
+              <h1>MALICIOUSMUSIC</h1>
+              <p class="h-pitch">Un MP3 entre, les stems sortent : le plugin VST recompose chaque morceau en pistes séparées, prêtes à remixer dans votre DAW.</p>
+            </div>
+          </div>
+          <a class="btn inv h-price" href="#tarif">59 €/MOIS<small>COMMENCER</small></a>
+        </div>
+
+        <div class="box demo" id="demo">
+          <div class="demo-head">
+            <p class="demo-title">DÉMO</p>
+            <div class="demo-pick" role="radiogroup" aria-label="Morceau de démo">
+              <button class="btn sm" role="radio" aria-checked="true" data-demo="0">01 NEON DRIVE</button>
+              <button class="btn sm" role="radio" aria-checked="false" data-demo="1">02 BASEMENT 808</button>
+              <button class="btn sm" role="radio" aria-checked="false" data-demo="2">03 SUNDAY LOFI</button>
+            </div>
+          </div>
+          <canvas class="demo-roll" data-demo-roll role="img" aria-label="Piano roll : le morceau recomposé en MIDI, stem par stem"></canvas>
+          <div class="demo-foot">
+            <p class="demo-status" id="demo-status" aria-live="polite">CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION</p>
+            <div class="row demo-ctl">
+              <button class="btn inv" id="demo-run">▶ LANCER LA DÉMO</button>
+              <span class="demo-ab" id="demo-ab" hidden>
+                <button class="btn" data-ab="orig" aria-pressed="false">ORIGINAL</button>
+                <button class="btn" data-ab="final" aria-pressed="true">FINI</button>
+                <button class="btn" id="demo-stop" aria-label="Arrêter la lecture">■</button>
+              </span>
+            </div>
           </div>
         </div>
-        <p class="big h-big">UN MP3 ENTRE.<br />DES STEMS SORTENT.</p>
-        <p class="txt h-txt">Malicious Music sépare n'importe quel morceau en pistes voix, batterie, basse et instruments, puis vous laisse les remixer directement dans votre DAW.</p>
-        <div class="box scope" aria-hidden="true">
-          <div class="track track-mix"><span>MIX.MP3</span><canvas data-wave="mix"></canvas></div>
-          <div class="track"><span>VOCALS</span><canvas data-wave="vox"></canvas></div>
-          <div class="track"><span>DRUMS</span><canvas data-wave="drums"></canvas></div>
-          <div class="track"><span>BASS</span><canvas data-wave="bass"></canvas></div>
-          <div class="track"><span>OTHER</span><canvas data-wave="other"></canvas></div>
-        </div>
-        <div class="row h-cta">
-          <a class="btn inv" href="#tarif">COMMENCER — 59 €/MOIS</a>
-          <a class="btn" href="#plugin">VOIR LE PLUGIN</a>
-          <a class="btn" href="#audioware">AUDIOWARE</a>
-        </div>
-        <div class="grid3">
-          <a class="box tile" href="#pyramide"><b>LA PYRAMIDE</b>Platine · range-vinyles · enceinte</a>
-          <a class="box tile" href="#geants"><b>LES GÉANTS</b>Écouteurs XXL = paire d'enceintes</a>
-          <a class="box tile" href="#casque"><b>LE CASQUE</b>Sans recharge · stockage intégré</a>
-        </div>
+        <p class="note demo-note">Démo synthétisée dans votre navigateur. <span class="ph">[à remplacer par de vrais rendus du plugin]</span></p>
       </section>
 
       <!-- ---------- PLUGIN ---------- -->
@@ -384,6 +392,7 @@
   <img class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.png" alt="" />
 </div>
 <img class="stylus" id="stylus" src="assets/hw/stylus.png" alt="" aria-hidden="true" />
-<script src="main.js?v=45"></script>
+<script src="main.js?v=46"></script>
+<script src="demo.js?v=50"></script>
 </body>
 </html>
