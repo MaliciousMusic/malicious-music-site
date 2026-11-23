@@ -834,3 +834,8 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
 .h-pitch { max-width: none; font-size: .9em; text-wrap: balance; }
 .h-price { line-height: .95; }
 .h-price small { font-size: 1em; letter-spacing: .04em; margin-top: 2px; }
+
+/* audioware : vues 3D plus grandes, sans tampon */
+.viewer { background: none; border-style: dotted; }
+.viewer canvas { height: clamp(170px, 40cqh, 340px); image-rendering: auto; }
+.glass .viewer canvas { image-rendering: auto; }

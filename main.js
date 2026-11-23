@@ -5,7 +5,7 @@ const allCanvases = [...document.querySelectorAll("canvas:not([data-demo-roll])"
 
 // Models are drawn at low resolution and scaled up: real dot-matrix pixels
 function fit(c) {
-  const k = c.dataset.model ? 1 / 2.5 : 0.5;
+  const k = c.dataset.model ? Math.min(dpr(), 1.5) : 0.5;
   const w = Math.max(1, Math.round(c.clientWidth * k));
   const h = Math.max(1, Math.round(c.clientHeight * k));
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
@@ -406,6 +406,7 @@ function buildPhones() {
 }
 const models = { pyramid: buildPyramid(), buds: buildBuds(), phones: buildPhones() };
 function drawModel(c, t) {
+  if (window.MM3D) return window.MM3D.draw(c, t, c.dataset.model);
   const ctx = c.getContext("2d");
   const { width: w, height: h } = c;
   ctx.clearRect(0, 0, w, h);
