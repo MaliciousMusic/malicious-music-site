@@ -830,3 +830,5 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
   .demo-roll { height: 230px; }
   .demo-pick .btn { font-size: .9em; }
 }
+.h-top .hero { flex: 1; }
+.h-pitch { max-width: none; font-size: .9em; text-wrap: balance; }
