@@ -40,7 +40,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 .dev-top, .side, .console { z-index: 3; }
 
 /* ---------- gravures et plaques ---------- */
-.engrave { font-size: .58rem; font-weight: 700; letter-spacing: .22em; color: #3d444c; text-shadow: 0 1px 0 rgba(255,255,255,.75); white-space: nowrap; }
+.engrave { font-size: .66rem; font-weight: 700; letter-spacing: .22em; color: #3d444c; text-shadow: 0 1px 0 rgba(255,255,255,.75); white-space: nowrap; }
 .plate {
   display: inline-block; padding: 5px 16px; border-radius: 999px; white-space: nowrap;
   font-size: .58rem; font-weight: 700; letter-spacing: .24em; color: #d5dbe2;
@@ -93,7 +93,7 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
 .side-l { left: 0; } .side-r { right: 0; }
 .nav-btn { position: relative; display: grid; justify-items: center; gap: 6px; }
 .side-l .nav-btn .led { right: -16px; } .side-r .nav-btn .led { left: -16px; }
-.nav-btn b { font-size: .52rem; font-weight: 700; letter-spacing: .16em; color: #3d444c; text-shadow: 0 1px 0 rgba(255,255,255,.75); }
+.nav-btn b { font-size: .66rem; font-weight: 700; letter-spacing: .06em; color: #3d444c; text-shadow: 0 1px 0 rgba(255,255,255,.75); }
 .nav-btn .led { position: absolute; top: calc(clamp(40px, 6.4vh, 54px) / 2 - 5.5px); }
 .grille { width: 40px; height: 40px; border-radius: 10px; background: radial-gradient(circle, #23272c 0 1.6px, transparent 2.2px) 0 0 / 8px 8px; opacity: .85; filter: drop-shadow(0 1px 0 rgba(255,255,255,.7)); }
 
@@ -354,7 +354,7 @@ h2::before { content: "> "; }
   .mob-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 4px; justify-items: center; }
   .mob-keys .rbtn { --s: 38px; }
   .mob-keys .nav-btn .led { display: none; }
-  .mob-keys .nav-btn b { font-size: .46rem; letter-spacing: .1em; }
+  .mob-keys .nav-btn b { font-size: .64rem; letter-spacing: .02em; }
   .readout { font-size: 1.2rem; }
   .pill { width: 44px; }
 }
@@ -720,7 +720,7 @@ a:active > .rbtn svg, button.rbtn:active svg, [aria-current="page"] > .rbtn svg,
 .device { --jog-big: calc(var(--jog) * 1.45); --jog-k: calc(var(--jog) * .7); --jog-p: calc(var(--jog) * 1.4); }
 .console > .jog { --jog: var(--jog-big); align-self: start; margin: calc(var(--bottom) - 8px - max(14px, env(safe-area-inset-bottom)) - var(--jog)) 0 0; z-index: 4; }
 .knob-wrap { --jog: var(--jog-k); }
-.knob-wrap .engrave { font-size: .5rem; }
+.knob-wrap .engrave { font-size: .64rem; letter-spacing: .1em; }
 .power-wrap { --jog: var(--jog-p); }
 @media (max-width: 760px) { .device { --jog-big: var(--jog); } .console > .jog { align-self: center; margin: 0; } }
 
@@ -982,3 +982,5 @@ html[hidden] { display: none; }
 .btn:disabled, .btn:disabled:hover { background: transparent; color: var(--ink); border-style: dashed; cursor: not-allowed; }
 .signup input:disabled, .signup select:disabled { opacity: 1; border-style: dashed; cursor: not-allowed; }
 .notice { border-left: 4px solid var(--ink); padding-left: 10px; }
+/* le focus au clavier sur l'écran ne doit pas arrondir (donc couper) son contenu */
+.views:focus, .views:focus-visible { border-radius: 0; }

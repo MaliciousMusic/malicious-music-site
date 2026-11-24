@@ -589,7 +589,7 @@ window.addEventListener("pointerdown", () => { swallowClick = false; }, true);
 (function () {
   const box = document.getElementById("charms");
   if (!box) return;
-  if (!document.documentElement.classList.contains("stylus-on")) { box.hidden = true; return; }
+  if (reduceMotion || !document.documentElement.classList.contains("stylus-on")) { box.hidden = true; return; }
   const END = [0.8529, -0.8561];          // bout arrière du stylet par rapport à la pointe (× taille du stylet)
   const cordEls = [...box.querySelectorAll(".cord")], shadowEls = [...box.querySelectorAll(".cord-shadow")];
   const loopEl = box.querySelector(".loop"), knotEl = box.querySelector(".knot");
