@@ -1,5 +1,5 @@
 // anti-clickjacking : le site refuse d'être affiché dans un cadre d'un autre site
-if (window.top !== window.self) { try { window.top.location = window.self.location.href; } catch (e) { document.documentElement.style.display = "none"; } }
+if (window.top !== window.self) { try { window.top.location = window.self.location.href; } catch (e) { document.documentElement.hidden = true; } }
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
 const INK = "38,51,44";

@@ -6,7 +6,7 @@
   <title>Malicious Music — MP3 to Stems &amp; Audioware</title>
   <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WZRJfWvsnNCPcxzZwvyhovnZGqhZaC+8gPGPRbx6wTk='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'none'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="theme-color" content="#1a1030" />
   <link rel="canonical" href="https://maliciousmusic.github.io/malicious-music-site/" />
@@ -23,10 +23,10 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=79" />
+  <link rel="stylesheet" href="styles.css?v=80" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.webp" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.webp" />
-  <script>document.documentElement.classList.add("js");</script>
+  <script src="boot.js?v=80"></script>
 </head>
 <body>
 <div class="device" id="device">
@@ -67,13 +67,13 @@
     <path id="body" fill="url(#p-plate)" fill-rule="evenodd" filter="url(#f-chrome)"/>
     <path id="body-sheen" fill="url(#g-sheen)" fill-rule="evenodd"/>
     <path id="body-shade" fill="url(#g-shade)" fill-rule="evenodd"/>
-    <rect width="100%" height="100%" filter="url(#f-grain)" opacity=".16" style="mix-blend-mode:overlay"/>
+    <rect width="100%" height="100%" filter="url(#f-grain)" opacity=".16" class="grain"/>
   </svg>
 
   <!-- ===== HAUT ===== -->
   <header class="dev-top">
     <span class="dev-left">
-      <button class="rbtn xs" id="power-x" aria-label="Éteindre ou rallumer l'écran"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+      <button class="rbtn xs" id="power-x" aria-label="Éteindre ou rallumer l'écran"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
       <i class="led blue" id="led"></i>
       <span class="engrave dev-model">MM-59 · MP3-TO-STEMS</span>
     </span>
@@ -160,7 +160,7 @@
             </div>
           </div>
           <div class="box mixer">
-            <p class="p-sub" style="text-align:left">MIXEUR DE STEMS</p>
+            <p class="p-sub left">MIXEUR DE STEMS</p>
             <div class="strip" data-stem="0"><span>VOCALS</span><input class="lv" type="range" min="0" max="100" value="80" aria-label="Volume vocals" /><button class="btn sm m" aria-pressed="false" aria-label="Mute vocals">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo vocals">S</button></div>
             <div class="strip" data-stem="1"><span>DRUMS</span><input class="lv" type="range" min="0" max="100" value="70" aria-label="Volume drums" /><button class="btn sm m" aria-pressed="false" aria-label="Mute drums">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo drums">S</button></div>
             <div class="strip" data-stem="2"><span>BASS</span><input class="lv" type="range" min="0" max="100" value="90" aria-label="Volume bass" /><button class="btn sm m" aria-pressed="false" aria-label="Mute bass">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo bass">S</button></div>
@@ -209,7 +209,7 @@
         <p class="big">UNE SEULE FORMULE. TOUT INCLUS.</p>
         <div class="box price">
           <div class="offer">
-          <p class="p-sub" style="text-align:left">MALICIOUSMUSIC · FORMULE UNIQUE</p>
+          <p class="p-sub left">MALICIOUSMUSIC · FORMULE UNIQUE</p>
           <p class="amount">59 €<small>/MOIS</small></p>
           <p>TTC · SANS ENGAGEMENT <span class="ph">[À CONFIRMER]</span></p>
           <div class="row"><a class="btn inv xl" href="#" data-placeholder="checkout">S'ABONNER</a></div>
@@ -422,45 +422,45 @@
   <!-- ===== BOUTONS LATÉRAUX ===== -->
   <nav class="side side-l" aria-label="Pages">
     <span class="grille" aria-hidden="true"></span>
-    <a class="nav-btn" href="#home" data-key="home"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></span><i class="led blue"></i><b>ACCUEIL</b></a>
-    <a class="nav-btn" href="#plugin" data-key="plugin"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M5 19V10M10 19V5M15 19v-6M20 19V8"/></svg></span><i class="led blue"></i><b>PLUGIN</b></a>
-    <a class="nav-btn" href="#tarif" data-key="tarif"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M17.5 6.5a6.5 6.5 0 1 0 0 11M4 10.2h9M4 13.8h9"/></svg></span><i class="led blue"></i><b>TARIF</b></a>
+    <a class="nav-btn" href="#home" data-key="home"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></span><i class="led blue"></i><b>ACCUEIL</b></a>
+    <a class="nav-btn" href="#plugin" data-key="plugin"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10M10 19V5M15 19v-6M20 19V8"/></svg></span><i class="led blue"></i><b>PLUGIN</b></a>
+    <a class="nav-btn" href="#tarif" data-key="tarif"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 6.5a6.5 6.5 0 1 0 0 11M4 10.2h9M4 13.8h9"/></svg></span><i class="led blue"></i><b>TARIF</b></a>
   </nav>
   <nav class="side side-r" aria-label="Pages (suite)">
-    <a class="nav-btn" href="#audioware" data-key="audioware"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M4.5 15v-3a7.5 7.5 0 0 1 15 0v3M4.5 14.5h3v5h-3zM16.5 14.5h3v5h-3z"/></svg></span><i class="led blue"></i><b>AUDIOWARE</b></a>
-    <a class="nav-btn" href="#faq" data-key="faq"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M9 9a3 3 0 1 1 4.2 2.7c-.8.4-1.2 1-1.2 1.8V15M12 18.6v.2"/></svg></span><i class="led blue"></i><b>FAQ</b></a>
-    <a class="nav-btn" href="#contact" data-key="contact"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17zM3.5 6.5l8.5 6.5 8.5-6.5"/></svg></span><i class="led blue"></i><b>CONTACT</b></a>
+    <a class="nav-btn" href="#audioware" data-key="audioware"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 15v-3a7.5 7.5 0 0 1 15 0v3M4.5 14.5h3v5h-3zM16.5 14.5h3v5h-3z"/></svg></span><i class="led blue"></i><b>AUDIOWARE</b></a>
+    <a class="nav-btn" href="#faq" data-key="faq"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4.2 2.7c-.8.4-1.2 1-1.2 1.8V15M12 18.6v.2"/></svg></span><i class="led blue"></i><b>FAQ</b></a>
+    <a class="nav-btn" href="#contact" data-key="contact"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17zM3.5 6.5l8.5 6.5 8.5-6.5"/></svg></span><i class="led blue"></i><b>CONTACT</b></a>
     <span class="grille" aria-hidden="true"></span>
   </nav>
 
   <!-- ===== CONSOLE DU BAS ===== -->
   <div class="console">
     <div class="jog">
-      <i class="dot" style="--a:0deg"></i><i class="dot" style="--a:45deg"></i><i class="dot" style="--a:90deg"></i><i class="dot" style="--a:135deg"></i><i class="dot" style="--a:180deg"></i><i class="dot" style="--a:225deg"></i><i class="dot" style="--a:270deg"></i><i class="dot" style="--a:315deg"></i>
+      <i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i>
       <div class="jog-disc">
-        <button class="jog-btn prev" id="prev" aria-label="Page précédente"><svg viewBox="0 0 24 24"><path d="M12 6 6 12l6 6zM19 6l-6 6 6 6z"/></svg></button>
-        <button class="jog-btn next" id="next" aria-label="Page suivante"><svg viewBox="0 0 24 24"><path d="M12 6l6 6-6 6zM5 6l6 6-6 6z"/></svg></button>
-        <a class="jog-home" href="#home" aria-label="Accueil"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></a>
+        <button class="jog-btn prev" id="prev" aria-label="Page précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6 6 12l6 6zM19 6l-6 6 6 6z"/></svg></button>
+        <button class="jog-btn next" id="next" aria-label="Page suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6l6 6-6 6zM5 6l6 6-6 6z"/></svg></button>
+        <a class="jog-home" href="#home" aria-label="Accueil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></a>
       </div>
     </div>
 
     <div class="deck">
       <span class="plate">P O S I T I O N</span>
       <div class="pos-row">
-        <button class="pill" id="up" aria-label="Remonter dans l'écran"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6z"/></svg></button>
+        <button class="pill" id="up" aria-label="Remonter dans l'écran"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6z"/></svg></button>
         <div class="pos-track" id="pos-track"><i></i></div>
-        <button class="pill" id="down" aria-label="Descendre dans l'écran"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6z"/></svg></button>
+        <button class="pill" id="down" aria-label="Descendre dans l'écran"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6z"/></svg></button>
       </div>
       <p class="readout"><span id="readout" data-i18n-skip>01 ACCUEIL</span><span>MM-59</span></p>
     </div>
 
     <nav class="mob-keys" aria-label="Pages">
-    <a class="nav-btn sm" href="#home" data-key="home"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></span><i class="led blue"></i><b>ACCUEIL</b></a>
-    <a class="nav-btn sm" href="#plugin" data-key="plugin"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M5 19V10M10 19V5M15 19v-6M20 19V8"/></svg></span><i class="led blue"></i><b>PLUGIN</b></a>
-    <a class="nav-btn sm" href="#tarif" data-key="tarif"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M17.5 6.5a6.5 6.5 0 1 0 0 11M4 10.2h9M4 13.8h9"/></svg></span><i class="led blue"></i><b>TARIF</b></a>
-    <a class="nav-btn sm" href="#audioware" data-key="audioware"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M4.5 15v-3a7.5 7.5 0 0 1 15 0v3M4.5 14.5h3v5h-3zM16.5 14.5h3v5h-3z"/></svg></span><i class="led blue"></i><b>AUDIOWARE</b></a>
-    <a class="nav-btn sm" href="#faq" data-key="faq"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M9 9a3 3 0 1 1 4.2 2.7c-.8.4-1.2 1-1.2 1.8V15M12 18.6v.2"/></svg></span><i class="led blue"></i><b>FAQ</b></a>
-    <a class="nav-btn sm" href="#contact" data-key="contact"><span class="rbtn"><svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17zM3.5 6.5l8.5 6.5 8.5-6.5"/></svg></span><i class="led blue"></i><b>CONTACT</b></a>
+    <a class="nav-btn sm" href="#home" data-key="home"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4.5l8 7M6.5 10v9h11v-9"/></svg></span><i class="led blue"></i><b>ACCUEIL</b></a>
+    <a class="nav-btn sm" href="#plugin" data-key="plugin"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10M10 19V5M15 19v-6M20 19V8"/></svg></span><i class="led blue"></i><b>PLUGIN</b></a>
+    <a class="nav-btn sm" href="#tarif" data-key="tarif"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 6.5a6.5 6.5 0 1 0 0 11M4 10.2h9M4 13.8h9"/></svg></span><i class="led blue"></i><b>TARIF</b></a>
+    <a class="nav-btn sm" href="#audioware" data-key="audioware"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 15v-3a7.5 7.5 0 0 1 15 0v3M4.5 14.5h3v5h-3zM16.5 14.5h3v5h-3z"/></svg></span><i class="led blue"></i><b>AUDIOWARE</b></a>
+    <a class="nav-btn sm" href="#faq" data-key="faq"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4.2 2.7c-.8.4-1.2 1-1.2 1.8V15M12 18.6v.2"/></svg></span><i class="led blue"></i><b>FAQ</b></a>
+    <a class="nav-btn sm" href="#contact" data-key="contact"><span class="rbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17zM3.5 6.5l8.5 6.5 8.5-6.5"/></svg></span><i class="led blue"></i><b>CONTACT</b></a>
     </nav>
 
     <div class="pod">
@@ -482,9 +482,9 @@
   <img decoding="async" draggable="false" class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.webp" alt="" />
 </div>
 <img decoding="async" draggable="false" class="stylus" id="stylus" src="assets/hw/stylus.webp" alt="" aria-hidden="true" />
-<script src="i18n.js?v=79"></script>
-<script src="models.js?v=79"></script>
-<script src="main.js?v=79"></script>
-<script src="demo.js?v=79"></script>
+<script src="i18n.js?v=80"></script>
+<script src="models.js?v=80"></script>
+<script src="main.js?v=80"></script>
+<script src="demo.js?v=80"></script>
 </body>
 </html>

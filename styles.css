@@ -8,7 +8,7 @@
   --lcd: #b4c8bc;
   --lcd-lo: #98aea1;
   --ink: #26332c;
-  --ink-2: rgba(38, 51, 44, .58);
+  --ink-2: rgba(38, 51, 44, .82);
   --ink-3: rgba(38, 51, 44, .12);
   --blue: #2450c8;
   --sans: Helvetica, Arial, sans-serif;
@@ -133,8 +133,8 @@ a:active > .rbtn, button.rbtn:active, [aria-current="page"] > .rbtn {
 .view.active { animation: lcd-in .28s steps(4) both; }
 @keyframes lcd-in { from { opacity: 0; } to { opacity: 1; } }
 
-.glass.off { background: radial-gradient(120% 90% at 50% 38%, #6f7c74, #56625b); filter: none; }
-.glass.off > .status, .glass.off > .views { visibility: hidden; }
+.js .glass.off { background: radial-gradient(120% 90% at 50% 38%, #6f7c74, #56625b); filter: none; }
+.js .glass.off > .status, .js .glass.off > .views { visibility: hidden; }
 
 /* ---------- splash d'allumage ---------- */
 .splash { display: none; position: absolute; inset: 0; z-index: 5; place-content: center; justify-items: center; gap: clamp(8px, 1.6vh, 16px); text-align: center; padding: 20px; }
@@ -365,7 +365,7 @@ h2::before { content: "> "; }
 }
 @media (prefers-reduced-motion: reduce) {
   /* le splash d'allumage reste joué : c'est l'ouverture du site */
-  .view, .nosignal, .glass:not(.booting) { animation: none !important; }
+  .view, .nosignal, .glass:not(.booting), .title-chrome, .title-chrome::before, .title-chrome::after { animation: none !important; }
 }
 
 /* =========================================================
@@ -965,4 +965,15 @@ h2 { font-size: clamp(1.6rem, min(4.6cqw, 8cqh), 3rem); }
   .side .grille { display: none; }
   .deck .plate { display: none; }
   .pod { gap: 10px; }
+}
+
+/* attributs style remplacés par des classes (CSP sans style en ligne) */
+.grain { mix-blend-mode: overlay; }
+.p-sub.left { text-align: left; }
+html[hidden] { display: none; }
+
+/* fenêtre très basse (zoom 200 à 400 %, petit téléphone couché) : l'appareil garde une taille lisible et la page défile */
+@media (max-width: 760px) and (max-height: 520px) {
+  html, body { height: auto; overflow: auto; }
+  .device { position: relative; inset: auto; width: 100%; height: 620px; }
 }

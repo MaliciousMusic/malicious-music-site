@@ -30,8 +30,8 @@ window.I18N = (() => {
   const srcAttr = new WeakMap();
 
   const t = (s, vars) => {
-    let r = (lang !== "fr" && dict[s]) || s;
-    if (vars) r = r.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+    let r = (lang !== "fr" && Object.hasOwn(dict, s) && typeof dict[s] === "string" && dict[s]) || s;
+    if (vars) r = r.replace(/\{(\w+)\}/g, (m, k) => (Object.hasOwn(vars, k) ? vars[k] : m));
     return r;
   };
   function texts(root, cb) {
@@ -63,23 +63,30 @@ window.I18N = (() => {
     });
     document.documentElement.lang = lang;
   }
+  const known = (c) => typeof c === "string" && Object.hasOwn(LANGS, c);
+  let asked = 0;
   async function set(code, save) {
-    if (!LANGS[code]) code = "fr";
+    if (!known(code)) code = "fr";
+    const id = ++asked;
+    let d = {};
     if (code !== "fr") {
-      try { const r = await fetch(`i18n/${code}.json?v=${DICT_V}`); dict = r.ok ? await r.json() : {}; } catch (e) { dict = {}; }
-    } else dict = {};
+      try { const r = await fetch(`i18n/${code}.json?v=${DICT_V}`); d = r.ok ? await r.json() : null; } catch (e) { d = null; }
+      if (id !== asked) return;                                   // une langue choisie plus tard l'emporte
+      if (!d || typeof d !== "object") { if (save) return; code = "fr"; d = {}; }   // traduction introuvable : on garde le texte affiché
+    }
+    dict = d;
     lang = code;
     if (save) { try { localStorage.setItem("mm-lang", code); } catch (e) {} }
     apply();
-    const btn = document.getElementById("lang-btn"); if (btn) btn.textContent = code.toUpperCase() + " ▾";
+    const btn = document.getElementById("lang-btn"); if (btn) { btn.textContent = code.toUpperCase() + " ▾"; btn.setAttribute("aria-label", code.toUpperCase() + " — " + t("Langue")); }
     document.querySelectorAll("#lang-list [data-lang]").forEach((o) => o.setAttribute("aria-selected", String(o.dataset.lang === code)));
     subs.forEach((f) => f(code));
   }
   function detect() {
-    try { const s = localStorage.getItem("mm-lang"); if (s && LANGS[s]) return s; } catch (e) {}
+    try { const s = localStorage.getItem("mm-lang"); if (known(s)) return s; } catch (e) {}
     for (const l of navigator.languages || [navigator.language || "fr"]) {
       const b = l.toLowerCase().split("-")[0], c = b === "no" || b === "nn" ? "nb" : b;
-      if (LANGS[c]) return c;
+      if (known(c)) return c;
     }
     return "en";
   }
@@ -96,10 +103,10 @@ window.I18N = (() => {
     const btn = document.getElementById("lang-btn"), pop = document.getElementById("lang-pop"), list = document.getElementById("lang-list");
     if (btn && pop && list) {
       for (const [k, v] of Object.entries(LANGS)) {
-        const li = document.createElement("li");
+        const li = document.createElement("li"); li.setAttribute("role", "presentation");
         const b = document.createElement("button");
         b.type = "button"; b.dataset.lang = k; b.setAttribute("role", "option"); b.lang = k;
-        b.innerHTML = "<b></b><span></span>"; b.firstChild.textContent = k.toUpperCase(); b.lastChild.textContent = v;
+        b.append(document.createElement("b"), document.createElement("span")); b.firstChild.textContent = k.toUpperCase(); b.lastChild.textContent = v;
         b.addEventListener("click", () => { set(k, true); close(true); });
         li.appendChild(b); list.appendChild(li);
       }
