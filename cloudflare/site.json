@@ -1,16 +1,17 @@
 {
   "domain": "maliciousmusic.org",
-  "security_contact": "",
-  "security_expires": "",
-  "texts_date": "",
+  "security_contact": "mailto:verymaliciousmusic@gmail.com",
+  "security_expires": "2027-10-31",
+  "texts_date": "2026-11-25",
   "identity": {
-    "raison": "",
-    "statut": "",
+    "raison": "Hadrien Lonjaret (EI)",
+    "statut": "entrepreneur individuel (EI)",
+    "siret": "853 801 488 00026",
     "immatriculation": "",
     "tva": "",
-    "adresse": "",
-    "telephone": "",
-    "email": "",
-    "directeur": ""
+    "adresse": "35 cours Sablon, 63000 Clermont-Ferrand, France",
+    "telephone": "07 43 71 95 24",
+    "email": "verymaliciousmusic@gmail.com",
+    "directeur": "Hadrien Lonjaret"
   }
 }

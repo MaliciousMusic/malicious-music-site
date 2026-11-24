@@ -66,6 +66,7 @@ Puis compléter les `i18n/<code>.json` et incrémenter `DICT_V` dans `i18n.js` (
 ```bash
 python3 tools/build.py --draft        # aperçu dans dist/, interdit à l'indexation
 python3 tools/build.py                # production : refusée si un texte légal est incomplet
+python3 tools/build.py --a-confirmer  # production, TVA et RCS/RNE affichés « à confirmer »
 node --test tests/site.test.mjs       # lecture : scripts, textes, traductions, secrets
 node --test tests/served.test.mjs     # site servi (wrangler pages dev) et Chrome
 ```

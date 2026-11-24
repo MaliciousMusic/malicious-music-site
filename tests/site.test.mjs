@@ -102,6 +102,14 @@ test("production refusée sans identité ; remplie, elle est échappée et sans 
   const write = (c) => fs.writeFileSync(tmp + "/cloudflare/site.json", JSON.stringify(c));
   try {
     const r = run(); if (full) assert.equal(r.status, 0, r.stderr); else { assert.notEqual(r.status, 0); assert.match(r.stderr, /Production refusée/); }
+    write({ ...cfg, identity: { ...cfg.identity, tva: "", immatriculation: "" } });
+    assert.notEqual(run().status, 0);                               // TVA et RCS/RNE vides : refus par défaut
+    const r1 = run("--a-confirmer"); assert.equal(r1.status, 0, r1.stderr);
+    const pub = fs.readFileSync(tmp + "/dist/index.html", "utf8");
+    for (const v of Object.values(cfg.identity).filter(Boolean)) assert.ok(pub.includes(v), v);
+    assert.equal(pub.match(/data-id="(tva|immatriculation)">À CONFIRMER/g).length, 2); assert.equal(pub.match(/data-id=/g).length, 2);
+    assert.doesNotMatch(pub, /au capital de/);
+    write({ ...cfg, identity: { ...cfg.identity, adresse: "" } }); assert.notEqual(run("--a-confirmer").status, 0);
     const id = Object.fromEntries(Object.keys(cfg.identity).map((k) => [k, `<b>${k}</b> & test`]));
     const ok = { ...cfg, texts_date: "1er janvier", security_contact: "mailto:test@example.test", security_expires: new Date(Date.now() + 2e10).toISOString().slice(0, 10), identity: id };
     write(ok); const r2 = run(); assert.equal(r2.status, 0, r2.stderr);

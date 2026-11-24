@@ -2,6 +2,7 @@
 """Construit dist/ pour Cloudflare Pages : liste blanche de fichiers, domaine, security.txt.
 
   python3 tools/build.py           production : refuse si un texte légal reste à compléter
+  python3 tools/build.py --a-confirmer   production avec TVA et RCS/RNE encore « à confirmer »
   python3 tools/build.py --draft   aperçu : construit quand même, interdit à l'indexation
 """
 import datetime, json, pathlib, re, shutil, sys
@@ -20,6 +21,11 @@ problems = []
 values = {**cfg["identity"], "date": cfg["texts_date"]}
 slots = set(re.findall(r'data-id="(\w+)"', html))
 missing = sorted(n for n in slots if not str(values.get(n, "")).strip())
+# TVA et RCS/RNE : affichés « À CONFIRMER » ; publier ainsi est un choix explicite
+unconfirmed = [n for n in missing if n in ("immatriculation", "tva")]
+if unconfirmed and "--a-confirmer" in sys.argv:
+    print("⚠ publié « à confirmer » : " + ", ".join(unconfirmed))
+    missing = [n for n in missing if n not in unconfirmed]
 if missing:
     problems.append("identité légale à remplir dans cloudflare/site.json : " + ", ".join(missing))
 if re.search(r'<span class="ph"[^>]*>\s*\[', html):
@@ -61,7 +67,7 @@ out = html.replace(old, base)
 for n in slots:
     v = str(values.get(n, "")).strip()
     if v:
-        out = re.sub(rf'<span class="ph" data-id="{n}">[^<]*</span>', lambda m: f'<span translate="no">{escape(v)}</span>', out)
+        out = re.sub(rf'<span class="ph" data-id="{n}">[^<]*</span>', lambda m: f'<a href="mailto:{escape(v)}" translate="no">{escape(v)}</a>' if n == "email" else f'<span translate="no">{escape(v)}</span>', out)
 headers = (root / "cloudflare/_headers").read_text(encoding="utf-8")
 if draft:
     out = out.replace("</title>", '</title>\n  <meta name="robots" content="noindex" />', 1)
