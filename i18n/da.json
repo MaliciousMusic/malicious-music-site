@@ -103,7 +103,6 @@
  "/MOIS": "/MD.",
  "TTC · SANS ENGAGEMENT": "INKL. MOMS · INGEN BINDING",
  "[À CONFIRMER]": "[SKAL BEKRÆFTES]",
- "S'ABONNER": "ABONNÉR",
  "Paiement sécurisé": "Sikker betaling",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — skal tilsluttes]",
  "CGV": "HANDELSBETINGELSER",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[H × B × D]",
  "FINITION:": "FINISH:",
  "[MATIÈRES]": "[MATERIALER]",
- "PRÉCOMMANDER": "FORUDBESTIL",
  "ÊTRE NOTIFIÉ": "FÅ BESKED",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "KABLEDE XXL-ØRETELEFONER · HØJTTALERPAR ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Et par overdimensionerede kablede øretelefoner, der lægges ned på skrivebordet og danner et rigtigt par stereohøjttalere, tilsluttet med deres kabel og jackstik.",
@@ -180,8 +178,6 @@
  "TOUT": "ALT",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Jeg accepterer at modtage e-mails fra Malicious Music og kan til enhver tid afmelde mig.",
  "S'INSCRIRE": "TILMELD",
- "C'EST NOTÉ !": "NOTERET!",
- "[liste à brancher]": "[liste skal tilsluttes]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "JURIDISK MEDDELELSE",
  "CGU": "BRUGSVILKÅR",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass-logo og Malicious Music-titel i krom",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VÆLG ET NUMMER, OG START ADSKILLELSEN",
  "Recoller": "Sæt på igen",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "KOMMER SNART",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Intet er til salg endnu: man kan hverken bestille eller betale på dette site.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Tilmeldingen er ikke åben endnu: intet sendes eller gemmes.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Udkast: intet er til salg endnu, disse betingelser gælder ikke endnu."
 }

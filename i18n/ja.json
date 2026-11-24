@@ -103,7 +103,6 @@
  "/MOIS": "/月",
  "TTC · SANS ENGAGEMENT": "税込 · 契約期間の縛りなし",
  "[À CONFIRMER]": "[要確認]",
- "S'ABONNER": "購読する",
  "Paiement sécurisé": "安全な決済",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — 接続予定]",
  "CGV": "販売条件",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[高さ × 幅 × 奥行]",
  "FINITION:": "仕上げ:",
  "[MATIÈRES]": "[素材]",
- "PRÉCOMMANDER": "予約注文",
  "ÊTRE NOTIFIÉ": "通知を受け取る",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL 有線イヤホン · スピーカーペア ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "デスクに横たえると本物のステレオスピーカーペアになる、特大サイズの有線イヤホン。ケーブルとジャックプラグで接続します。",
@@ -180,8 +178,6 @@
  "TOUT": "すべて",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Malicious Music からのメール受信に同意します。配信はいつでも停止できます。",
  "S'INSCRIRE": "登録する",
- "C'EST NOTÉ !": "登録しました！",
- "[liste à brancher]": "[リスト接続予定]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "法的表示",
  "CGU": "利用条件",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass ロゴとクローム仕上げの Malicious Music タイトル",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "曲を選んで、分離を開始してください",
  "Recoller": "貼り直す",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 ステム"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 ステム",
+ "BIENTÔT DISPONIBLE": "近日公開",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "まだ何も販売していません。このサイトでは注文も支払いもできません。",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "登録はまだ受け付けていません。何も送信・保存されません。",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "草案：まだ何も販売していないため、この規約はまだ適用されません。"
 }

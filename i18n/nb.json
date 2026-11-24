@@ -103,7 +103,6 @@
  "/MOIS": "/MND",
  "TTC · SANS ENGAGEMENT": "INKL. MVA · INGEN BINDINGSTID",
  "[À CONFIRMER]": "[MÅ BEKREFTES]",
- "S'ABONNER": "ABONNER",
  "Paiement sécurisé": "Sikker betaling",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — skal kobles til]",
  "CGV": "SALGSVILKÅR",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[H × B × D]",
  "FINITION:": "FINISH:",
  "[MATIÈRES]": "[MATERIALER]",
- "PRÉCOMMANDER": "FORHÅNDSBESTILL",
  "ÊTRE NOTIFIÉ": "FÅ VARSEL",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "KABLEDE XXL-ØREPROPPER · HØYTTALERPAR ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Et par overdimensjonerte kablede ørepropper som legges ned på skrivebordet og danner et ekte par stereohøyttalere, koblet til med kabelen og jackpluggen sin.",
@@ -180,8 +178,6 @@
  "TOUT": "ALT",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Jeg godtar å motta e-post fra Malicious Music og kan når som helst melde meg av.",
  "S'INSCRIRE": "MELD DEG PÅ",
- "C'EST NOTÉ !": "NOTERT!",
- "[liste à brancher]": "[listen skal kobles til]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "JURIDISK INFORMASJON",
  "CGU": "BRUKSVILKÅR",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass-logo og Malicious Music-tittel i krom",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VELG ET SPOR OG START SEPARERINGEN",
  "Recoller": "Lim på igjen",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "KOMMER SNART",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Ingenting er til salgs ennå: det er ikke mulig å bestille eller betale på dette nettstedet.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Påmeldingen er ikke åpnet ennå: ingenting sendes eller lagres.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Utkast: ingenting er til salgs ennå, disse vilkårene gjelder ikke ennå."
 }

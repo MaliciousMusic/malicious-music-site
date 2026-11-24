@@ -103,7 +103,6 @@
  "/MOIS": "/HÓ",
  "TTC · SANS ENGAGEMENT": "BRUTTÓ · HŰSÉGIDŐ NÉLKÜL",
  "[À CONFIRMER]": "[MEGERŐSÍTENDŐ]",
- "S'ABONNER": "ELŐFIZETEK",
  "Paiement sécurisé": "Biztonságos fizetés",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — bekötendő]",
  "CGV": "ÁSZF",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[M × SZ × M]",
  "FINITION:": "KIVITEL:",
  "[MATIÈRES]": "[ANYAGOK]",
- "PRÉCOMMANDER": "ELŐRENDELÉS",
  "ÊTRE NOTIFIÉ": "ÉRTESÍTÉST KÉREK",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL VEZETÉKES FÜLHALLGATÓK · HANGSZÓRÓPÁR ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Egy pár túlméretezett vezetékes fülhallgató, amely az asztalra fektetve valódi sztereó hangszórópárt alkot, a saját kábelén és jack-csatlakozóján keresztül bekötve.",
@@ -180,8 +178,6 @@
  "TOUT": "MINDEN",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Hozzájárulok, hogy e-maileket kapjak a Malicious Musictól, és tudom, hogy bármikor leiratkozhatok.",
  "S'INSCRIRE": "FELIRATKOZÁS",
- "C'EST NOTÉ !": "MEGVAN!",
- "[liste à brancher]": "[lista bekötendő]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "IMPRESSZUM",
  "CGU": "ÁFF",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass logó és króm Malicious Music felirat",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VÁLASSZ EGY SZÁMOT, MAJD INDÍTSD EL A SZÉTVÁLASZTÁST",
  "Recoller": "Visszaragasztás",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM",
+ "BIENTÔT DISPONIBLE": "HAMAROSAN",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Még semmi sem kapható: ezen az oldalon nem lehet rendelni vagy fizetni.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "A feliratkozás még nem nyílt meg: semmit sem küldünk el vagy tárolunk.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Tervezet: még semmi sem kapható, ezek a feltételek még nem érvényesek."
 }

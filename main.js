@@ -493,10 +493,6 @@ if (reduceMotion) {
   still(); window.addEventListener("resize", still); window.addEventListener("hashchange", () => setTimeout(still, 50));
 } else requestAnimationFrame(frame);
 
-// Newsletter (placeholder, rien n'est envoyé)
-document.querySelectorAll("form.signup").forEach((f) =>
-  f.addEventListener("submit", (e) => { e.preventDefault(); f.querySelector(".msg").hidden = false; f.reset(); })
-);
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 
 // ---------------------------------------------------------

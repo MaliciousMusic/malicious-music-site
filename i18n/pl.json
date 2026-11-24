@@ -103,7 +103,6 @@
  "/MOIS": "/MIES.",
  "TTC · SANS ENGAGEMENT": "Z VAT · BEZ ZOBOWIĄZAŃ",
  "[À CONFIRMER]": "[DO POTWIERDZENIA]",
- "S'ABONNER": "SUBSKRYBUJ",
  "Paiement sécurisé": "Bezpieczna płatność",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — do podłączenia]",
  "CGV": "OWS",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[W × S × G]",
  "FINITION:": "WYKOŃCZENIE:",
  "[MATIÈRES]": "[MATERIAŁY]",
- "PRÉCOMMANDER": "ZAMÓW W PRZEDSPRZEDAŻY",
  "ÊTRE NOTIFIÉ": "POWIADOM MNIE",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "PRZEWODOWE SŁUCHAWKI DOUSZNE XXL · PARA GŁOŚNIKÓW ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Para przewodowych słuchawek dousznych w ponadwymiarowym rozmiarze, które kładą się na biurku i tworzą prawdziwą parę głośników stereo, podłączonych własnym kablem i wtykiem jack.",
@@ -180,8 +178,6 @@
  "TOUT": "WSZYSTKO",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Wyrażam zgodę na otrzymywanie e-maili od Malicious Music i mogę w każdej chwili zrezygnować z subskrypcji.",
  "S'INSCRIRE": "ZAPISZ SIĘ",
- "C'EST NOTÉ !": "ZAPISANO!",
- "[liste à brancher]": "[lista do podłączenia]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "NOTA PRAWNA",
  "CGU": "REGULAMIN",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Logo Malicious Bass i tytuł Malicious Music w chromie",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "WYBIERZ UTWÓR I URUCHOM SEPARACJĘ",
  "Recoller": "Przyklej ponownie",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMY"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMY",
+ "BIENTÔT DISPONIBLE": "WKRÓTCE DOSTĘPNE",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Nic nie jest jeszcze w sprzedaży: na tej stronie nie można składać zamówień ani płacić.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Zapisy nie są jeszcze otwarte: nic nie jest wysyłane ani zapisywane.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Projekt: nic nie jest jeszcze w sprzedaży, te warunki jeszcze nie obowiązują."
 }

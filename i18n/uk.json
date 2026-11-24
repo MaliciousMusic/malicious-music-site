@@ -103,7 +103,6 @@
  "/MOIS": "/МІС",
  "TTC · SANS ENGAGEMENT": "З ПДВ · БЕЗ ЗОБОВ'ЯЗАНЬ",
  "[À CONFIRMER]": "[УТОЧНИТИ]",
- "S'ABONNER": "ПІДПИСАТИСЯ",
  "Paiement sécurisé": "Безпечна оплата",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — підключити]",
  "CGV": "УМОВИ ПРОДАЖУ",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[В × Ш × Г]",
  "FINITION:": "ОЗДОБЛЕННЯ:",
  "[MATIÈRES]": "[МАТЕРІАЛИ]",
- "PRÉCOMMANDER": "ПЕРЕДЗАМОВЛЕННЯ",
  "ÊTRE NOTIFIÉ": "ПОВІДОМИТИ МЕНЕ",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "ДРОТОВІ НАВУШНИКИ XXL · ПАРА КОЛОНОК ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Пара величезних дротових навушників-вкладишів, які лягають на стіл і утворюють справжню пару стереоколонок, підключених власним кабелем і роз'ємом jack.",
@@ -180,8 +178,6 @@
  "TOUT": "УСЕ",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Я погоджуюся отримувати листи від Malicious Music і можу відписатися будь-коли.",
  "S'INSCRIRE": "ПІДПИСАТИСЯ",
- "C'EST NOTÉ !": "ЗАПИСАНО!",
- "[liste à brancher]": "[підключити список]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "ПРАВОВІ ВІДОМОСТІ",
  "CGU": "УМОВИ КОРИСТУВАННЯ",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Логотип Malicious Bass і хромований напис Malicious Music",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "ОБЕРІТЬ ТРЕК І ЗАПУСТІТЬ РОЗДІЛЕННЯ",
  "Recoller": "Приклеїти назад",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 СТЕМИ"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 СТЕМИ",
+ "BIENTÔT DISPONIBLE": "НЕЗАБАРОМ",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Поки що нічого не продається: на цьому сайті неможливо оформити замовлення чи оплату.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Підписка ще не відкрита: нічого не надсилається і не зберігається.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Проєкт: поки що нічого не продається, ці умови ще не діють."
 }

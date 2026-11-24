@@ -103,7 +103,6 @@
  "/MOIS": "/MAAND",
  "TTC · SANS ENGAGEMENT": "INCL. BTW · MAANDELIJKS OPZEGBAAR",
  "[À CONFIRMER]": "[NOG TE BEVESTIGEN]",
- "S'ABONNER": "ABONNEREN",
  "Paiement sécurisé": "Veilig betalen",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — nog te koppelen]",
  "CGV": "AV",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[H × B × D]",
  "FINITION:": "AFWERKING:",
  "[MATIÈRES]": "[MATERIALEN]",
- "PRÉCOMMANDER": "PRE-ORDER",
  "ÊTRE NOTIFIÉ": "HOU ME OP DE HOOGTE",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL-OORDOPJES MET KABEL · PAAR SPEAKERS ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Een paar overmaatse oordopjes met kabel die plat op je bureau liggen en samen een echt paar stereospeakers vormen, aangesloten via hun kabel en jackplug.",
@@ -180,8 +178,6 @@
  "TOUT": "ALLES",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Ik ga ermee akkoord e-mails van Malicious Music te ontvangen en kan me op elk moment afmelden.",
  "S'INSCRIRE": "INSCHRIJVEN",
- "C'EST NOTÉ !": "GENOTEERD!",
- "[liste à brancher]": "[lijst nog te koppelen]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "COLOFON",
  "CGU": "GEBRUIKSVOORWAARDEN",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Logo Malicious Bass en titel Malicious Music in chroom",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "KIES EEN NUMMER EN START DE SCHEIDING",
  "Recoller": "Opnieuw plakken",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "BINNENKORT",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Er is nog niets te koop: op deze site kun je niet bestellen of betalen.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Inschrijven kan nog niet: er wordt niets verzonden of opgeslagen.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Concept: er is nog niets te koop, deze voorwaarden gelden nog niet."
 }

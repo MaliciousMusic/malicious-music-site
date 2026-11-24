@@ -103,7 +103,6 @@
  "/MOIS": "/MĚSÍC",
  "TTC · SANS ENGAGEMENT": "VČ. DPH · BEZ ZÁVAZKU",
  "[À CONFIRMER]": "[K POTVRZENÍ]",
- "S'ABONNER": "PŘEDPLATIT",
  "Paiement sécurisé": "Zabezpečená platba",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — k napojení]",
  "CGV": "OBCHODNÍ PODMÍNKY",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[V × Š × H]",
  "FINITION:": "POVRCH:",
  "[MATIÈRES]": "[MATERIÁLY]",
- "PRÉCOMMANDER": "PŘEDOBJEDNAT",
  "ÊTRE NOTIFIÉ": "DÁT MI VĚDĚT",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "DRÁTOVÁ XXL SLUCHÁTKA · PÁR REPRODUKTORŮ ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Pár nadrozměrných drátových sluchátek, která se položí na stůl a vytvoří skutečný pár stereo reproduktorů, připojených vlastním kabelem a jackem.",
@@ -180,8 +178,6 @@
  "TOUT": "VŠE",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Souhlasím se zasíláním e-mailů od Malicious Music a mohu se kdykoli odhlásit.",
  "S'INSCRIRE": "PŘIHLÁSIT SE",
- "C'EST NOTÉ !": "ZAZNAMENÁNO!",
- "[liste à brancher]": "[seznam k napojení]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "PRÁVNÍ UPOZORNĚNÍ",
  "CGU": "PODMÍNKY UŽITÍ",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Logo Malicious Bass a chromovaný nápis Malicious Music",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VYBERTE SKLADBU A SPUSŤTE ROZDĚLENÍ",
  "Recoller": "Znovu nalepit",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMY"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMY",
+ "BIENTÔT DISPONIBLE": "JIŽ BRZY",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Zatím není nic v prodeji: na tomto webu nelze objednávat ani platit.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Přihlašování zatím není otevřené: nic se neodesílá ani neukládá.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Návrh: zatím není nic v prodeji, tyto podmínky zatím neplatí."
 }

@@ -103,7 +103,6 @@
  "/MOIS": "/AY",
  "TTC · SANS ENGAGEMENT": "KDV DAHİL · TAAHHÜTSÜZ",
  "[À CONFIRMER]": "[TEYİT EDİLECEK]",
- "S'ABONNER": "ABONE OL",
  "Paiement sécurisé": "Güvenli ödeme",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — bağlanacak]",
  "CGV": "SATIŞ KOŞULLARI",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[Y × G × D]",
  "FINITION:": "KAPLAMA:",
  "[MATIÈRES]": "[MALZEMELER]",
- "PRÉCOMMANDER": "ÖN SİPARİŞ VER",
  "ÊTRE NOTIFIÉ": "BANA HABER VER",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL KABLOLU KULAKLIKLAR · HOPARLÖR ÇİFTİ ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Masanın üzerine yatırılan ve kablosu ile jak fişi üzerinden bağlanarak gerçek bir stereo hoparlör çifti oluşturan, büyük boy bir çift kablolu kulak içi kulaklık.",
@@ -180,8 +178,6 @@
  "TOUT": "HEPSİ",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Malicious Music'ten e-posta almayı kabul ediyorum ve istediğim zaman abonelikten çıkabilirim.",
  "S'INSCRIRE": "KAYDOL",
- "C'EST NOTÉ !": "KAYDEDİLDİ!",
- "[liste à brancher]": "[liste bağlanacak]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "YASAL BİLDİRİM",
  "CGU": "KULLANIM KOŞULLARI",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass logosu ve krom Malicious Music başlığı",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "BİR PARÇA SEÇİN, ARDINDAN AYIRMAYI BAŞLATIN",
  "Recoller": "Yeniden yapıştır",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM",
+ "BIENTÔT DISPONIBLE": "YAKINDA",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Henüz hiçbir şey satışta değil: bu sitede sipariş vermek veya ödeme yapmak mümkün değil.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Kayıtlar henüz açılmadı: hiçbir şey gönderilmez veya saklanmaz.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Taslak: henüz hiçbir şey satışta değil, bu koşullar henüz geçerli değil."
 }

@@ -103,7 +103,6 @@
  "/MOIS": "/MONAT",
  "TTC · SANS ENGAGEMENT": "INKL. MWST. · OHNE MINDESTLAUFZEIT",
  "[À CONFIRMER]": "[ZU BESTÄTIGEN]",
- "S'ABONNER": "ABONNIEREN",
  "Paiement sécurisé": "Sichere Zahlung",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — anzubinden]",
  "CGV": "AGB",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[H × B × T]",
  "FINITION:": "OBERFLÄCHE:",
  "[MATIÈRES]": "[MATERIALIEN]",
- "PRÉCOMMANDER": "VORBESTELLEN",
  "ÊTRE NOTIFIÉ": "BENACHRICHTIGEN",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL-KABELKOPFHÖRER · LAUTSPRECHERPAAR ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Ein Paar übergroßer kabelgebundener Ohrhörer, die sich auf den Schreibtisch legen und ein echtes Stereo-Lautsprecherpaar bilden, angeschlossen über ihr Kabel und ihren Klinkenstecker.",
@@ -180,8 +178,6 @@
  "TOUT": "ALLES",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Ich bin damit einverstanden, E-Mails von Malicious Music zu erhalten, und kann mich jederzeit abmelden.",
  "S'INSCRIRE": "ANMELDEN",
- "C'EST NOTÉ !": "NOTIERT!",
- "[liste à brancher]": "[Liste anzubinden]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "IMPRESSUM",
  "CGU": "NUTZUNGSBEDINGUNGEN",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious-Bass-Logo und Malicious-Music-Schriftzug in Chrom",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "WÄHLE EINEN TRACK UND STARTE DIE TRENNUNG",
  "Recoller": "Wieder aufkleben",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "DEMNÄCHST",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Noch ist nichts im Verkauf: Auf dieser Website sind weder Bestellungen noch Zahlungen möglich.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Die Anmeldung ist noch nicht geöffnet: Es wird nichts gesendet oder gespeichert.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Entwurf: Noch ist nichts im Verkauf, diese Bedingungen gelten noch nicht."
 }

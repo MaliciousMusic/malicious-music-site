@@ -103,7 +103,6 @@
  "/MOIS": "/KK",
  "TTC · SANS ENGAGEMENT": "SIS. ALV · EI SITOUTUMISTA",
  "[À CONFIRMER]": "[VAHVISTETAAN]",
- "S'ABONNER": "TILAA",
  "Paiement sécurisé": "Turvallinen maksu",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — kytketään]",
  "CGV": "MYYNTIEHDOT",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[K × L × S]",
  "FINITION:": "VIIMEISTELY:",
  "[MATIÈRES]": "[MATERIAALIT]",
- "PRÉCOMMANDER": "ENNAKKOTILAA",
  "ÊTRE NOTIFIÉ": "ILMOITA MINULLE",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "LANGALLISET XXL-NAPPIKUULOKKEET · KAIUTINPARI ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Pari ylisuuria langallisia nappikuulokkeita, jotka asettuvat makuulle pöydälle ja muodostavat oikean stereokaiutinparin, kytkettyinä omalla johdollaan ja jakkiliittimellään.",
@@ -180,8 +178,6 @@
  "TOUT": "KAIKKI",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Hyväksyn sähköpostien vastaanottamisen Malicious Musicilta ja voin perua tilauksen milloin tahansa.",
  "S'INSCRIRE": "TILAA",
- "C'EST NOTÉ !": "KIRJATTU!",
- "[liste à brancher]": "[luettelo kytketään]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "OIKEUDELLINEN HUOMAUTUS",
  "CGU": "KÄYTTÖEHDOT",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass -logo ja kromattu Malicious Music -otsikko",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VALITSE KAPPALE JA KÄYNNISTÄ EROTTELU",
  "Recoller": "Liimaa takaisin",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMIÄ"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMIÄ",
+ "BIENTÔT DISPONIBLE": "TULOSSA PIAN",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Mitään ei ole vielä myynnissä: tällä sivustolla ei voi tilata eikä maksaa.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Ilmoittautuminen ei ole vielä auki: mitään ei lähetetä eikä tallenneta.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Luonnos: mitään ei ole vielä myynnissä, nämä ehdot eivät ole vielä voimassa."
 }

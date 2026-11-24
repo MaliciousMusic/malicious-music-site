@@ -103,7 +103,6 @@
  "/MOIS": "/MÊS",
  "TTC · SANS ENGAGEMENT": "IVA INCL. · SEM FIDELIZAÇÃO",
  "[À CONFIRMER]": "[A CONFIRMAR]",
- "S'ABONNER": "SUBSCREVER",
  "Paiement sécurisé": "Pagamento seguro",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — a integrar]",
  "CGV": "CGV",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[A × L × P]",
  "FINITION:": "ACABAMENTO:",
  "[MATIÈRES]": "[MATERIAIS]",
- "PRÉCOMMANDER": "PRÉ-ENCOMENDAR",
  "ÊTRE NOTIFIÉ": "SER NOTIFICADO",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "AURICULARES XXL COM FIO · PAR DE COLUNAS ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Um par de auriculares com fio sobredimensionados que se deitam na secretária e formam um verdadeiro par de colunas estéreo, ligadas pelo seu cabo e ficha jack.",
@@ -180,8 +178,6 @@
  "TOUT": "TUDO",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Aceito receber os emails da Malicious Music e posso cancelar a inscrição a qualquer momento.",
  "S'INSCRIRE": "INSCREVER",
- "C'EST NOTÉ !": "ANOTADO!",
- "[liste à brancher]": "[lista a integrar]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "AVISO LEGAL",
  "CGU": "CGU",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Logótipo Malicious Bass e título Malicious Music em cromado",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "ESCOLHA UMA FAIXA E INICIE A SEPARAÇÃO",
  "Recoller": "Voltar a colar",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "BREVEMENTE",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Ainda não há nada à venda: neste site não é possível fazer encomendas nem pagamentos.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "A inscrição ainda não está aberta: nada é enviado nem guardado.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Projeto: ainda não há nada à venda, estas condições ainda não se aplicam."
 }

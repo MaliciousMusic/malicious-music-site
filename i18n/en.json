@@ -103,7 +103,6 @@
  "/MOIS": "/MONTH",
  "TTC · SANS ENGAGEMENT": "INCL. VAT · NO COMMITMENT",
  "[À CONFIRMER]": "[TO BE CONFIRMED]",
- "S'ABONNER": "SUBSCRIBE",
  "Paiement sécurisé": "Secure payment",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — to be connected]",
  "CGV": "TERMS OF SALE",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[H × W × D]",
  "FINITION:": "FINISH:",
  "[MATIÈRES]": "[MATERIALS]",
- "PRÉCOMMANDER": "PRE-ORDER",
  "ÊTRE NOTIFIÉ": "GET NOTIFIED",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL WIRED EARPHONES · PAIR OF SPEAKERS ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "A pair of oversized wired earphones that lie flat on your desk and form a real pair of stereo speakers, connected by their cable and jack plug.",
@@ -180,8 +178,6 @@
  "TOUT": "ALL",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "I agree to receive emails from Malicious Music and can unsubscribe at any time.",
  "S'INSCRIRE": "SIGN UP",
- "C'EST NOTÉ !": "GOT IT!",
- "[liste à brancher]": "[list to be connected]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "LEGAL NOTICE",
  "CGU": "TERMS OF USE",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass logo and chrome Malicious Music title",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "CHOOSE A TRACK, THEN START THE SEPARATION",
  "Recoller": "Stick back on",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "COMING SOON",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Nothing is on sale yet: no order or payment is possible on this site.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Sign-up is not open yet: nothing is sent or stored.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Draft: nothing is on sale yet, these terms do not apply yet."
 }

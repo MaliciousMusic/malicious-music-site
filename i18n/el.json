@@ -103,7 +103,6 @@
  "/MOIS": "/ΜΗΝΑ",
  "TTC · SANS ENGAGEMENT": "ΜΕ ΦΠΑ · ΧΩΡΙΣ ΔΕΣΜΕΥΣΗ",
  "[À CONFIRMER]": "[ΠΡΟΣ ΕΠΙΒΕΒΑΙΩΣΗ]",
- "S'ABONNER": "ΣΥΝΔΡΟΜΗ",
  "Paiement sécurisé": "Ασφαλής πληρωμή",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — προς σύνδεση]",
  "CGV": "ΓΟΠ",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[Υ × Π × Β]",
  "FINITION:": "ΦΙΝΙΡΙΣΜΑ:",
  "[MATIÈRES]": "[ΥΛΙΚΑ]",
- "PRÉCOMMANDER": "ΠΡΟΠΑΡΑΓΓΕΛΙΑ",
  "ÊTRE NOTIFIÉ": "ΕΙΔΟΠΟΙΗΣΤΕ ΜΕ",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "ΕΝΣΥΡΜΑΤΑ ΑΚΟΥΣΤΙΚΑ XXL · ΖΕΥΓΑΡΙ ΗΧΕΙΩΝ ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Ένα ζευγάρι υπερμεγέθη ενσύρματα ακουστικά που ξαπλώνουν στο γραφείο και σχηματίζουν ένα πραγματικό ζευγάρι στερεοφωνικών ηχείων, συνδεδεμένα με το καλώδιο και το βύσμα jack τους.",
@@ -180,8 +178,6 @@
  "TOUT": "ΟΛΑ",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Αποδέχομαι να λαμβάνω email από τη Malicious Music και μπορώ να καταργήσω την εγγραφή μου οποιαδήποτε στιγμή.",
  "S'INSCRIRE": "ΕΓΓΡΑΦΗ",
- "C'EST NOTÉ !": "ΚΑΤΑΓΡΑΦΗΚΕ!",
- "[liste à brancher]": "[λίστα προς σύνδεση]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "ΝΟΜΙΚΕΣ ΣΗΜΕΙΩΣΕΙΣ",
  "CGU": "ΟΡΟΙ ΧΡΗΣΗΣ",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Λογότυπο Malicious Bass και τίτλος Malicious Music σε χρώμιο",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "ΕΠΙΛΕΞΤΕ ΚΟΜΜΑΤΙ ΚΑΙ ΞΕΚΙΝΗΣΤΕ ΤΟ ΔΙΑΧΩΡΙΣΜΟ",
  "Recoller": "Επανακόλληση",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "ΣΥΝΤΟΜΑ ΔΙΑΘΕΣΙΜΟ",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Δεν πωλείται ακόμη τίποτα: σε αυτόν τον ιστότοπο δεν είναι δυνατή καμία παραγγελία ή πληρωμή.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Οι εγγραφές δεν έχουν ανοίξει ακόμη: τίποτα δεν αποστέλλεται ούτε αποθηκεύεται.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Σχέδιο: δεν πωλείται ακόμη τίποτα, οι όροι αυτοί δεν ισχύουν ακόμη."
 }

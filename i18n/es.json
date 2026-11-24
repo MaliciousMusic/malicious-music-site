@@ -103,7 +103,6 @@
  "/MOIS": "/MES",
  "TTC · SANS ENGAGEMENT": "IVA INCL. · SIN PERMANENCIA",
  "[À CONFIRMER]": "[POR CONFIRMAR]",
- "S'ABONNER": "SUSCRIBIRSE",
  "Paiement sécurisé": "Pago seguro",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — por conectar]",
  "CGV": "CONDICIONES DE VENTA",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[AL × AN × PR]",
  "FINITION:": "ACABADO:",
  "[MATIÈRES]": "[MATERIALES]",
- "PRÉCOMMANDER": "RESERVAR",
  "ÊTRE NOTIFIÉ": "AVISARME",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "AURICULARES XXL CON CABLE · PAR DE ALTAVOCES ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Un par de auriculares con cable sobredimensionados que se tumban sobre el escritorio y forman un auténtico par de altavoces estéreo, conectados por su cable y su clavija jack.",
@@ -180,8 +178,6 @@
  "TOUT": "TODO",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Acepto recibir los emails de Malicious Music y puedo darme de baja en cualquier momento.",
  "S'INSCRIRE": "SUSCRIBIRME",
- "C'EST NOTÉ !": "¡APUNTADO!",
- "[liste à brancher]": "[lista por conectar]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "AVISO LEGAL",
  "CGU": "CONDICIONES DE USO",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Logotipo de Malicious Bass y título Malicious Music en cromo",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "ELIGE UNA CANCIÓN Y LANZA LA SEPARACIÓN",
  "Recoller": "Volver a pegar",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "PRÓXIMAMENTE",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Todavía no hay nada a la venta: en este sitio no es posible hacer ningún pedido ni pago.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "La inscripción aún no está abierta: no se envía ni se guarda nada.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Borrador: todavía no hay nada a la venta, estas condiciones aún no se aplican."
 }

@@ -103,7 +103,6 @@
  "/MOIS": "/MESE",
  "TTC · SANS ENGAGEMENT": "IVA INCLUSA · SENZA VINCOLI",
  "[À CONFIRMER]": "[DA CONFERMARE]",
- "S'ABONNER": "ABBONATI",
  "Paiement sécurisé": "Pagamento sicuro",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — da collegare]",
  "CGV": "CGV",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[A × L × P]",
  "FINITION:": "FINITURA:",
  "[MATIÈRES]": "[MATERIALI]",
- "PRÉCOMMANDER": "PREORDINA",
  "ÊTRE NOTIFIÉ": "AVVISAMI",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "AURICOLARI XXL CON FILO · COPPIA DI CASSE ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Una coppia di auricolari con filo sovradimensionati che si adagiano sulla scrivania e formano una vera coppia di casse stereo, collegate tramite il loro cavo e il loro jack.",
@@ -180,8 +178,6 @@
  "TOUT": "TUTTO",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Accetto di ricevere le email di Malicious Music e posso disiscrivermi in qualsiasi momento.",
  "S'INSCRIRE": "ISCRIVITI",
- "C'EST NOTÉ !": "FATTO!",
- "[liste à brancher]": "[lista da collegare]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "NOTE LEGALI",
  "CGU": "CGU",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Logo Malicious Bass e titolo Malicious Music cromato",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "SCEGLI UN BRANO, POI AVVIA LA SEPARAZIONE",
  "Recoller": "Riattacca",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEM",
+ "BIENTÔT DISPONIBLE": "PROSSIMAMENTE",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Non c'è ancora nulla in vendita: su questo sito non è possibile effettuare ordini né pagamenti.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Le iscrizioni non sono ancora aperte: nulla viene inviato o memorizzato.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Bozza: non c'è ancora nulla in vendita, queste condizioni non si applicano ancora."
 }

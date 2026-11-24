@@ -1,3 +1,4 @@
+Copyright 2011, The VT323 Project Authors (peter.hull@oikoi.com)
 Copyright (c) 2011-2012, Jovanny Lemonad (jovanny.ru), with Reserved Font Name "Russo"
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.

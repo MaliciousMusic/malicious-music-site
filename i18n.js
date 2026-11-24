@@ -20,7 +20,7 @@ window.I18N = (() => {
     "ÉCRAN ÉTEINT · LECTURE ARRÊTÉE", "Malicious Music — MP3 to Stems & Audioware", "Langue",
     "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION", "Recoller", "{name} · {bpm} BPM · 4 STEMS",
   ];
-  const DICT_V = 3;                       // à incrémenter à chaque mise à jour des traductions (cache)
+  const DICT_V = 4;                       // à incrémenter à chaque mise à jour des traductions (cache)
   const ATTRS = ["aria-label", "alt", "placeholder", "title"];
   const SKIP = "script, style, #lang-btn, #lang-list, [translate='no'], [data-i18n-skip]";
   const norm = (s) => s.replace(/\s+/g, " ").trim();

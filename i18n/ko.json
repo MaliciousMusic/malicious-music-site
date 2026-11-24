@@ -103,7 +103,6 @@
  "/MOIS": "/월",
  "TTC · SANS ENGAGEMENT": "부가세 포함 · 약정 없음",
  "[À CONFIRMER]": "[확인 필요]",
- "S'ABONNER": "구독하기",
  "Paiement sécurisé": "안전한 결제",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — 연동 예정]",
  "CGV": "판매 약관",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[높이 × 너비 × 깊이]",
  "FINITION:": "마감:",
  "[MATIÈRES]": "[소재]",
- "PRÉCOMMANDER": "사전 주문",
  "ÊTRE NOTIFIÉ": "알림 받기",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "XXL 유선 이어폰 · 스피커 한 쌍 ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "책상 위에 눕히면 진짜 스테레오 스피커 한 쌍이 되는 초대형 유선 이어폰. 케이블과 잭 플러그로 연결합니다.",
@@ -180,8 +178,6 @@
  "TOUT": "전체",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Malicious Music의 이메일 수신에 동의하며, 언제든지 수신을 거부할 수 있습니다.",
  "S'INSCRIRE": "가입하기",
- "C'EST NOTÉ !": "등록되었습니다!",
- "[liste à brancher]": "[메일링 리스트 연동 예정]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "법적 고지",
  "CGU": "이용 약관",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass 로고와 크롬 Malicious Music 타이틀",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "곡을 선택한 뒤 분리를 시작하세요",
  "Recoller": "다시 붙이기",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 스템 4개"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 스템 4개",
+ "BIENTÔT DISPONIBLE": "출시 예정",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "아직 판매 중인 상품이 없습니다. 이 사이트에서는 주문이나 결제를 할 수 없습니다.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "아직 등록을 받지 않습니다. 어떤 내용도 전송되거나 저장되지 않습니다.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "초안: 아직 판매 중인 상품이 없으므로 이 약관은 아직 적용되지 않습니다."
 }

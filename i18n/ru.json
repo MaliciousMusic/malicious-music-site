@@ -103,7 +103,6 @@
  "/MOIS": "/МЕС",
  "TTC · SANS ENGAGEMENT": "С НДС · БЕЗ ОБЯЗАТЕЛЬСТВ",
  "[À CONFIRMER]": "[УТОЧНИТЬ]",
- "S'ABONNER": "ПОДПИСАТЬСЯ",
  "Paiement sécurisé": "Безопасная оплата",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — подключить]",
  "CGV": "УСЛОВИЯ ПРОДАЖИ",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[В × Ш × Г]",
  "FINITION:": "ОТДЕЛКА:",
  "[MATIÈRES]": "[МАТЕРИАЛЫ]",
- "PRÉCOMMANDER": "ПРЕДЗАКАЗ",
  "ÊTRE NOTIFIÉ": "УВЕДОМИТЬ МЕНЯ",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "ПРОВОДНЫЕ НАУШНИКИ XXL · ПАРА КОЛОНОК ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Пара огромных проводных наушников-вкладышей, которые ложатся на стол и образуют настоящую пару стереоколонок, подключённых собственным кабелем и разъёмом jack.",
@@ -180,8 +178,6 @@
  "TOUT": "ВСЁ",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Я согласен(-на) получать письма от Malicious Music и могу отписаться в любой момент.",
  "S'INSCRIRE": "ПОДПИСАТЬСЯ",
- "C'EST NOTÉ !": "ЗАПИСАНО!",
- "[liste à brancher]": "[подключить список]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "ПРАВОВЫЕ СВЕДЕНИЯ",
  "CGU": "УСЛОВИЯ ИСПОЛЬЗОВАНИЯ",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Логотип Malicious Bass и хромированная надпись Malicious Music",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "ВЫБЕРИТЕ ТРЕК И ЗАПУСТИТЕ РАЗДЕЛЕНИЕ",
  "Recoller": "Приклеить обратно",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 СТЕМА"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 СТЕМА",
+ "BIENTÔT DISPONIBLE": "СКОРО",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Пока ничего не продаётся: на этом сайте нельзя оформить заказ или оплату.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Подписка ещё не открыта: ничего не отправляется и не сохраняется.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Проект: пока ничего не продаётся, эти условия ещё не действуют."
 }

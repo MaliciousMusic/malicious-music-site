@@ -103,7 +103,6 @@
  "/MOIS": "/MÅN",
  "TTC · SANS ENGAGEMENT": "INKL. MOMS · INGEN BINDNINGSTID",
  "[À CONFIRMER]": "[BEKRÄFTAS]",
- "S'ABONNER": "PRENUMERERA",
  "Paiement sécurisé": "Säker betalning",
  "[Stripe / Paddle — à brancher]": "[Stripe / Paddle — ska kopplas]",
  "CGV": "KÖPVILLKOR",
@@ -136,7 +135,6 @@
  "[H × L × P]": "[H × B × D]",
  "FINITION:": "FINISH:",
  "[MATIÈRES]": "[MATERIAL]",
- "PRÉCOMMANDER": "FÖRBESTÄLL",
  "ÊTRE NOTIFIÉ": "MEDDELA MIG",
  "ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES ·": "TRÅDBUNDNA XXL-ÖRONSNÄCKOR · HÖGTALARPAR ·",
  "Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.": "Ett par överdimensionerade trådbundna öronsnäckor som läggs ner på skrivbordet och bildar ett riktigt par stereohögtalare, anslutna via sin kabel och sin teleplugg.",
@@ -180,8 +178,6 @@
  "TOUT": "ALLT",
  "J'accepte de recevoir les emails de Malicious Music et je peux me désinscrire à tout moment.": "Jag godkänner att få e-post från Malicious Music och kan avregistrera mig när som helst.",
  "S'INSCRIRE": "ANMÄL MIG",
- "C'EST NOTÉ !": "NOTERAT!",
- "[liste à brancher]": "[lista ska kopplas]",
  "[Instagram] [YouTube] [TikTok]": "[Instagram] [YouTube] [TikTok]",
  "MENTIONS LÉGALES": "RÄTTSLIG INFORMATION",
  "CGU": "ANVÄNDARVILLKOR",
@@ -324,5 +320,9 @@
  "Logo Malicious Bass et titre Malicious Music en chrome": "Malicious Bass-logotyp och Malicious Music-titel i krom",
  "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION": "VÄLJ ETT SPÅR OCH STARTA SEPARERINGEN",
  "Recoller": "Klistra tillbaka",
- "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS"
+ "{name} · {bpm} BPM · 4 STEMS": "{name} · {bpm} BPM · 4 STEMS",
+ "BIENTÔT DISPONIBLE": "KOMMER SNART",
+ "Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.": "Inget är till salu ännu: det går inte att beställa eller betala på den här webbplatsen.",
+ "Inscription pas encore ouverte : rien n'est envoyé ni enregistré.": "Anmälan är inte öppen ännu: inget skickas eller sparas.",
+ "Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.": "Utkast: inget är till salu ännu, dessa villkor gäller inte ännu."
 }
