@@ -45,7 +45,14 @@ export async function chrome() {
       await c("Emulation.setUserAgentOverride", { userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36", acceptLanguage: lang });
       return {
         c, log, req,
-        async goto(u, ms = 4000) { await c("Page.navigate", { url: u }); await sleep(ms); },
+        // attend la fin du chargement (sauf script coupé), puis ms
+        async goto(u, ms = 4000) {
+          const r = await c("Page.navigate", { url: u });
+          if (r.errorText) throw new Error(r.errorText + " " + u);
+          for (let i = 0; js && i < 100; i++) { await sleep(100); if (await this.ev("document.readyState === 'complete' && location.href !== 'about:blank'").catch(() => false)) break; }
+          await sleep(ms);
+        },
+        close: () => send("Target.disposeBrowserContext", { browserContextId }),
         async ev(x) {
           const r = await c("Runtime.evaluate", { expression: x, awaitPromise: true, returnByValue: true });
           if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description);

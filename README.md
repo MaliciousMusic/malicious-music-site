@@ -1,6 +1,6 @@
 # Malicious Music — site
 
-Site vitrine et de vente de Malicious Music :
+Site vitrine de Malicious Music (rien en vente pour l'instant) :
 
 - **Software** : plugin (VST probable) MP3 → stems mixés — formule unique à 59 €/mois.
 - **Audioware** : gamme hardware Malicious Music, estampillée du logo Malicious Bass (la Pyramide platine/range-vinyles/enceinte, les écouteurs géants-enceintes, le casque expérimental sans recharge avec stockage intégré).
@@ -40,7 +40,7 @@ blender -b -P design/blender/parts.py -- jog knob  # seulement certaines
 ```
 
 
-## Traductions (21 langues)
+## Traductions (22 langues : le français et 21 traductions)
 
 Le français du HTML est la langue source. `i18n.js` traduit au chargement tous les textes et les attributs accessibles (`aria-label`, `alt`, `placeholder`), choisit la langue du navigateur (ou celle mémorisée via le sélecteur de la barre de statut) et met à jour `<html lang>`.
 
@@ -55,7 +55,19 @@ Puis compléter les `i18n/<code>.json` et incrémenter `DICT_V` dans `i18n.js` (
 
 ## Sécurité et confidentialité
 
-- CSP stricte (aucune ressource tierce, script inline autorisé par empreinte), anti-clickjacking, HTTPS forcé par GitHub Pages.
+- CSP stricte (ni script ni style en ligne, aucune ressource tierce, Trusted Types), la même dans la page et dans `cloudflare/_headers`.
 - Polices hébergées sur le site, aucun cookie, aucun traceur ; seule la langue choisie est gardée en `localStorage`.
 - Démo audio synthétisée localement (Web Audio), rien n'est envoyé.
-- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : les crochets `[…]` sont à compléter avec les informations de la société, puis à faire valider par un juriste.
+- Rien n'est en vente : boutons d'achat et formulaire désactivés.
+- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : les crochets `[…]` sont à compléter, puis à faire valider par un juriste.
+
+## Construction et tests
+
+```bash
+python3 tools/build.py --draft        # aperçu dans dist/, interdit à l'indexation
+python3 tools/build.py                # production : refusée si un texte légal est incomplet
+node --test tests/site.test.mjs       # lecture : scripts, textes, traductions, secrets
+node --test tests/served.test.mjs     # site servi (wrangler pages dev) et Chrome
+```
+
+`dist/` ne contient que les fichiers du site (liste blanche). `cloudflare/site.json` : domaine, contact et échéance de `security.txt`.

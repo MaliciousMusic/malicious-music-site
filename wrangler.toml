@@ -1,0 +1,5 @@
+# Cloudflare Pages, fichiers statiques seuls : ni fonction, ni variable, ni secret
+name = "malicious-music"
+compatibility_date = "2026-11-01"
+pages_build_output_dir = "dist"
+send_metrics = false
