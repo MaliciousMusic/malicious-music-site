@@ -2,7 +2,7 @@
 
 Site vitrine de Malicious Music (rien en vente pour l'instant) :
 
-- **Software** : plugin (VST probable) MP3 → stems mixés — formule unique à 59 €/mois.
+- **Software** : plugin (VST probable) MP3 → stems mixés — à venir, tarif prévu 59 €/mois.
 - **Audioware** : gamme hardware Malicious Music, estampillée du logo Malicious Bass (la Pyramide platine/range-vinyles/enceinte, les écouteurs géants-enceintes, le casque expérimental sans recharge avec stockage intégré).
 
 Site statique (HTML/CSS/JS, aucune dépendance).
@@ -14,7 +14,7 @@ Tout le site est un seul appareil : un cadre en métal brossé avec un écran LC
 - Les boutons du cadre (ACCUEIL, PLUGIN, TARIF, AUDIOWARE, FAQ, CONTACT, flèches, POWER) changent ce que l'écran affiche. Chaque page a son adresse (`#plugin`, `#tarif`, `#pyramide`…).
 - À l'ouverture, l'écran s'allume : rétroéclairage, logo, titre MALICIOUSMUSIC, barre de chargement (un clic passe le splash).
 - Tout ce qui est dans l'écran est en HTML/CSS/JS, sans image : spectre, stems et produits en filaire 3D sont dessinés en direct dans `main.js`.
-- Les contenus provisoires sont entre crochets, en gris (classe `.ph`).
+- Ce qui n'est pas prêt est marqué « À VENIR », en gris (classe `.ph`) ; aucun texte entre crochets.
 
 `assets/malicious-bass-logo.png` : logo Malicious Bass (bar violet en dégradé, fond transparent), tiré de `~/Bureau/lonjaret/assets/logos/maliciousmusic/source-bass-degrade.png`.
  
@@ -59,7 +59,7 @@ Puis compléter les `i18n/<code>.json` et incrémenter `DICT_V` dans `i18n.js` (
 - Polices hébergées sur le site, aucun cookie, aucun traceur ; seule la langue choisie est gardée en `localStorage`.
 - Démo audio synthétisée localement (Web Audio), rien n'est envoyé.
 - Rien n'est en vente : boutons d'achat et formulaire désactivés.
-- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : les crochets `[…]` sont à compléter, puis à faire valider par un juriste.
+- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : l'identité (`data-id`) vient de `cloudflare/site.json` à la construction ; textes à faire valider par un juriste.
 
 ## Construction et tests
 
@@ -70,4 +70,4 @@ node --test tests/site.test.mjs       # lecture : scripts, textes, traductions, 
 node --test tests/served.test.mjs     # site servi (wrangler pages dev) et Chrome
 ```
 
-`dist/` ne contient que les fichiers du site (liste blanche). `cloudflare/site.json` : domaine, contact et échéance de `security.txt`.
+`dist/` ne contient que les fichiers du site (liste blanche). `cloudflare/site.json` : domaine, contact et échéance de `security.txt`, date des textes, identité légale.

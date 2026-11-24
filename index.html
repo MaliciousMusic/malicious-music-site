@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Malicious Music — MP3 to Stems &amp; Audioware</title>
-  <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
+  <meta name="description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass. Le plugin est à venir." />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Malicious Music" />
   <meta property="og:title" content="Malicious Music — MP3 to Stems &amp; Audioware" />
-  <meta property="og:description" content="Le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass." />
+  <meta property="og:description" content="Malicious Music : le plugin VST qui transforme n'importe quel MP3 en stems mixables, et Audioware, le hardware audio estampillé Malicious Bass. Le plugin est à venir." />
   <meta property="og:url" content="https://maliciousmusic.github.io/malicious-music-site/" />
   <meta property="og:image" content="https://maliciousmusic.github.io/malicious-music-site/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -23,10 +23,10 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=82" />
+  <link rel="stylesheet" href="styles.css?v=83" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.webp" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.webp" />
-  <script src="boot.js?v=82"></script>
+  <script src="boot.js?v=83"></script>
 </head>
 <body>
 <div class="device" id="device">
@@ -112,7 +112,7 @@
               <p class="h-pitch">Un MP3 entre, les stems sortent : le plugin VST recompose chaque morceau en pistes séparées, prêtes à remixer dans votre DAW.</p>
             </div>
           </div>
-          <a class="btn inv h-price" href="#tarif">59€/MOIS<small>COMMENCER</small></a>
+          <a class="btn inv h-price" href="#tarif">59€/MOIS<small>TARIF PRÉVU</small></a>
         </div>
 
         <div class="box demo" id="demo">
@@ -126,9 +126,9 @@
           </div>
           <canvas class="demo-roll" data-demo-roll role="img" aria-label="Piano roll : le morceau recomposé en MIDI, stem par stem"></canvas>
           <div class="demo-foot">
-            <p class="demo-status" id="demo-status" data-i18n-skip aria-live="polite">CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION</p>
+            <p class="demo-status" id="demo-status" data-i18n-skip aria-live="polite">CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SIMULATION</p>
             <div class="row demo-ctl">
-              <button class="btn inv" id="demo-run" data-i18n-skip>▶ LANCER LA DÉMO</button>
+              <button class="btn inv" id="demo-run" data-i18n-skip>▶ LANCER LA SIMULATION</button>
               <span class="demo-ab" id="demo-ab" hidden>
                 <button class="btn" data-ab="orig" aria-pressed="false">ORIGINAL</button>
                 <button class="btn" data-ab="final" aria-pressed="true">FINI</button>
@@ -137,13 +137,15 @@
             </div>
           </div>
         </div>
-        <p class="note demo-note">Démo synthétisée dans votre navigateur. <span class="ph">[à remplacer par de vrais rendus du plugin]</span></p>
+        <p class="note demo-note">Simulation synthétisée dans votre navigateur, pas le rendu du plugin. Plugin et vrais extraits à venir.</p>
       </section>
 
       <!-- ---------- PLUGIN ---------- -->
       <section class="view" id="plugin" data-view="plugin">
         <h2>LE PLUGIN</h2>
         <p class="txt">Chargez un MP3, obtenez les stems séparés et mixez-les sans quitter votre session. Remix, sample, karaoké, travail d'oreille, préparation de DJ set.</p>
+
+        <p class="notice plugin-status">Plugin en développement : tout ce qui suit est prévu et peut changer.</p>
 
         <div class="player">
           <div class="box">
@@ -165,14 +167,14 @@
             <div class="strip" data-stem="1"><span>DRUMS</span><input class="lv" type="range" min="0" max="100" value="70" aria-label="Volume drums" /><button class="btn sm m" aria-pressed="false" aria-label="Mute drums">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo drums">S</button></div>
             <div class="strip" data-stem="2"><span>BASS</span><input class="lv" type="range" min="0" max="100" value="90" aria-label="Volume bass" /><button class="btn sm m" aria-pressed="false" aria-label="Mute bass">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo bass">S</button></div>
             <div class="strip" data-stem="3"><span>OTHER</span><input class="lv" type="range" min="0" max="100" value="60" aria-label="Volume other" /><button class="btn sm m" aria-pressed="false" aria-label="Mute other">M</button><button class="btn sm s" aria-pressed="false" aria-label="Solo other">S</button></div>
-            <p class="note">↑ Maquette : bougez les niveaux, essayez M (mute) et S (solo). <span class="ph">[à remplacer par le vrai plugin]</span></p>
+            <p class="note">↑ Maquette : bougez les niveaux, essayez M (mute) et S (solo). <span class="ph">Le plugin est à venir.</span></p>
           </div>
         </div>
 
         <h3>COMMENT ÇA MARCHE</h3>
         <ol class="grid3 steps">
-          <li class="box"><b>CHARGEZ</b>Glissez un MP3 dans le plugin, sur n'importe quelle piste de votre DAW. <span class="ph">[WAV, FLAC ?]</span></li>
-          <li class="box"><b>SÉPAREZ</b>Malicious Music isole voix, batterie, basse et le reste. <span class="ph">[temps de traitement]</span></li>
+          <li class="box"><b>CHARGEZ</b>Glissez un MP3 dans le plugin, sur n'importe quelle piste de votre DAW. <span class="ph">MP3 prévu, autres formats à venir.</span></li>
+          <li class="box"><b>SÉPAREZ</b>Malicious Music isole voix, batterie, basse et le reste. <span class="ph">À VENIR</span></li>
           <li class="box"><b>MIXEZ</b>Réglez chaque stem, puis glissez-les vers vos pistes ou exportez en WAV.</li>
         </ol>
 
@@ -180,25 +182,26 @@
           <div class="col">
         <h3>FONCTIONS</h3>
         <ul class="list">
-          <li><b>SÉPARATION</b> <span class="ph">[détails du moteur, nombre de stems]</span></li>
+          <li><b>SÉPARATION</b> <span class="ph">À VENIR</span></li>
           <li><b>MIXEUR DE STEMS</b> volume, pan, mute et solo par stem, en temps réel</li>
           <li><b>GLISSER-DÉPOSER</b> chaque stem part directement vers une piste du projet</li>
           <li><b>EXPORT WAV</b> tous les stems d'un coup, calés au sample près</li>
-          <li><b>SYNC TEMPO</b> <span class="ph">[détection BPM / sync DAW — à confirmer]</span></li>
-          <li><b>TRAITEMENT</b> <span class="ph">[local ou cloud ? à préciser]</span></li>
-          <li><b>MAC &amp; WINDOWS</b> <span class="ph">[systèmes supportés à confirmer]</span></li>
+          <li><b>SYNC TEMPO</b> <span class="ph">À VENIR</span></li>
+          <li><b>TRAITEMENT</b> <span class="ph">À VENIR</span></li>
+          <li><b>MAC &amp; WINDOWS</b> <span class="ph">À VENIR</span></li>
           <li><b>MISES À JOUR</b> incluses dans l'abonnement</li>
         </ul>
 
           </div>
           <div class="col">
         <h3>COMPATIBILITÉ</h3>
-        <p class="txt">Format VST3 <span class="ph">[+ AU / AAX ?]</span> <span class="ph">[liste à confirmer]</span></p>
-        <div class="row chips"><span>ABLETON LIVE</span><span>FL STUDIO</span><span>LOGIC PRO</span><span>CUBASE</span><span>REAPER</span><span>STUDIO ONE</span><span>BITWIG</span><span>PRO TOOLS</span></div>
+        <p class="txt">VST3 prévu, autres formats à venir.</p>
+        <div class="row chips"><span>ABLETON LIVE</span><span>FL STUDIO</span><span>LOGIC PRO <span class="ph">À VENIR</span></span><span>CUBASE</span><span>REAPER</span><span>STUDIO ONE</span><span>BITWIG</span><span>PRO TOOLS <span class="ph">À VENIR</span></span></div>
+        <p class="note">Compatibilité visée, à vérifier. Les noms cités sont des marques de leurs propriétaires, sans partenariat.</p>
 
         <h3>DÉMO</h3>
-        <div class="box nosignal"><p>NO SIGNAL</p><p class="ph">[VIDÉO DÉMO DU PLUGIN]</p></div>
-            <div class="row"><a class="btn inv" href="#tarif">S'ABONNER — 59 €/MOIS</a></div>
+        <div class="box nosignal"><p>NO SIGNAL</p><p class="ph">VIDÉO DÉMO DU PLUGIN : À VENIR</p></div>
+            <div class="row"><a class="btn inv" href="#tarif">VOIR LE TARIF PRÉVU</a></div>
           </div>
         </div>
       </section>
@@ -211,18 +214,18 @@
           <div class="offer">
           <p class="p-sub left">MALICIOUSMUSIC · FORMULE UNIQUE</p>
           <p class="amount">59 €<small>/MOIS</small></p>
-          <p>TTC · SANS ENGAGEMENT <span class="ph">[À CONFIRMER]</span></p>
-          <div class="row"><button class="btn xl" type="button" disabled>BIENTÔT DISPONIBLE</button></div>
+          <p>Tarif prévu, TTC, sans engagement : à venir.</p>
+          <div class="row"><button class="btn xl" type="button" disabled>À VENIR</button></div>
           <p class="notice">Rien n'est encore en vente : aucune commande ni aucun paiement n'est possible sur ce site.</p>
-          <p class="note">Paiement sécurisé <span class="ph">[Stripe / Paddle — à brancher]</span> · <a href="#cgv">CGV</a> · <a href="#confidentialite">CONFIDENTIALITÉ</a></p>
+          <p class="note">Paiement sécurisé <span class="ph">À VENIR</span> · <a href="#cgv">CGV</a> · <a href="#confidentialite">CONFIDENTIALITÉ</a></p>
           </div>
           <ul class="list">
-            <li>Séparation illimitée <span class="ph">[à confirmer]</span></li>
-            <li>Plugin VST3 <span class="ph">[+ AU ?]</span></li>
+            <li>Séparation illimitée <span class="ph">À VENIR</span></li>
+            <li>Plugin VST3 <span class="ph">À VENIR</span></li>
             <li>Mixeur de stems intégré</li>
             <li>Export WAV de tous les stems</li>
             <li>Toutes les mises à jour</li>
-            <li>Support par email</li>
+            <li>Support par email <span class="ph">À VENIR</span></li>
           </ul>
         </div>
       </section>
@@ -233,23 +236,23 @@
           <a class="box product" href="#pyramide">
             <div class="viewer"><canvas data-model="pyramid" role="img" aria-label="Modèle 3D de la Pyramide"></canvas></div>
             <h3>LA PYRAMIDE</h3>
-            <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE</p>
-            <p class="card-price"><span class="ph">[PRIX]</span> €</p>
-            <span class="btn">VOIR LE PRODUIT →</span>
+            <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE <span class="ph">CONCEPT · À VENIR</span></p>
+            <p class="card-price"><span class="ph">PRIX À VENIR</span></p>
+            <span class="btn">VOIR LE CONCEPT →</span>
           </a>
           <a class="box product" href="#geants">
             <div class="viewer"><canvas data-model="buds" role="img" aria-label="Modèle 3D des Géants"></canvas></div>
             <h3>LES GÉANTS</h3>
-            <p class="tag">ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES</p>
-            <p class="card-price"><span class="ph">[PRIX]</span> €</p>
-            <span class="btn">VOIR LE PRODUIT →</span>
+            <p class="tag">ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES <span class="ph">CONCEPT · À VENIR</span></p>
+            <p class="card-price"><span class="ph">PRIX À VENIR</span></p>
+            <span class="btn">VOIR LE CONCEPT →</span>
           </a>
           <a class="box product" href="#casque">
             <div class="viewer"><canvas data-model="phones" role="img" aria-label="Modèle 3D du Casque"></canvas></div>
             <h3>LE CASQUE</h3>
-            <p class="tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ</p>
-            <p class="card-price"><span class="ph">[PRIX]</span> €</p>
-            <span class="btn">VOIR LE PRODUIT →</span>
+            <p class="tag">EXPÉRIMENTAL · OBJECTIF : SANS RECHARGE · STOCKAGE INTÉGRÉ <span class="ph">CONCEPT · À VENIR</span></p>
+            <p class="card-price"><span class="ph">PRIX À VENIR</span></p>
+            <span class="btn">VOIR LE CONCEPT →</span>
           </a>
         </div>
       </section>
@@ -263,19 +266,19 @@
         <div class="pdp-info">
           <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
           <h2>LA PYRAMIDE</h2>
-          <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE · <span class="ph">[NOM DÉFINITIF]</span></p>
+          <p class="tag">PLATINE · RANGE-VINYLES · ENCEINTE <span class="ph">CONCEPT · À VENIR</span></p>
           <p class="txt">Une platine vinyle sous un capot vitré au sommet, une enceinte habillée de tissu dans le corps, et le rangement de votre collection tout autour de la base.</p>
           <ul class="list">
-              <li>PLATINE: <span class="ph">[33/45, ENTRAÎNEMENT]</span></li>
-              <li>RANGEMENT: <span class="ph">[NB VINYLES]</span></li>
-              <li>ENCEINTE: <span class="ph">[PUISSANCE]</span></li>
-              <li>DIMENSIONS: <span class="ph">[H × L × P]</span></li>
-              <li>FINITION: <span class="ph">[MATIÈRES]</span></li>
+              <li>PLATINE: <span class="ph">À VENIR</span></li>
+              <li>RANGEMENT: <span class="ph">À VENIR</span></li>
+              <li>ENCEINTE: <span class="ph">À VENIR</span></li>
+              <li>DIMENSIONS: <span class="ph">À VENIR</span></li>
+              <li>FINITION: <span class="ph">À VENIR</span></li>
           </ul>
           <div class="pdp-buy">
-            <p class="amount pdp-price"><span class="ph">[PRIX]</span> €</p>
-            <button class="btn xl" type="button" disabled>BIENTÔT DISPONIBLE</button>
-            <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
+            <p class="amount pdp-price"><span class="ph">PRIX À VENIR</span></p>
+            <button class="btn xl" type="button" disabled>À VENIR</button>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ <span class="ph">À VENIR</span></a>
           </div>
         </div>
       </section>
@@ -289,19 +292,19 @@
         <div class="pdp-info">
           <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
           <h2>LES GÉANTS</h2>
-          <p class="tag">ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES · <span class="ph">[NOM DÉFINITIF]</span></p>
+          <p class="tag">ÉCOUTEURS XXL FILAIRES · PAIRE D'ENCEINTES <span class="ph">CONCEPT · À VENIR</span></p>
           <p class="txt">Une paire d'écouteurs filaires surdimensionnés qui se couchent sur le bureau et forment une vraie paire d'enceintes stéréo, branchées par leur câble et leur prise jack.</p>
           <ul class="list">
-              <li>FORMAT: <span class="ph">[LONGUEUR]</span></li>
-              <li>HAUT-PARLEURS: <span class="ph">[DRIVERS]</span></li>
-              <li>CONNECTIQUE: JACK 3,5 MM <span class="ph">[+ ADAPTATEURS ?]</span></li>
-              <li>CÂBLE: <span class="ph">[LONGUEUR]</span></li>
-              <li>ALIMENTATION: <span class="ph">[SECTEUR / PASSIF ?]</span></li>
+              <li>FORMAT: <span class="ph">À VENIR</span></li>
+              <li>HAUT-PARLEURS: <span class="ph">À VENIR</span></li>
+              <li>CONNECTIQUE: JACK 3,5 MM <span class="ph">À VENIR</span></li>
+              <li>CÂBLE: <span class="ph">À VENIR</span></li>
+              <li>ALIMENTATION: <span class="ph">À VENIR</span></li>
           </ul>
           <div class="pdp-buy">
-            <p class="amount pdp-price"><span class="ph">[PRIX]</span> €</p>
-            <button class="btn xl" type="button" disabled>BIENTÔT DISPONIBLE</button>
-            <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
+            <p class="amount pdp-price"><span class="ph">PRIX À VENIR</span></p>
+            <button class="btn xl" type="button" disabled>À VENIR</button>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ <span class="ph">À VENIR</span></a>
           </div>
         </div>
       </section>
@@ -315,19 +318,19 @@
         <div class="pdp-info">
           <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
           <h2>LE CASQUE</h2>
-          <p class="tag">EXPÉRIMENTAL · SANS RECHARGE · STOCKAGE INTÉGRÉ · <span class="ph">[NOM DÉFINITIF]</span></p>
-          <p class="txt">Un casque qui n'a jamais besoin d'être rechargé et qui stocke lui-même votre musique. Commandes de lecture et de volume directement sur l'écouteur. Vous le mettez, il joue.</p>
+          <p class="tag">EXPÉRIMENTAL · OBJECTIF : SANS RECHARGE · STOCKAGE INTÉGRÉ <span class="ph">CONCEPT · À VENIR</span></p>
+          <p class="txt">Concept à venir : un casque qui vise à se passer de recharge et à stocker lui-même votre musique, avec les commandes de lecture et de volume sur l'écouteur.</p>
           <ul class="list">
-              <li>ÉNERGIE: <span class="ph">[TECHNOLOGIE]</span></li>
-              <li>STOCKAGE: <span class="ph">[CAPACITÉ]</span></li>
-              <li>TRANSFERT: <span class="ph">[MÉTHODE]</span></li>
+              <li>ÉNERGIE: <span class="ph">À VENIR</span></li>
+              <li>STOCKAGE: <span class="ph">À VENIR</span></li>
+              <li>TRANSFERT: <span class="ph">À VENIR</span></li>
               <li>COMMANDES: LECTURE · PISTES · VOLUME</li>
-              <li>STATUT: PROTOTYPE</li>
+              <li>STATUT: CONCEPT</li>
           </ul>
           <div class="pdp-buy">
-            <p class="amount pdp-price"><span class="ph">[PRIX]</span> €</p>
-            <button class="btn xl" type="button" disabled>BIENTÔT DISPONIBLE</button>
-            <a class="btn" href="#contact">ÊTRE NOTIFIÉ</a>
+            <p class="amount pdp-price"><span class="ph">PRIX À VENIR</span></p>
+            <button class="btn xl" type="button" disabled>À VENIR</button>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ <span class="ph">À VENIR</span></a>
           </div>
         </div>
       </section>
@@ -336,19 +339,19 @@
       <section class="view" id="faq" data-view="faq">
         <h2>QUESTIONS FRÉQUENTES</h2>
         <div class="faq">
-          <details><summary>Est-ce que je peux résilier quand je veux ?</summary><p><span class="ph">[À valider : oui, résiliable à tout moment depuis votre compte.]</span></p></details>
-          <details><summary>Sur combien d'ordinateurs puis-je l'installer ?</summary><p><span class="ph">[Nombre d'activations à définir]</span></p></details>
-          <details><summary>Quels formats audio sont acceptés ?</summary><p><span class="ph">[MP3 confirmé — WAV, FLAC, AIFF à confirmer]</span></p></details>
-          <details><summary>Faut-il une connexion internet ?</summary><p><span class="ph">[Dépend du traitement local ou cloud]</span></p></details>
-          <details><summary>Y a-t-il un essai gratuit ?</summary><p><span class="ph">[À décider]</span></p></details>
-          <details><summary>Puis-je utiliser les stems dans mes productions ?</summary><p>Le plugin sépare les pistes ; les droits sur la musique d'origine restent ceux de ses ayants droit. Vérifiez que vous avez l'autorisation avant de publier un remix. <span class="ph">[à faire valider]</span></p></details>
+          <details><summary>Est-ce que je peux résilier quand je veux ?</summary><p><span class="ph">À VENIR</span></p></details>
+          <details><summary>Sur combien d'ordinateurs puis-je l'installer ?</summary><p><span class="ph">À VENIR</span></p></details>
+          <details><summary>Quels formats audio sont acceptés ?</summary><p>MP3 prévu, autres formats à venir.</p></details>
+          <details><summary>Faut-il une connexion internet ?</summary><p><span class="ph">À VENIR</span></p></details>
+          <details><summary>Y a-t-il un essai gratuit ?</summary><p><span class="ph">À VENIR</span></p></details>
+          <details><summary>Puis-je utiliser les stems dans mes productions ?</summary><p>Le plugin sépare les pistes ; les droits sur la musique d'origine restent ceux de ses ayants droit. Vérifiez que vous avez l'autorisation avant de publier un remix.</p></details>
         </div>
       </section>
 
       <!-- ---------- CONTACT ---------- -->
       <section class="view" id="contact" data-view="contact">
         <h2>RESTEZ DANS LA BOUCLE</h2>
-        <p class="txt">Sortie du plugin, précommandes Audioware : on vous prévient en premier.</p>
+        <p class="txt">Liste de diffusion à venir : sortie du plugin, nouvelles d'Audioware.</p>
         <form class="box signup">
           <label>EMAIL<input type="email" name="email" autocomplete="email" placeholder="VOTRE@EMAIL.COM" required disabled /></label>
           <label>INTÉRÊT
@@ -358,33 +361,33 @@
           <button class="btn" type="submit" disabled>S'INSCRIRE</button>
           <p class="msg">Inscription pas encore ouverte : rien n'est envoyé ni enregistré.</p>
         </form>
-        <p class="note"><span class="ph">[Instagram] [YouTube] [TikTok]</span> · <a href="#mentions">MENTIONS LÉGALES</a> · <a href="#cgv">CGV</a> · <a href="#cgu">CGU</a> · <a href="#confidentialite">CONFIDENTIALITÉ</a></p>
+        <p class="note"><span class="ph">Instagram, YouTube, TikTok : à venir</span> · <a href="#mentions">MENTIONS LÉGALES</a> · <a href="#cgv">CGV</a> · <a href="#cgu">CGU</a> · <a href="#confidentialite">CONFIDENTIALITÉ</a></p>
       </section>
 
       <!-- ---------- LÉGAL ---------- -->
       <section class="view legal" id="legal" data-view="legal">
         <h2>INFORMATIONS LÉGALES</h2>
         <nav class="row chips legal-toc" aria-label="Sommaire"><a href="#mentions">MENTIONS</a><a href="#cgv">CGV</a><a href="#cgu">CGU</a><a href="#confidentialite">CONFIDENTIALITÉ</a><a href="#cookies">COOKIES</a></nav>
-        <p class="note">Version du <span class="ph">[date de mise en ligne]</span>. En cas de traduction, la version française fait foi. <span class="ph">[textes à faire valider par un juriste avant ouverture des ventes]</span></p>
+        <p class="note">Version du <span class="ph" data-id="date">À VENIR</span>. En cas de traduction, la version française fait foi. <span class="ph">Textes en cours de validation.</span></p>
 
         <h3 id="mentions">MENTIONS LÉGALES</h3>
-        <p class="txt"><b>Éditeur.</b> <span class="ph">[Raison sociale]</span>, <span class="ph">[forme juridique]</span> au capital de <span class="ph">[montant]</span> €, immatriculée au RCS de <span class="ph">[ville]</span> sous le numéro <span class="ph">[RCS]</span>, SIRET <span class="ph">[SIRET]</span>, TVA intracommunautaire <span class="ph">[numéro de TVA]</span>, siège social : <span class="ph">[adresse]</span>. Contact : <span class="ph">[email]</span>. Directeur de la publication : <span class="ph">[nom]</span>.</p>
+        <p class="txt"><b>Éditeur.</b> <span class="ph" data-id="raison">À VENIR</span><br />Statut : <span class="ph" data-id="statut">À VENIR</span><br />Immatriculation : <span class="ph" data-id="immatriculation">À VENIR</span><br />TVA : <span class="ph" data-id="tva">À VENIR</span><br />Adresse : <span class="ph" data-id="adresse">À VENIR</span><br />Téléphone : <span class="ph" data-id="telephone">À VENIR</span><br />E-mail : <span class="ph" data-id="email">À VENIR</span><br />Directeur de la publication : <span class="ph" data-id="directeur">À VENIR</span></p>
         <p class="txt"><b>Hébergement.</b> Cloudflare, Inc. (Cloudflare Pages), 101 Townsend St, San Francisco, CA 94107, États-Unis — +1 650 319 8930 — cloudflare.com.</p>
         <p class="txt"><b>Propriété intellectuelle.</b> Les marques Malicious Music et Malicious Bass, les logos, visuels, modèles 3D, textes, sons et le code de ce site sont protégés. Toute reproduction ou réutilisation sans autorisation écrite est interdite.</p>
-        <p class="txt"><b>Crédits.</b> Police VT323 et police Russo One (titre), sous licence SIL Open Font License 1.1.</p>
+        <p class="txt"><b>Crédits.</b> Police VT323 et police Russo One (titre), sous licence SIL Open Font License 1.1.<br />Éclairage des rendus 3D : HDRI Poly Haven (CC0). VST est une marque de Steinberg Media Technologies GmbH.</p>
 
-        <h3 id="cgv">CONDITIONS GÉNÉRALES DE VENTE</h3>
+        <h3 id="cgv">CONDITIONS GÉNÉRALES DE VENTE <span class="ph">PROJET, À VENIR, SANS VENTE</span></h3>
         <p class="txt notice">Projet : rien n'est encore en vente, ces conditions ne s'appliquent pas encore.</p>
-        <p class="txt"><b>1. Objet.</b> Les présentes conditions régissent l'abonnement au plugin Malicious Music et les précommandes des produits Audioware conclus sur ce site entre <span class="ph">[Raison sociale]</span> (« nous ») et toute personne qui achète (« vous »).</p>
-        <p class="txt"><b>2. Prix.</b> L'abonnement coûte 59 € TTC par mois, TVA française incluse <span class="ph">[à confirmer selon le pays de l'acheteur]</span>. Le prix des produits Audioware est indiqué sur chaque fiche produit au moment de la commande.</p>
-        <p class="txt"><b>3. Commande et paiement.</b> Le paiement est encaissé par notre prestataire de paiement <span class="ph">[Stripe / Paddle]</span>. Nous n'avons jamais accès à vos données bancaires complètes et nous ne les stockons pas. La commande est confirmée par email.</p>
+        <p class="txt"><b>1. Objet.</b> Les présentes conditions régissent l'abonnement au plugin Malicious Music et les précommandes des produits Audioware conclus sur ce site entre <span class="ph" data-id="raison">À VENIR</span> (« nous ») et toute personne qui achète (« vous »).</p>
+        <p class="txt"><b>2. Prix.</b> L'abonnement coûte 59 € TTC par mois, TVA française incluse <span class="ph">À VENIR</span>. Le prix des produits Audioware est indiqué sur chaque fiche produit au moment de la commande.</p>
+        <p class="txt"><b>3. Commande et paiement.</b> Le paiement est encaissé par notre prestataire de paiement <span class="ph">À VENIR</span>. Nous n'avons jamais accès à vos données bancaires complètes et nous ne les stockons pas. La commande est confirmée par email.</p>
         <p class="txt"><b>4. Durée et résiliation.</b> L'abonnement est mensuel, sans engagement, et se renouvelle automatiquement chaque mois. Vous pouvez le résilier à tout moment depuis votre compte ou par email ; la résiliation prend effet à la fin de la période déjà payée, sans frais.</p>
         <p class="txt"><b>5. Droit de rétractation.</b> Vous disposez de 14 jours pour vous rétracter. Pour le plugin (contenu numérique fourni sans support matériel), l'accès immédiat n'est donné qu'avec votre accord exprès et votre reconnaissance de la perte du droit de rétractation (article L221-28 13° du Code de la consommation). Pour les produits Audioware, le délai court à partir de la réception ; le produit doit être retourné complet, dans son état d'origine, et le remboursement intervient sous 14 jours.</p>
-        <p class="txt"><b>6. Licence.</b> L'abonnement vous donne une licence personnelle, non exclusive et non cessible d'utilisation du plugin sur <span class="ph">[nombre]</span> ordinateurs, pendant la durée de l'abonnement. Il est interdit de décompiler, revendre ou contourner les protections du logiciel.</p>
+        <p class="txt"><b>6. Licence.</b> L'abonnement vous donne une licence personnelle, non exclusive et non cessible d'utilisation du plugin sur <span class="ph">À VENIR</span> ordinateurs, pendant la durée de l'abonnement. Il est interdit de décompiler, revendre ou contourner les protections du logiciel.</p>
         <p class="txt"><b>7. Droits sur la musique.</b> Le plugin sépare les pistes des fichiers que vous lui fournissez. Vous êtes seul responsable de disposer des droits nécessaires sur ces œuvres et sur l'usage que vous faites des stems obtenus.</p>
-        <p class="txt"><b>8. Précommandes et livraison Audioware.</b> Les précommandes indiquent une date de livraison estimée <span class="ph">[délai]</span>. Vous serez prévenu de tout retard et pourrez alors annuler et être remboursé intégralement.</p>
+        <p class="txt"><b>8. Précommandes et livraison Audioware.</b> Les précommandes indiquent une date de livraison estimée <span class="ph">À VENIR</span>. Vous serez prévenu de tout retard et pourrez alors annuler et être remboursé intégralement.</p>
         <p class="txt"><b>9. Garanties.</b> Les produits bénéficient de la garantie légale de conformité (articles L217-3 et suivants du Code de la consommation, 2 ans) et de la garantie des vices cachés (articles 1641 et suivants du Code civil), indépendamment de toute garantie commerciale.</p>
-        <p class="txt"><b>10. Réclamations et médiation.</b> Contactez-nous d'abord à <span class="ph">[email]</span>. À défaut d'accord, vous pouvez recourir gratuitement au médiateur de la consommation <span class="ph">[nom et site du médiateur]</span>.</p>
+        <p class="txt"><b>10. Réclamations et médiation.</b> Contactez-nous d'abord à <span class="ph" data-id="email">À VENIR</span>. À défaut d'accord, vous pouvez recourir gratuitement au médiateur de la consommation <span class="ph">À VENIR</span>.</p>
         <p class="txt"><b>11. Droit applicable.</b> Ces conditions sont soumises au droit français, sans vous priver de la protection des règles impératives de votre pays de résidence.</p>
 
         <h3 id="cgu">CONDITIONS GÉNÉRALES D'UTILISATION</h3>
@@ -394,11 +397,11 @@
         <p class="txt"><b>Responsabilité.</b> Les informations du site sont fournies à titre indicatif et peuvent évoluer, en particulier les caractéristiques des produits en développement.</p>
 
         <h3 id="confidentialite">POLITIQUE DE CONFIDENTIALITÉ</h3>
-        <p class="txt"><b>Responsable du traitement.</b> <span class="ph">[Raison sociale]</span>, <span class="ph">[adresse]</span>, <span class="ph">[email]</span>.</p>
-        <p class="txt"><b>Ce que nous collectons.</b> Rien tant que vous naviguez : pas de compte, pas de statistiques, pas de publicité. Si vous vous inscrivez à la liste : votre email et votre centre d'intérêt (base : votre consentement, conservés jusqu'à votre désinscription). Si vous achetez : vos coordonnées et les informations de commande (base : exécution du contrat ; pièces comptables conservées 10 ans).</p>
-        <p class="txt"><b>Destinataires.</b> Nos seuls prestataires : l'hébergeur (Cloudflare), le prestataire de paiement <span class="ph">[Stripe / Paddle]</span> et l'outil d'emailing <span class="ph">[outil]</span>. Lorsque des données sont traitées hors de l'Union européenne, le transfert est encadré par le Data Privacy Framework UE–États-Unis ou par des clauses contractuelles types.</p>
+        <p class="txt"><b>Responsable du traitement.</b> <span class="ph" data-id="raison">À VENIR</span>, <span class="ph" data-id="adresse">À VENIR</span>, <span class="ph" data-id="email">À VENIR</span>.</p>
+        <p class="txt"><b>Ce que nous collectons.</b> Rien tant que vous naviguez : pas de compte, pas de statistiques, pas de publicité. Si vous vous inscrivez à la liste : votre email et votre centre d'intérêt (base : votre consentement, conservés jusqu'à votre désinscription). Si vous achetez : vos coordonnées et les informations de commande (base : exécution du contrat ; pièces comptables conservées 10 ans).<br />Inscription et achat sont à venir : aujourd'hui, rien n'est collecté ainsi.</p>
+        <p class="txt"><b>Destinataires.</b> Nos seuls prestataires : l'hébergeur (Cloudflare), le prestataire de paiement <span class="ph">À VENIR</span> et l'outil d'emailing <span class="ph">À VENIR</span>. Lorsque des données sont traitées hors de l'Union européenne, le transfert est encadré par le Data Privacy Framework UE–États-Unis ou par des clauses contractuelles types.</p>
         <p class="txt"><b>Journaux techniques.</b> Comme tout serveur, l'hébergeur enregistre l'adresse IP des visiteurs dans ses journaux, pour la sécurité du service.</p>
-        <p class="txt"><b>Vos droits.</b> Accès, rectification, effacement, limitation, opposition, portabilité et retrait du consentement à tout moment : écrivez à <span class="ph">[email]</span>. Vous pouvez aussi saisir la CNIL (cnil.fr, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07).</p>
+        <p class="txt"><b>Vos droits.</b> Accès, rectification, effacement, limitation, opposition, portabilité et retrait du consentement à tout moment : écrivez à <span class="ph" data-id="email">À VENIR</span>. Vous pouvez aussi saisir la CNIL (cnil.fr, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07).</p>
         <p class="txt"><b>Sécurité.</b> Site servi uniquement en HTTPS, politique de sécurité du contenu stricte, aucune ressource tierce chargée (polices hébergées sur le site), aucun mot de passe ni donnée bancaire stockés par nous.</p>
 
         <h3 id="cookies">COOKIES</h3>
@@ -484,9 +487,9 @@
   <img decoding="async" draggable="false" class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.webp" alt="" />
 </div>
 <img decoding="async" draggable="false" class="stylus" id="stylus" src="assets/hw/stylus.webp" alt="" aria-hidden="true" />
-<script src="i18n.js?v=82"></script>
-<script src="models.js?v=82"></script>
-<script src="main.js?v=82"></script>
-<script src="demo.js?v=82"></script>
+<script src="i18n.js?v=83"></script>
+<script src="models.js?v=83"></script>
+<script src="main.js?v=83"></script>
+<script src="demo.js?v=83"></script>
 </body>
 </html>

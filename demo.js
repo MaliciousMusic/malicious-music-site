@@ -239,7 +239,7 @@
   const setRun = (s) => { runBtn.dataset.k = s; runBtn.textContent = T(s); };
   if (window.I18N) I18N.onChange(() => { if (lastStatus) setStatus(...lastStatus); if (runBtn.dataset.k) setRun(runBtn.dataset.k); kick(); });
   // textes de départ gérés par le JS (traduits et retraduits à chaque changement de langue)
-  setStatus("CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION"); setRun("▶ LANCER LA DÉMO");
+  setStatus("CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SIMULATION"); setRun("▶ LANCER LA SIMULATION");
 
   async function go() {
     const id = ++run;
@@ -287,7 +287,7 @@
       mixTo({ final: 1 }, 1.6);
       await wait(Math.max(4500, song.L * 650), id);
       state.phase = "done";
-      setStatus("TERMINÉ · COMPAREZ L'ORIGINAL ET LE RÉSULTAT");
+      setStatus("SIMULATION TERMINÉE · COMPAREZ LES DEUX VERSIONS");
       abWrap.hidden = false; setAB("final");
     } catch (e) { if (e !== "stop") { setStatus("AUDIO INDISPONIBLE SUR CE NAVIGATEUR"); console.error(e); } }
   }
@@ -308,7 +308,7 @@
   function stop(msg) {
     run++; stopAudio();
     if (state.phase !== "idle") { state.phase = state.phase.startsWith("done") ? "stopped" : "idle"; }
-    setRun("▶ LANCER LA DÉMO");
+    setRun("▶ LANCER LA SIMULATION");
     if (msg) setStatus(msg);
     abBtns.forEach((b) => b.setAttribute("aria-pressed", "false"));
     kick();
@@ -318,7 +318,7 @@
   abBtns.forEach((b) => b.addEventListener("click", () => {
     if (!playing && lastBufs) { // relance la comparaison sans refaire les passes
       state.gains = {}; restartAt(lastBufs, 0); setRun("↻ RELANCER");
-      setStatus("TERMINÉ · COMPAREZ L'ORIGINAL ET LE RÉSULTAT"); kick();
+      setStatus("SIMULATION TERMINÉE · COMPAREZ LES DEUX VERSIONS"); kick();
     }
     setAB(b.dataset.ab);
   }));

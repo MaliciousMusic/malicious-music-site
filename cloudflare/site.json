@@ -1,5 +1,16 @@
 {
   "domain": "maliciousmusic.org",
   "security_contact": "",
-  "security_expires": ""
+  "security_expires": "",
+  "texts_date": "",
+  "identity": {
+    "raison": "",
+    "statut": "",
+    "immatriculation": "",
+    "tva": "",
+    "adresse": "",
+    "telephone": "",
+    "email": "",
+    "directeur": ""
+  }
 }

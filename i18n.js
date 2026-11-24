@@ -15,12 +15,12 @@ window.I18N = (() => {
     "ACCUEIL", "PLUGIN", "TARIF", "AUDIOWARE", "FAQ", "CONTACT", "INFOS LÉGALES", "LA PYRAMIDE", "LES GÉANTS", "LE CASQUE",
     "PAUSE", "PLAY ▶", "ANALYSE DE {name}.MP3…", "PASSE 1/3 · RECOMPOSITION MIDI — LES STEMS SORTENT",
     "PASSE 1/3 · RECOMPOSITION MIDI — STEM {stem} → {n}/4", "PASSE 2/3 · TIMBRES & ARTICULATION", "PASSE 3/3 · MIX, ESPACE & MASTER",
-    "TERMINÉ · COMPAREZ L'ORIGINAL ET LE RÉSULTAT", "AUDIO INDISPONIBLE SUR CE NAVIGATEUR", "↻ RELANCER", "▶ LANCER LA DÉMO",
+    "SIMULATION TERMINÉE · COMPAREZ LES DEUX VERSIONS", "AUDIO INDISPONIBLE SUR CE NAVIGATEUR", "↻ RELANCER", "▶ LANCER LA SIMULATION",
     "LECTURE ARRÊTÉE · RELANCEZ OU CHANGEZ DE MORCEAU", "{name} · {bpm} BPM — PRÊT", "LECTURE ARRÊTÉE", "ANALYSE SPECTRALE…",
     "ÉCRAN ÉTEINT · LECTURE ARRÊTÉE", "Malicious Music — MP3 to Stems & Audioware", "Langue",
-    "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SÉPARATION", "Recoller", "{name} · {bpm} BPM · 4 STEMS",
+    "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SIMULATION", "Recoller", "{name} · {bpm} BPM · 4 STEMS",
   ];
-  const DICT_V = 5;                       // à incrémenter à chaque mise à jour des traductions (cache)
+  const DICT_V = 6;                       // à incrémenter à chaque mise à jour des traductions (cache)
   const ATTRS = ["aria-label", "alt", "placeholder", "title"];
   const SKIP = "script, style, #lang-btn, #lang-list, [translate='no'], [data-i18n-skip]";
   const norm = (s) => s.replace(/\s+/g, " ").trim();

@@ -2,6 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import { execFileSync, spawnSync } from "node:child_process";
 
 const root = new URL("..", import.meta.url).pathname;
@@ -67,7 +68,7 @@ test("rien ne laisse croire qu'on peut payer ou s'inscrire", () => {
   const form = html.match(/<form class="box signup"[\s\S]*?<\/form>/)[0];
   assert.doesNotMatch(form, /\b(action|method)=/);
   for (const el of form.match(/<(input|select|button)\b[^>]*>/g)) assert.match(el, /\bdisabled\b/, el);
-  assert.equal(html.match(/<button class="btn xl" type="button" disabled>BIENTÔT DISPONIBLE/g).length, 4);
+  assert.equal(html.match(/<button class="btn xl" type="button" disabled>À VENIR/g).length, 4);
   assert.ok(html.includes("Rien n'est encore en vente"));
 });
 test("ni clé, ni jeton, ni chemin personnel, dans les fichiers et l'historique", () => {
@@ -83,8 +84,32 @@ test("images sans position GPS ni EXIF", () => {
     assert.ok(!b.includes("Exif\0\0") && !b.includes("eXIf") && !b.includes("<x:xmpmeta"), f);
   }
 });
-test("production refusée tant que les textes légaux sont incomplets", () => {
-  const legal = html.slice(html.indexOf('id="mentions"'), html.indexOf('id="cgv"'));
-  const r = spawnSync("python3", ["tools/build.py"], { cwd: root, encoding: "utf8" });
-  if (legal.includes('class="ph"')) { assert.notEqual(r.status, 0); assert.match(r.stderr, /mentions légales/); } else assert.equal(r.status, 0, r.stderr);
+test("plus aucun texte entre crochets, dans aucune langue", () => {
+  const body = html.slice(html.indexOf("<body"));
+  assert.doesNotMatch(body.replace(/<[^>]+>/g, ""), /\[[^\]]*\]/);
+  for (const f of DICTS) assert.doesNotMatch(read("i18n/" + f), /\[/, f);
+});
+test("statut annoncé : tarif prévu, concept, simulation, CGV projet", () => {
+  for (const x of ["VOIR LE TARIF PRÉVU", "TARIF PRÉVU", "Tarif prévu, TTC, sans engagement : à venir.", "pas le rendu du plugin", "VST3 prévu, autres formats à venir.", "PROJET, À VENIR, SANS VENTE", "Plugin en développement"]) assert.ok(html.includes(x), x);
+  assert.equal(html.match(/CONCEPT · À VENIR/g).length, 6);
+  assert.doesNotMatch(html, /jamais besoin|COMMENCER|S'ABONNER|PRÉCOMMANDER|>EXPÉRIMENTAL · SANS RECHARGE/);
+});
+test("production refusée sans identité ; remplie, elle est échappée et sans « à venir » légal", () => {
+  const cfg = JSON.parse(read("cloudflare/site.json")), tmp = fs.mkdtempSync(os.tmpdir() + "/mm-build-");
+  const full = !!cfg.texts_date && !!cfg.security_contact && !!cfg.security_expires && Object.values(cfg.identity).every(Boolean);
+  const run = (...a) => spawnSync("python3", ["tools/build.py", ...a], { cwd: tmp, encoding: "utf8" });
+  for (const f of ["index.html", "404.html", "404.css", "styles.css", ...JS, "assets", "i18n", "tools", "cloudflare"]) fs.cpSync(root + f, tmp + "/" + f, { recursive: true });
+  const write = (c) => fs.writeFileSync(tmp + "/cloudflare/site.json", JSON.stringify(c));
+  try {
+    const r = run(); if (full) assert.equal(r.status, 0, r.stderr); else { assert.notEqual(r.status, 0); assert.match(r.stderr, /Production refusée/); }
+    const id = Object.fromEntries(Object.keys(cfg.identity).map((k) => [k, `<b>${k}</b> & test`]));
+    const ok = { ...cfg, texts_date: "1er janvier", security_contact: "mailto:test@example.test", security_expires: new Date(Date.now() + 2e10).toISOString().slice(0, 10), identity: id };
+    write(ok); const r2 = run(); assert.equal(r2.status, 0, r2.stderr);
+    const out = fs.readFileSync(tmp + "/dist/index.html", "utf8");
+    assert.doesNotMatch(out, /data-id=/); assert.ok(out.includes("&lt;b&gt;raison&lt;/b&gt; &amp; test")); assert.ok(!out.includes("<b>raison"));
+    assert.doesNotMatch(out, /name="robots"/); assert.ok(!fs.readFileSync(tmp + "/dist/_headers", "utf8").startsWith("X-Robots"));
+    assert.match(fs.readFileSync(tmp + "/dist/.well-known/security.txt", "utf8"), /^Contact: mailto:test@example\.test\nExpires: \d{4}/);
+    for (const k of Object.keys(id)) { write({ ...ok, identity: { ...id, [k]: " " } }); assert.notEqual(run().status, 0, k); }
+    write({ ...ok, security_expires: "2020-01-01" }); assert.notEqual(run().status, 0);
+  } finally { fs.rmSync(tmp, { recursive: true }); }
 });

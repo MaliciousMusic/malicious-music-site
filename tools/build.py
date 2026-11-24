@@ -5,6 +5,7 @@
   python3 tools/build.py --draft   aperçu : construit quand même, interdit à l'indexation
 """
 import datetime, json, pathlib, re, shutil, sys
+from html import escape
 
 root = pathlib.Path(__file__).resolve().parent.parent
 dist = root / "dist"
@@ -15,14 +16,14 @@ html = (root / "index.html").read_text(encoding="utf-8")
 
 # ---- contrôles ----
 problems = []
-ph = re.compile(r'<span class="ph">(.*?)</span>', re.S)
-def part(i, j):
-    return html[html.index(f'id="{i}"'):html.index(f'id="{j}"') if j else len(html)]
-# obligatoires dès la mise en ligne : en-tête légal, mentions, confidentialité, cookies
-for name, a, b in (("version des textes", "legal", "mentions"), ("mentions légales", "mentions", "cgv"), ("confidentialité", "confidentialite", "cookies"), ("cookies", "cookies", "bezel")):
-    left = ph.findall(part(a, b))
-    if left:
-        problems.append(f"{name} : {len(left)} champ(s) à compléter : " + ", ".join(left))
+# identité légale et date : <span class="ph" data-id="…">À VENIR</span> remplacés par cloudflare/site.json
+values = {**cfg["identity"], "date": cfg["texts_date"]}
+slots = set(re.findall(r'data-id="(\w+)"', html))
+missing = sorted(n for n in slots if not str(values.get(n, "")).strip())
+if missing:
+    problems.append("identité légale à remplir dans cloudflare/site.json : " + ", ".join(missing))
+if re.search(r'<span class="ph"[^>]*>\s*\[', html):
+    problems.append("texte entre crochets dans la page")
 contact = cfg["security_contact"]
 try:
     exp = datetime.date.fromisoformat(cfg["security_expires"])
@@ -35,8 +36,8 @@ if not re.fullmatch(r"(mailto:[^\s@]+@[^\s@]+\.[^\s@]+|https://\S+)", contact):
     problems.append("security_contact : mailto:… ou https://… attendu dans cloudflare/site.json")
 if problems and not draft:
     sys.exit("Production refusée :\n- " + "\n- ".join(problems))
-rest = len(ph.findall(html))
-print(f"{rest} texte(s) entre crochets dans la page" + (f" ; brouillon, {len(problems)} point(s) bloquant(s)" if problems else ""))
+if problems:
+    print("Brouillon, points bloquants pour la production :\n- " + "\n- ".join(problems))
 
 # ---- copie (liste blanche) ----
 shutil.rmtree(dist, ignore_errors=True)
@@ -57,12 +58,17 @@ for a in sorted(used):
 # ---- domaine ----
 old = re.search(r'<link rel="canonical" href="([^"]+)"', html).group(1)
 out = html.replace(old, base)
+for n in slots:
+    v = str(values.get(n, "")).strip()
+    if v:
+        out = re.sub(rf'<span class="ph" data-id="{n}">[^<]*</span>', lambda m: f'<span translate="no">{escape(v)}</span>', out)
 headers = (root / "cloudflare/_headers").read_text(encoding="utf-8")
 if draft:
     out = out.replace("</title>", '</title>\n  <meta name="robots" content="noindex" />', 1)
     headers = headers.replace("\n/*\n", "\n/*\n  X-Robots-Tag: noindex\n", 1)
 (dist / "index.html").write_text(out, encoding="utf-8")
 (dist / "_headers").write_text(headers, encoding="utf-8")
+(dist / "llms.txt").write_text(f"# Malicious Music\n\nVitrine. Plugin audio et matériel Audioware en développement, à venir : rien n'est en vente, prix prévus, fiches concept, démo simulée.\n\n- [Accueil]({base})\n- [Mentions légales]({base}#mentions)\n", encoding="utf-8")
 (dist / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {base}sitemap.xml\n", encoding="utf-8")
 (dist / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>{base}</loc></url>\n</urlset>\n', encoding="utf-8")
 if not any(p.startswith("security_") for p in problems):

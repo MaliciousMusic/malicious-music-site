@@ -54,10 +54,11 @@ test("Chrome : 22 langues, toutes les pages, aucune erreur, aucun tiers, aucun c
   for (const l of langs) {
     await p.ev(`I18N.set("${l}")`);
     assert.equal(await p.ev("document.documentElement.lang"), l);
+    assert.equal(await p.ev("[...document.querySelectorAll('.nav-btn b')].filter(e=>e.offsetParent&&(e.getBoundingClientRect().right>innerWidth||e.getBoundingClientRect().left<0)).map(e=>e.textContent).join()"), "", l);
     for (const v of ["home", "plugin", "tarif", "audioware", "pyramide", "faq", "contact", "legal"]) {
       await p.ev(`location.hash="${v}"`); await sleep(40);
       assert.equal(await p.ev("document.querySelector('.view.active').id"), v);
-      const cut = await p.ev("[...document.querySelectorAll('.view.active .btn, .view.active .notice, .view.active .msg')].filter(e=>e.offsetParent&&(e.scrollWidth>e.clientWidth+2||e.getBoundingClientRect().right>document.getElementById('views').getBoundingClientRect().right)).map(e=>e.textContent).join()");
+      const cut = await p.ev("[...document.querySelectorAll('.view.active .btn, .view.active .notice, .view.active .msg, .view.active .tag, .view.active .amount, .view.active .chips span')].filter(e=>e.offsetParent&&(e.scrollWidth>e.clientWidth+2||e.getBoundingClientRect().right>document.getElementById('views').getBoundingClientRect().right)).map(e=>e.textContent).join()");
       assert.equal(cut, "", l + " " + v);
     }
   }
@@ -119,9 +120,15 @@ test("clavier : focus visible partout, tout élément a un nom, langues au clavi
   const { nodes } = await p.c("Accessibility.getFullAXTree");
   assert.deepEqual(nodes.filter((n) => !n.ignored && ["button", "link", "textbox", "combobox", "slider", "checkbox", "radio", "option"].includes(n.role?.value) && !(n.name?.value || "").trim()).map((n) => n.role.value), []);
 });
+test("changer de page au clavier ne coupe pas les coins de l'écran", async () => {
+  const p = await page(); await p.goto(U, 5500);
+  await p.ev("location.hash = 'tarif'"); await sleep(500);
+  assert.equal(await p.ev("document.activeElement.id + getComputedStyle(document.getElementById('views')).borderTopLeftRadius"), "views0px");
+});
 test("mouvement réduit : aucune animation sans fin", async () => {
   const p = await page({ reduce: true }); await p.goto(U, 5500);
   assert.equal(await p.ev("document.getAnimations().filter(a => a.effect.getTiming().iterations === Infinity && a.playState === 'running').map(a => a.animationName).join()"), "");
+  assert.ok(await p.ev("document.getElementById('charms').hidden"));
 });
 test("cadre d'un autre site refusé", async () => {
   const host = http.createServer((q, r) => { r.setHeader("content-type", "text/html"); r.end(`<iframe src="${U}"></iframe>`); }).listen(8798, "127.0.0.1");
