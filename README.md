@@ -59,16 +59,17 @@ Puis compléter les `i18n/<code>.json` et incrémenter `DICT_V` dans `i18n.js` (
 - Polices hébergées sur le site, aucun cookie, aucun traceur ; seule la langue choisie est gardée en `localStorage`.
 - Démo audio synthétisée localement (Web Audio), rien n'est envoyé.
 - Rien n'est en vente : boutons d'achat et formulaire désactivés.
-- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : l'identité (`data-id`) vient de `cloudflare/site.json` à la construction ; textes à faire valider par un juriste.
+- Textes légaux (mentions, CGV, CGU, confidentialité, cookies) dans la vue `#legal` : l'identité est écrite dans `index.html` (`data-id`) et contrôlée à la construction ; textes à faire valider par un juriste.
 
 ## Construction et tests
 
 ```bash
 python3 tools/build.py --draft        # aperçu dans dist/, interdit à l'indexation
 python3 tools/build.py                # production : refusée si un texte légal est incomplet
-python3 tools/build.py --a-confirmer  # production, TVA et RCS/RNE affichés « à confirmer »
 node --test tests/site.test.mjs       # lecture : scripts, textes, traductions, secrets
 node --test tests/served.test.mjs     # site servi (wrangler pages dev) et Chrome
 ```
 
-`dist/` ne contient que les fichiers du site (liste blanche). `cloudflare/site.json` : domaine, contact et échéance de `security.txt`, date des textes, identité légale.
+`dist/` ne contient que les fichiers du site (liste blanche). `cloudflare/site.json` : domaine, contact et échéance de `security.txt`.
+
+GitHub Pages sert la racine de `main` comme aperçu, non indexé ; `_config.yml` en exclut les outils. `tools/build.py` produit la version Cloudflare.

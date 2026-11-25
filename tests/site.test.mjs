@@ -90,34 +90,36 @@ test("plus aucun texte entre crochets, dans aucune langue", () => {
   for (const f of DICTS) assert.doesNotMatch(read("i18n/" + f), /\[/, f);
 });
 test("statut annoncé : tarif prévu, concept, simulation, CGV projet", () => {
-  for (const x of ["VOIR LE TARIF PRÉVU", "TARIF PRÉVU", "Tarif prévu, TTC, sans engagement : à venir.", "pas le rendu du plugin", "VST3 prévu, autres formats à venir.", "PROJET, À VENIR, SANS VENTE", "Plugin en développement"]) assert.ok(html.includes(x), x);
+  for (const x of ["VOIR LE TARIF PRÉVU", "TARIF PRÉVU", "Tarif prévu, sans engagement : à venir.", "pas le rendu du plugin", "VST3 prévu, autres formats à venir.", "PROJET, À VENIR, SANS VENTE", "Plugin en développement"]) assert.ok(html.includes(x), x);
   assert.equal(html.match(/CONCEPT · À VENIR/g).length, 6);
   assert.doesNotMatch(html, /jamais besoin|COMMENCER|S'ABONNER|PRÉCOMMANDER|>EXPÉRIMENTAL · SANS RECHARGE/);
 });
-test("production refusée sans identité ; remplie, elle est échappée et sans « à venir » légal", () => {
-  const cfg = JSON.parse(read("cloudflare/site.json")), tmp = fs.mkdtempSync(os.tmpdir() + "/mm-build-");
-  const full = !!cfg.texts_date && !!cfg.security_contact && !!cfg.security_expires && Object.values(cfg.identity).every(Boolean);
+test("la production passe, et refuse dès qu'un champ d'identité manque", () => {
+  const tmp = fs.mkdtempSync(os.tmpdir() + "/mm-build-");
   const run = (...a) => spawnSync("python3", ["tools/build.py", ...a], { cwd: tmp, encoding: "utf8" });
   for (const f of ["index.html", "404.html", "404.css", "styles.css", ...JS, "assets", "i18n", "tools", "cloudflare"]) fs.cpSync(root + f, tmp + "/" + f, { recursive: true });
-  const write = (c) => fs.writeFileSync(tmp + "/cloudflare/site.json", JSON.stringify(c));
+  const cfg = JSON.parse(read("cloudflare/site.json"));
   try {
-    const r = run(); if (full) assert.equal(r.status, 0, r.stderr); else { assert.notEqual(r.status, 0); assert.match(r.stderr, /Production refusée/); }
-    write({ ...cfg, identity: { ...cfg.identity, tva: "", immatriculation: "" } });
-    assert.notEqual(run().status, 0);                               // TVA et RCS/RNE vides : refus par défaut
-    const r1 = run("--a-confirmer"); assert.equal(r1.status, 0, r1.stderr);
-    const pub = fs.readFileSync(tmp + "/dist/index.html", "utf8");
-    for (const v of Object.values(cfg.identity).filter(Boolean)) assert.ok(pub.includes(v), v);
-    assert.equal(pub.match(/data-id="(tva|immatriculation)">À CONFIRMER/g).length, 2); assert.equal(pub.match(/data-id=/g).length, 2);
-    assert.doesNotMatch(pub, /au capital de/);
-    write({ ...cfg, identity: { ...cfg.identity, adresse: "" } }); assert.notEqual(run("--a-confirmer").status, 0);
-    const id = Object.fromEntries(Object.keys(cfg.identity).map((k) => [k, `<b>${k}</b> & test`]));
-    const ok = { ...cfg, texts_date: "1er janvier", security_contact: "mailto:test@example.test", security_expires: new Date(Date.now() + 2e10).toISOString().slice(0, 10), identity: id };
-    write(ok); const r2 = run(); assert.equal(r2.status, 0, r2.stderr);
+    const r = run(); assert.equal(r.status, 0, r.stderr);
     const out = fs.readFileSync(tmp + "/dist/index.html", "utf8");
-    assert.doesNotMatch(out, /data-id=/); assert.ok(out.includes("&lt;b&gt;raison&lt;/b&gt; &amp; test")); assert.ok(!out.includes("<b>raison"));
-    assert.doesNotMatch(out, /name="robots"/); assert.ok(!fs.readFileSync(tmp + "/dist/_headers", "utf8").startsWith("X-Robots"));
-    assert.match(fs.readFileSync(tmp + "/dist/.well-known/security.txt", "utf8"), /^Contact: mailto:test@example\.test\nExpires: \d{4}/);
-    for (const k of Object.keys(id)) { write({ ...ok, identity: { ...id, [k]: " " } }); assert.notEqual(run().status, 0, k); }
-    write({ ...ok, security_expires: "2020-01-01" }); assert.notEqual(run().status, 0);
+    assert.doesNotMatch(out, /name="robots"|github\.io\/malicious-music-site/); assert.match(out, /canonical" href="https:\/\/maliciousmusic\.org\/"/);
+    assert.doesNotMatch(fs.readFileSync(tmp + "/dist/404.html", "utf8"), /malicious-music-site/);
+    assert.doesNotMatch(fs.readFileSync(tmp + "/dist/_headers", "utf8"), /^\/\*\n  X-Robots-Tag/m);
+    assert.match(fs.readFileSync(tmp + "/dist/.well-known/security.txt", "utf8"), /^Contact: mailto:\S+@\S+\nExpires: \d{4}/);
+    assert.match(out, /SIRET : <span[^>]*>853 801 488 00026/); assert.match(out, />853 801 488 RCS Clermont-Ferrand</); assert.match(out, /data-id="tva">TVA non applicable, article 293 B du CGI</);
+    assert.doesNotMatch(out, /au capital de|TTC|TVA française incluse/);
+    for (const k of ["raison", "statut", "siret", "immatriculation", "tva", "adresse", "telephone", "email", "directeur", "date"]) {
+      for (const v of ["", "À CONFIRMER", "À VENIR"]) {
+        fs.writeFileSync(tmp + "/index.html", html.replace(new RegExp(`(data-id="${k}"[^>]*>)[^<]*<`), `$1${v}<`));
+        assert.notEqual(run().status, 0, k + v);
+      }
+    }
+    fs.writeFileSync(tmp + "/index.html", html);
+    fs.writeFileSync(tmp + "/cloudflare/site.json", JSON.stringify({ ...cfg, security_expires: "2020-01-01" })); assert.notEqual(run().status, 0);
   } finally { fs.rmSync(tmp, { recursive: true }); }
+});
+test("messages : 3 ans, Gmail annoncé, dans toutes les langues", () => {
+  const k = "Si vous nous écrivez : votre adresse e-mail et votre message, reçus sur Gmail (Google) et gardés 3 ans.";
+  assert.ok(html.includes(k));
+  for (const f of DICTS) assert.match(JSON.parse(read("i18n/" + f))[k], /Gmail.*Google.*3|3.*Gmail.*Google/, f);
 });

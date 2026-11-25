@@ -2,11 +2,9 @@
 """Construit dist/ pour Cloudflare Pages : liste blanche de fichiers, domaine, security.txt.
 
   python3 tools/build.py           production : refuse si un texte légal reste à compléter
-  python3 tools/build.py --a-confirmer   production avec TVA et RCS/RNE encore « à confirmer »
   python3 tools/build.py --draft   aperçu : construit quand même, interdit à l'indexation
 """
 import datetime, json, pathlib, re, shutil, sys
-from html import escape
 
 root = pathlib.Path(__file__).resolve().parent.parent
 dist = root / "dist"
@@ -17,18 +15,15 @@ html = (root / "index.html").read_text(encoding="utf-8")
 
 # ---- contrôles ----
 problems = []
-# identité légale et date : <span class="ph" data-id="…">À VENIR</span> remplacés par cloudflare/site.json
-values = {**cfg["identity"], "date": cfg["texts_date"]}
-slots = set(re.findall(r'data-id="(\w+)"', html))
-missing = sorted(n for n in slots if not str(values.get(n, "")).strip())
-# TVA et RCS/RNE : affichés « À CONFIRMER » ; publier ainsi est un choix explicite
-unconfirmed = [n for n in missing if n in ("immatriculation", "tva")]
-if unconfirmed and "--a-confirmer" in sys.argv:
-    print("⚠ publié « à confirmer » : " + ", ".join(unconfirmed))
-    missing = [n for n in missing if n not in unconfirmed]
+# identité légale et date : écrites dans index.html (data-id)
+REQUIRED = {"raison", "statut", "siret", "immatriculation", "tva", "adresse", "telephone", "email", "directeur", "date"}
+found = {}
+for n, v in re.findall(r'data-id="(\w+)"[^>]*>([^<]*)<', html):
+    found.setdefault(n, []).append(v.strip())
+missing = sorted(n for n in REQUIRED if not found.get(n) or any(not v or re.search(r"à (venir|confirmer)", v, re.I) for v in found[n]))
 if missing:
-    problems.append("identité légale à remplir dans cloudflare/site.json : " + ", ".join(missing))
-if re.search(r'<span class="ph"[^>]*>\s*\[', html):
+    problems.append("identité légale à remplir dans index.html : " + ", ".join(missing))
+if re.search(r'class="ph"[^>]*>\s*\[', html):
     problems.append("texte entre crochets dans la page")
 contact = cfg["security_contact"]
 try:
@@ -64,15 +59,14 @@ for a in sorted(used):
 # ---- domaine ----
 old = re.search(r'<link rel="canonical" href="([^"]+)"', html).group(1)
 out = html.replace(old, base)
-for n in slots:
-    v = str(values.get(n, "")).strip()
-    if v:
-        out = re.sub(rf'<span class="ph" data-id="{n}">[^<]*</span>', lambda m: f'<a href="mailto:{escape(v)}" translate="no">{escape(v)}</a>' if n == "email" else f'<span translate="no">{escape(v)}</span>', out)
 headers = (root / "cloudflare/_headers").read_text(encoding="utf-8")
+out = re.sub(r'<meta name="robots"[^>]*>(<!--.*?-->)?\n\s*', "", out)
 if draft:
     out = out.replace("</title>", '</title>\n  <meta name="robots" content="noindex" />', 1)
     headers = headers.replace("\n/*\n", "\n/*\n  X-Robots-Tag: noindex\n", 1)
 (dist / "index.html").write_text(out, encoding="utf-8")
+p404 = dist / "404.html"
+p404.write_text(p404.read_text(encoding="utf-8").replace("/malicious-music-site/", "/"), encoding="utf-8")
 (dist / "_headers").write_text(headers, encoding="utf-8")
 (dist / "llms.txt").write_text(f"# Malicious Music\n\nVitrine. Plugin audio et matériel Audioware en développement, à venir : rien n'est en vente, prix prévus, fiches concept, démo simulée.\n\n- [Accueil]({base})\n- [Mentions légales]({base}#mentions)\n", encoding="utf-8")
 (dist / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {base}sitemap.xml\n", encoding="utf-8")
