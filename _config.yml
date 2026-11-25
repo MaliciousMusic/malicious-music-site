@@ -1,0 +1,2 @@
+# Aperçu GitHub Pages : ne publier que le site (Cloudflare publie dist/, construit par tools/build.py)
+exclude: [README.md, tools, tests, design, cloudflare, wrangler.toml, dist]
