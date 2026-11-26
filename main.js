@@ -775,7 +775,9 @@ setTimeout(() => I18N.init(), 0);
     let k; do { k = Math.floor(Math.random() * items.length); } while (k === cur && items.length > 1);
     img.hidden = true; nameEl.textContent = "";
     box.classList.remove("open"); box.classList.add("shake");
-    timer = setTimeout(() => { box.classList.remove("shake"); box.classList.add("open"); show(k); }, reduceMotion ? 0 : 900);
+    const stage = document.getElementById("blind");
+    stage.classList.remove("burst");
+    timer = setTimeout(() => { box.classList.remove("shake"); box.classList.add("open"); void stage.offsetWidth; stage.classList.add("burst"); show(k); }, reduceMotion ? 0 : 900);
   });
   items.forEach((it, i) => it.addEventListener("click", () => {
     clearTimeout(timer); box.classList.remove("shake"); box.classList.add("open"); show(i);

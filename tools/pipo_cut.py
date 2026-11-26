@@ -7,7 +7,7 @@ from scipy import ndimage as ndi
 
 src = sys.argv[1]
 root = pathlib.Path(__file__).resolve().parent.parent
-out = root / "assets" / "pipo"; out.mkdir(parents=True, exist_ok=True)
+out = root / "design" / "pipo"; out.mkdir(parents=True, exist_ok=True)   # sources couleur ; tools/pipo_lcd.py en fait le pixel art
 im = Image.open(src).convert("RGB"); A = np.asarray(im).astype(np.int16)
 H, W = A.shape[:2]
 ROWS = [(50, 300), (323, 574), (597, 848), (871, 1122), (1146, H)]

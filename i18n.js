@@ -21,7 +21,7 @@ window.I18N = (() => {
     "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SIMULATION", "Recoller", "{name} · {bpm} BPM · 4 STEMS",
     "LES PIPO", "OUVRIR UNE BLIND BOX", "OUVRIR UNE AUTRE BOX", "VOTRE PIPO : {name}",
   ];
-  const DICT_V = 10;                       // à incrémenter à chaque mise à jour des traductions (cache)
+  const DICT_V = 11;                       // à incrémenter à chaque mise à jour des traductions (cache)
   const ATTRS = ["aria-label", "alt", "placeholder", "title"];
   const SKIP = "script, style, #lang-btn, #lang-list, [translate='no'], [data-i18n-skip]";
   const norm = (s) => s.replace(/\s+/g, " ").trim();

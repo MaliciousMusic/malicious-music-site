@@ -79,7 +79,11 @@ GitHub Pages sert la racine de `main` comme aperçu, non indexé ; `_config.yml`
 Les 33 figurines (`assets/pipo/*.webp`) et le charm du stylet (`assets/hw/charm-pipo.webp`) sont découpés depuis la planche des Pipo :
 
 ```bash
-python3 tools/pipo_cut.py chemin/vers/planche-pipo.jpg
+python3 tools/pipo_cut.py chemin/vers/planche-pipo.jpg   # figurines couleur détourées → design/pipo/
+python3 tools/pipo_lcd.py                                # pixel art LCD deux tons → assets/pipo/*.png
+python3 tools/pipo_box.py                                # blind box et couvercle en pixel art
 ```
+
+À l'écran, les Pipo sont en pixel art deux tons comme le bar du démarrage : contours et zones sombres à l'encre, zones claires en vert LCD, et un liseré clair qui sépare l'instrument de la fourrure.
 
 Fond blanc retiré, renard isolé de ses voisins ; le pipa, masqué par le piano voisin sur la planche, est recomposé à partir du renard chanteur (même dessin).
