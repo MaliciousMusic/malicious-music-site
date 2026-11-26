@@ -19,8 +19,9 @@ window.I18N = (() => {
     "LECTURE ARRÊTÉE · RELANCEZ OU CHANGEZ DE MORCEAU", "{name} · {bpm} BPM — PRÊT", "LECTURE ARRÊTÉE", "ANALYSE SPECTRALE…",
     "ÉCRAN ÉTEINT · LECTURE ARRÊTÉE", "Malicious Music — MP3 to Stems & Audioware", "Langue",
     "CHOISISSEZ UN MORCEAU, PUIS LANCEZ LA SIMULATION", "Recoller", "{name} · {bpm} BPM · 4 STEMS",
+    "LES PIPO", "OUVRIR UNE BLIND BOX", "OUVRIR UNE AUTRE BOX", "VOTRE PIPO : {name}",
   ];
-  const DICT_V = 8;                       // à incrémenter à chaque mise à jour des traductions (cache)
+  const DICT_V = 10;                       // à incrémenter à chaque mise à jour des traductions (cache)
   const ATTRS = ["aria-label", "alt", "placeholder", "title"];
   const SKIP = "script, style, #lang-btn, #lang-list, [translate='no'], [data-i18n-skip]";
   const norm = (s) => s.replace(/\s+/g, " ").trim();

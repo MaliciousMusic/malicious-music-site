@@ -25,9 +25,9 @@ if ("IntersectionObserver" in window) {
 // Views: the frame's keys switch what the screen shows
 // ---------------------------------------------------------
 const order = ["home", "plugin", "tarif", "audioware", "faq", "contact", "legal"];
-const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "INFOS LÉGALES", pyramide: "LA PYRAMIDE", geants: "LES GÉANTS", casque: "LE CASQUE" };
+const names = { home: "ACCUEIL", plugin: "PLUGIN", tarif: "TARIF", audioware: "AUDIOWARE", faq: "FAQ", contact: "CONTACT", legal: "INFOS LÉGALES", pyramide: "LA PYRAMIDE", geants: "LES GÉANTS", casque: "LE CASQUE", pipo: "LES PIPO" };
 // pages produit : rangées sous Audioware dans la navigation
-const parentOf = { pyramide: "audioware", geants: "audioware", casque: "audioware" };
+const parentOf = { pyramide: "audioware", geants: "audioware", casque: "audioware", pipo: "audioware" };
 const slot = (id) => order.indexOf(parentOf[id] || id);
 const scroller = document.getElementById("views");
 const stTitle = document.getElementById("st-title");
@@ -102,6 +102,8 @@ function layout() {
   const d = device.getBoundingClientRect(), g = glassEl.getBoundingClientRect();
   const W = d.width, H = d.height, x = g.left - d.left, y = g.top - d.top;
   const tp = document.getElementById("title-plate").getBoundingClientRect();
+  // le titre n'est pas encore chargé (largeur nulle) : on attendra son image pour tracer l'encoche
+  if (tp.width < 40) { const ti = document.querySelector("#title-plate img"); if (ti) ti.addEventListener("load", layout, { once: true }); return; }
   const bt = Math.min(14, g.height * 0.03);
   // le titre est courbé (Blender) sur un cercle de rayon 1,9 × sa largeur : le fond de l'encoche
   // suit un cercle concentrique, décalé de la marge, pour que les deux courbes soient parallèles
@@ -745,4 +747,40 @@ setTimeout(() => I18N.init(), 0);
     st.style.transform = "translate(0, -60px) rotate(-14deg) scale(1.25)";
     requestAnimationFrame(() => requestAnimationFrame(() => { st.classList.add("snap"); st.style.transform = ""; }));
   });
+})();
+
+// ---------------------------------------------------------
+// Les Pipo : blind box (un renard instrumentiste au hasard) et collection
+// ---------------------------------------------------------
+(function () {
+  const btn = document.getElementById("blind-open");
+  if (!btn) return;
+  const box = document.getElementById("blind-box"), img = document.getElementById("blind-pipo"), nameEl = document.getElementById("blind-name");
+  const items = [...document.querySelectorAll(".pipo-item")];
+  let cur = -1, opened = false, timer = 0;
+  const label = () => {
+    btn.textContent = I18N.t(opened ? "OUVRIR UNE AUTRE BOX" : "OUVRIR UNE BLIND BOX");
+    nameEl.textContent = cur < 0 ? "" : I18N.t("VOTRE PIPO : {name}", { name: items[cur].querySelector("span").textContent }) + " · " + (cur + 1) + " / " + items.length;
+  };
+  const show = (k) => {
+    cur = k; opened = true;
+    img.src = items[k].querySelector("img").getAttribute("src");
+    img.alt = items[k].querySelector("span").textContent;
+    img.hidden = false; img.classList.remove("pop"); void img.offsetWidth; img.classList.add("pop");
+    items.forEach((it, i) => it.setAttribute("aria-pressed", String(i === k)));
+    label();
+  };
+  btn.addEventListener("click", () => {
+    clearTimeout(timer);
+    let k; do { k = Math.floor(Math.random() * items.length); } while (k === cur && items.length > 1);
+    img.hidden = true; nameEl.textContent = "";
+    box.classList.remove("open"); box.classList.add("shake");
+    timer = setTimeout(() => { box.classList.remove("shake"); box.classList.add("open"); show(k); }, reduceMotion ? 0 : 900);
+  });
+  items.forEach((it, i) => it.addEventListener("click", () => {
+    clearTimeout(timer); box.classList.remove("shake"); box.classList.add("open"); show(i);
+    document.getElementById("blind").scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+  }));
+  I18N.onChange(label);
+  label();
 })();

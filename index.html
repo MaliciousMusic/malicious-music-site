@@ -24,11 +24,11 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/vt323.woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=85" />
+  <link rel="stylesheet" href="styles.css?v=90" />
   <link rel="preload" as="image" href="assets/hw/jog.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/hw/power-on-frame.webp" />
   <link rel="preload" as="image" href="assets/hw/power-off-frame.webp" />
-  <script src="boot.js?v=85"></script>
+  <script src="boot.js?v=90"></script>
 </head>
 <body>
 <div class="device" id="device">
@@ -256,6 +256,80 @@
             <p class="card-price"><span class="ph">PRIX À VENIR</span></p>
             <span class="btn">VOIR LE CONCEPT →</span>
           </a>
+          <a class="box product" href="#pipo">
+            <div class="viewer pipo-viewer"><img decoding="async" draggable="false" class="pipo-img" src="assets/pipo/pipo.webp" alt="Un Pipo : petit renard qui joue du pipo" /></div>
+            <h3>LES PIPO</h3>
+            <p class="tag">FIGURINES BLUETOOTH À COLLECTIONNER · BLIND BOX <span class="ph">CONCEPT · À VENIR</span></p>
+            <p class="card-price"><span class="ph">PRIX À VENIR</span></p>
+            <span class="btn">VOIR LE CONCEPT →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ---------- PRODUIT : LES PIPO ---------- -->
+      <section class="view pdp pdp-pipo" id="pipo" data-view="pipo">
+        <div class="pdp-stage blind" id="blind">
+          <div class="blind-box" id="blind-box" aria-hidden="true"><span class="blind-lid"></span><span class="blind-q">?</span><span class="blind-brand">PIPO · BLIND BOX</span></div>
+          <img decoding="async" draggable="false" class="blind-pipo" id="blind-pipo" src="assets/pipo/pipo.webp" alt="" hidden />
+          <p class="blind-name" id="blind-name" aria-live="polite" data-i18n-skip></p>
+          <button class="btn inv blind-open" id="blind-open" type="button" data-i18n-skip>OUVRIR UNE BLIND BOX</button>
+          <p class="pdp-hint">33 PIPO À COLLECTIONNER · LEQUEL SERA DANS VOTRE BOÎTE ?</p>
+        </div>
+        <div class="pdp-info">
+          <a class="pdp-back" href="#audioware">← AUDIOWARE</a>
+          <h2>LES PIPO</h2>
+          <p class="tag">FIGURINES BLUETOOTH À COLLECTIONNER · BLIND BOX <span class="ph">CONCEPT · À VENIR</span></p>
+          <p class="txt">De petits renards instrumentistes à collectionner, vendus en blind box : impossible de savoir lequel vous allez découvrir. Chaque Pipo se connecte en Bluetooth à l'app Malicious Music et devient un stem de l'orchestre. La technologie de séparation du plugin donne à chacun sa partie, et vos Pipo jouent ensemble n'importe quel morceau.</p>
+          <ul class="list">
+              <li>COLLECTION: 33 INSTRUMENTISTES</li>
+              <li>FORMAT: BLIND BOX</li>
+              <li>CONNEXION: BLUETOOTH</li>
+              <li>APP: MALICIOUS MUSIC <span class="ph">À VENIR</span></li>
+              <li>TAILLE: <span class="ph">À VENIR</span></li>
+          </ul>
+          <div class="pdp-buy">
+            <p class="amount pdp-price"><span class="ph">PRIX À VENIR</span></p>
+            <button class="btn xl" type="button" disabled>À VENIR</button>
+            <a class="btn" href="#contact">ÊTRE NOTIFIÉ <span class="ph">À VENIR</span></a>
+          </div>
+        </div>
+        <div class="pipo-coll">
+          <h3>LA COLLECTION · 33 PIPO</h3>
+          <ul class="pipo-grid" aria-label="La collection des Pipo">
+            <li><button type="button" class="pipo-item" data-pipo="accordina"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/accordina.webp" alt="" /><span>ACCORDINA</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="accordeon"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/accordeon.webp" alt="" /><span>ACCORDÉON</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="banjo"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/banjo.webp" alt="" /><span>BANJO</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="batterie"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/batterie.webp" alt="" /><span>BATTERIE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="bongos"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/bongos.webp" alt="" /><span>BONGOS</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="bouteille"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/bouteille.webp" alt="" /><span>BOUTEILLE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="clarinette"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/clarinette.webp" alt="" /><span>CLARINETTE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="chanteur"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/chanteur.webp" alt="" /><span>CHANTEUR</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="contrebasse"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/contrebasse.webp" alt="" /><span>CONTREBASSE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="cornemuse"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/cornemuse.webp" alt="" /><span>CORNEMUSE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="crecelle"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/crecelle.webp" alt="" /><span>CRÉCELLE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="cymbale"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/cymbale.webp" alt="" /><span>CYMBALE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="flute"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/flute.webp" alt="" /><span>FLÛTE TRAVERSIÈRE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="grelot"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/grelot.webp" alt="" /><span>GRELOT</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="guitare"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/guitare.webp" alt="" /><span>GUITARE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="guitare-electrique"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/guitare-electrique.webp" alt="" /><span>GUITARE ÉLECTRIQUE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="harmonica"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/harmonica.webp" alt="" /><span>HARMONICA</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="harpe"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/harpe.webp" alt="" /><span>HARPE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="kazoo"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/kazoo.webp" alt="" /><span>KAZOO</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="maracas"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/maracas.webp" alt="" /><span>MARACAS</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="orgue"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/orgue.webp" alt="" /><span>ORGUE DE BARBARIE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="ocarina"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/ocarina.webp" alt="" /><span>OCARINA</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="piano"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/piano.webp" alt="" /><span>PIANO</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="pipa"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/pipa.webp" alt="" /><span>PIPA</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="pipo"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/pipo.webp" alt="" /><span>PIPO</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="saxophone"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/saxophone.webp" alt="" /><span>SAXOPHONE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="serpent"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/serpent.webp" alt="" /><span>SERPENT</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="synthe"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/synthe.webp" alt="" /><span>SYNTHÉ</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="triangle"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/triangle.webp" alt="" /><span>TRIANGLE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="trompette"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/trompette.webp" alt="" /><span>TROMPETTE</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="ukulele"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/ukulele.webp" alt="" /><span>UKULÉLÉ</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="violon"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/violon.webp" alt="" /><span>VIOLON</span></button></li>
+            <li><button type="button" class="pipo-item" data-pipo="xylophone"><img decoding="async" draggable="false" loading="lazy" src="assets/pipo/xylophone.webp" alt="" /><span>XYLOPHONE</span></button></li>
+          </ul>
         </div>
       </section>
 
@@ -483,15 +557,16 @@
 </div>
   <!-- charms accrochés au bout du stylet : cordons souples simulés (main.js) -->
 <div class="charms" id="charms" aria-hidden="true">
-  <svg class="cords" id="cords"><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord"/><path class="cord"/><path class="cord"/><circle class="loop" r="3.4"/><circle class="knot" r="2.9"/></svg>
+  <svg class="cords" id="cords"><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord-shadow"/><path class="cord"/><path class="cord"/><path class="cord"/><path class="cord"/><circle class="loop" r="3.4"/><circle class="knot" r="2.9"/></svg>
   <img decoding="async" draggable="false" class="charm" data-len="0.9" data-size="0.8" src="assets/hw/charm-note.webp" alt="" />
   <img decoding="async" draggable="false" class="charm" data-len="2.0" data-size="0.92" src="assets/hw/charm-emoji.webp" alt="" />
   <img decoding="async" draggable="false" class="charm" data-len="3.2" data-size="1.05" src="assets/hw/charm-bass.webp" alt="" />
+  <img decoding="async" draggable="false" class="charm" data-len="2.6" data-size="1.0" src="assets/hw/charm-pipo.webp" alt="" />
 </div>
 <img decoding="async" draggable="false" class="stylus" id="stylus" src="assets/hw/stylus.webp" alt="" aria-hidden="true" />
-<script src="i18n.js?v=85"></script>
-<script src="models.js?v=85"></script>
-<script src="main.js?v=85"></script>
-<script src="demo.js?v=85"></script>
+<script src="i18n.js?v=90"></script>
+<script src="models.js?v=90"></script>
+<script src="main.js?v=90"></script>
+<script src="demo.js?v=90"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 Site vitrine de Malicious Music (rien en vente pour l'instant) :
 
 - **Software** : plugin (VST probable) MP3 → stems mixés — à venir, tarif prévu 59 €/mois.
-- **Audioware** : gamme hardware Malicious Music, estampillée du logo Malicious Bass (la Pyramide platine/range-vinyles/enceinte, les écouteurs géants-enceintes, le casque expérimental sans recharge avec stockage intégré).
+- **Audioware** : gamme hardware Malicious Music, estampillée du logo Malicious Bass (la Pyramide platine/range-vinyles/enceinte, les écouteurs géants-enceintes, le casque expérimental sans recharge avec stockage intégré, et les Pipo : 33 figurines de renards instrumentistes à collectionner, en blind box, reliées en Bluetooth à l'app, chacune jouant un stem).
 
 Site statique (HTML/CSS/JS, aucune dépendance).
 
@@ -73,3 +73,13 @@ node --test tests/served.test.mjs     # site servi (wrangler pages dev) et Chrom
 `dist/` ne contient que les fichiers du site (liste blanche). `cloudflare/site.json` : domaine, contact et échéance de `security.txt`.
 
 GitHub Pages sert la racine de `main` comme aperçu, non indexé ; `_config.yml` en exclut les outils. `tools/build.py` produit la version Cloudflare.
+
+## Les Pipo
+
+Les 33 figurines (`assets/pipo/*.webp`) et le charm du stylet (`assets/hw/charm-pipo.webp`) sont découpés depuis la planche des Pipo :
+
+```bash
+python3 tools/pipo_cut.py chemin/vers/planche-pipo.jpg
+```
+
+Fond blanc retiré, renard isolé de ses voisins ; le pipa, masqué par le piano voisin sur la planche, est recomposé à partir du renard chanteur (même dessin).

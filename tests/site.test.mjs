@@ -68,7 +68,7 @@ test("rien ne laisse croire qu'on peut payer ou s'inscrire", () => {
   const form = html.match(/<form class="box signup"[\s\S]*?<\/form>/)[0];
   assert.doesNotMatch(form, /\b(action|method)=/);
   for (const el of form.match(/<(input|select|button)\b[^>]*>/g)) assert.match(el, /\bdisabled\b/, el);
-  assert.equal(html.match(/<button class="btn xl" type="button" disabled>À VENIR/g).length, 4);
+  assert.equal(html.match(/<button class="btn xl" type="button" disabled>À VENIR/g).length, 5);   // tarif + 4 fiches Audioware (Pyramide, Géants, Casque, Pipo)
   assert.ok(html.includes("Rien n'est encore en vente"));
 });
 test("ni clé, ni jeton, ni chemin personnel, dans les fichiers et l'historique", () => {
@@ -91,7 +91,7 @@ test("plus aucun texte entre crochets, dans aucune langue", () => {
 });
 test("statut annoncé : tarif prévu, concept, simulation, CGV projet", () => {
   for (const x of ["VOIR LE TARIF PRÉVU", "TARIF PRÉVU", "Tarif prévu, sans engagement : à venir.", "pas le rendu du plugin", "VST3 prévu, autres formats à venir.", "PROJET, À VENIR, SANS VENTE", "Plugin en développement"]) assert.ok(html.includes(x), x);
-  assert.equal(html.match(/CONCEPT · À VENIR/g).length, 6);
+  assert.equal(html.match(/CONCEPT · À VENIR/g).length, 8);   // 4 cartes + 4 pages produit
   assert.doesNotMatch(html, /jamais besoin|COMMENCER|S'ABONNER|PRÉCOMMANDER|>EXPÉRIMENTAL · SANS RECHARGE/);
 });
 test("la production passe, et refuse dès qu'un champ d'identité manque", () => {
